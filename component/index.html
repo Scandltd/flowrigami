@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Flowrigami</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+  <link href="index.css" rel="stylesheet">
+</head>
+
+<body>
+
+<h1 class="text-center">Flowrigami demo</h1>
+
+<div id="flowrigami"></div>
+
+<script src="flowrigami.js"></script>
+<script>
+  let flowrigami = new Flowrigami(document.getElementById('flowrigami'));
+</script>
+
+
+<div class="test-utilities">
+  <h2>
+    Testing utilities:
+  </h2>
+
+  <h3>
+    View Mode:
+  </h3>
+  <div class="">
+    <div class="onoffswitch">
+      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="view_mode_switcher">
+      <label class="onoffswitch-label" for="view_mode_switcher"></label>
+    </div>
+  </div>
+  <script>
+    const viewModeSwitcher = document.getElementById('view_mode_switcher');
+    viewModeSwitcher.onchange = (e) => {
+      flowrigami = new Flowrigami(document.getElementById('flowrigami'), { viewMode: e.target.checked });
+    }
+  </script>
+
+  <h3>
+    Diagram api:
+  </h3>
+  <div class="demo-data">
+    <button type="button" id="clear_data">
+      Clear
+    </button>
+
+    <button type="button" id="first_sample">
+      First sample
+    </button>
+
+    <button type="button" id="kyc_process">
+      KYC process
+    </button>
+
+    <button type="button" id="onboarding_process">
+      Onboarding process
+    </button>
+  </div>
+  <script>
+    const clearDiagram = document.getElementById('clear_data');
+    clearDiagram.onclick = () => flowrigami.diagramApi.clear();
+
+    function importData(url) {
+      fetch(url).
+        then((res) => res.json()).
+        then((json) => flowrigami.diagramApi.import(JSON.stringify(json)))
+    }
+
+    const firstSample = document.getElementById('first_sample');
+    firstSample.onclick = () => importData('demo/first_sample.json');
+
+    const kycProcess = document.getElementById('kyc_process');
+    kycProcess.onclick = () => importData('demo/kyc_process.json');
+
+    const onboardingProcess = document.getElementById('onboarding_process');
+    onboardingProcess.onclick = () => importData('demo/onboarding_process.json');
+  </script>
+  <br>
+
+
+  <h3>
+    Indicator api:
+  </h3>
+  <form id="indicator-form" autocomplete="off">
+    <input id="indicatorId" type="text" placeholder="Indicator ID">
+    <input id="indicatorValue" type="number" placeholder="Indicator value">
+    <input id="indicatorColor" type="text" placeholder="Indicator color">
+    <button type="submit">Submit indicator value</button>
+  </form>
+  <script>
+    const indicatorId = document.getElementById('indicatorId');
+    const indicatorValue = document.getElementById('indicatorValue');
+    const indicatorColor = document.getElementById('indicatorColor');
+
+    const indicatorForm = document.getElementById('indicator-form');
+    indicatorForm.onsubmit = (e) => {
+      e.preventDefault();
+
+      const id = indicatorId.value;
+      const parsedValue = Number(indicatorValue.value);
+      const value = parsedValue === parsedValue ? parsedValue : indicatorValue.value;
+      const color = indicatorColor.value || undefined;
+      flowrigami.indicatorApi.setIndicatorValue(id, value, color);
+    };
+  </script>
+  <br>
+  <br>
+</div>
+
+</body>
+</html>

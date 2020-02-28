@@ -1,0 +1,450 @@
+{
+  "version": "1.0",
+  "diagram": "UML",
+
+  "indicators": [],
+  "links": [
+    {
+      "from": "mj90dHaztHmivWkVlbPGx",
+      "to": "zGo6_WgGN0xInUBpQCD9D",
+      "points": [
+        {
+          "x": 254,
+          "y": 339
+        },
+        {
+          "x": 324,
+          "y": 339
+        }
+      ]
+    },
+    {
+      "from": "zGo6_WgGN0xInUBpQCD9D",
+      "to": "79e0T8DIUVXP1ZjXdQEro",
+      "points": [
+        {
+          "x": 444,
+          "y": 339
+        },
+        {
+          "x": 504,
+          "y": 339
+        }
+      ]
+    },
+    {
+      "from": "79e0T8DIUVXP1ZjXdQEro",
+      "to": "0XnjrY5vsztwUagzdAxE_",
+      "points": [
+        {
+          "x": 504,
+          "y": 339
+        },
+        {
+          "x": 574,
+          "y": 339
+        }
+      ]
+    },
+    {
+      "from": "79e0T8DIUVXP1ZjXdQEro",
+      "to": "-3hbvvO37BLrl3LvSrw0z",
+      "points": [
+        {
+          "x": 504,
+          "y": 309
+        },
+        {
+          "x": 574,
+          "y": 229
+        }
+      ]
+    },
+    {
+      "from": "79e0T8DIUVXP1ZjXdQEro",
+      "to": "VDxfxoC05n3cVBC7ubpwN",
+      "points": [
+        {
+          "x": 504,
+          "y": 369
+        },
+        {
+          "x": 574,
+          "y": 449
+        }
+      ]
+    },
+    {
+      "from": "0XnjrY5vsztwUagzdAxE_",
+      "to": "aWthboaLCf9SYYdb5BsZ4",
+      "points": [
+        {
+          "x": 694,
+          "y": 339
+        },
+        {
+          "x": 764,
+          "y": 339
+        }
+      ]
+    },
+    {
+      "from": "-3hbvvO37BLrl3LvSrw0z",
+      "to": "aWthboaLCf9SYYdb5BsZ4",
+      "points": [
+        {
+          "x": 694,
+          "y": 229
+        },
+        {
+          "x": 764,
+          "y": 309
+        }
+      ]
+    },
+    {
+      "from": "VDxfxoC05n3cVBC7ubpwN",
+      "to": "aWthboaLCf9SYYdb5BsZ4",
+      "points": [
+        {
+          "x": 694,
+          "y": 449
+        },
+        {
+          "x": 764,
+          "y": 369
+        }
+      ]
+    },
+    {
+      "from": "aWthboaLCf9SYYdb5BsZ4",
+      "to": "COqsaRT91iv3tF560HRqq",
+      "points": [
+        {
+          "x": 764,
+          "y": 339
+        },
+        {
+          "x": 834,
+          "y": 339
+        }
+      ]
+    },
+    {
+      "from": "COqsaRT91iv3tF560HRqq",
+      "to": "VfuQwcOGAXp44JjzLr26e",
+      "points": [
+        {
+          "x": 894,
+          "y": 339
+        },
+        {
+          "x": 964,
+          "y": 339
+        }
+      ]
+    },
+    {
+      "from": "VfuQwcOGAXp44JjzLr26e",
+      "to": "UIK29kkuaBL4BaxwN7623",
+      "points": [
+        {
+          "x": 1084,
+          "y": 339
+        },
+        {
+          "x": 1154,
+          "y": 339
+        }
+      ]
+    },
+    {
+      "from": "COqsaRT91iv3tF560HRqq",
+      "to": "tp80gjkiA12BJw7D-QOTH",
+      "points": [
+        {
+          "x": 864,
+          "y": 309
+        },
+        {
+          "x": 1124,
+          "y": 229
+        }
+      ]
+    },
+    {
+      "from": "UIK29kkuaBL4BaxwN7623",
+      "to": "tp80gjkiA12BJw7D-QOTH",
+      "points": [
+        {
+          "x": 1184,
+          "y": 309
+        },
+        {
+          "x": 1184,
+          "y": 259
+        }
+      ]
+    },
+    {
+      "from": "UIK29kkuaBL4BaxwN7623",
+      "to": "uWnqel2bX8I96dEk7qMZU",
+      "points": [
+        {
+          "x": 1214,
+          "y": 339
+        },
+        {
+          "x": 1324,
+          "y": 339
+        }
+      ]
+    },
+    {
+      "from": "COqsaRT91iv3tF560HRqq",
+      "to": "uWnqel2bX8I96dEk7qMZU",
+      "points": [
+        {
+          "x": 864,
+          "y": 369
+        },
+        {
+          "x": 864,
+          "y": 449
+        },
+        {
+          "x": 1354,
+          "y": 449
+        },
+        {
+          "x": 1354,
+          "y": 369
+        }
+      ]
+    },
+    {
+      "from": "tp80gjkiA12BJw7D-QOTH",
+      "to": "v_iB1YRUPdhdWFVO0R61P",
+      "points": [
+        {
+          "x": 1244,
+          "y": 229
+        },
+        {
+          "x": 1294,
+          "y": 229
+        }
+      ]
+    },
+    {
+      "from": "v_iB1YRUPdhdWFVO0R61P",
+      "to": "ehBEco1HCjG4GRkHo138y",
+      "points": [
+        {
+          "x": 1414,
+          "y": 229
+        },
+        {
+          "x": 1474,
+          "y": 229
+        }
+      ]
+    },
+    {
+      "from": "uWnqel2bX8I96dEk7qMZU",
+      "to": "rcxYMvILUIVM6ATiP93Pi",
+      "points": [
+        {
+          "x": 1384,
+          "y": 339
+        },
+        {
+          "x": 1474,
+          "y": 339
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "mj90dHaztHmivWkVlbPGx",
+      "name": "StartNode",
+      "label": "Customer\naccount\nrequested\n",
+      "params": {
+        "x": 234,
+        "y": 339
+      }
+    },
+    {
+      "id": "zGo6_WgGN0xInUBpQCD9D",
+      "name": "ActivityNode",
+      "label": "Create new \naccount",
+      "params": {
+        "x": 384,
+        "y": 339
+      }
+    },
+    {
+      "id": "79e0T8DIUVXP1ZjXdQEro",
+      "name": "VerticalForkJoinNode",
+      "label": "",
+      "params": {
+        "x": 504,
+        "y": 339
+      }
+    },
+    {
+      "id": "-3hbvvO37BLrl3LvSrw0z",
+      "name": "ActivityNode",
+      "label": "Validate name \nand address",
+      "params": {
+        "x": 634,
+        "y": 229
+      }
+    },
+    {
+      "id": "0XnjrY5vsztwUagzdAxE_",
+      "name": "ActivityNode",
+      "label": "Validate name\nfor interpol\nand PEP",
+      "params": {
+        "x": 634,
+        "y": 339
+      }
+    },
+    {
+      "id": "VDxfxoC05n3cVBC7ubpwN",
+      "name": "ActivityNode",
+      "label": "Verify account",
+      "params": {
+        "x": 634,
+        "y": 449
+      }
+    },
+    {
+      "id": "aWthboaLCf9SYYdb5BsZ4",
+      "name": "VerticalForkJoinNode",
+      "label": "",
+      "params": {
+        "x": 764,
+        "y": 339
+      }
+    },
+    {
+      "id": "COqsaRT91iv3tF560HRqq",
+      "name": "DecisionNode",
+      "label": "Certified?",
+      "params": {
+        "x": 864,
+        "y": 339
+      }
+    },
+    {
+      "id": "VfuQwcOGAXp44JjzLr26e",
+      "name": "ActivityNode",
+      "label": "Manually review \nnew customer",
+      "params": {
+        "x": 1024,
+        "y": 339
+      }
+    },
+    {
+      "id": "UIK29kkuaBL4BaxwN7623",
+      "name": "DecisionNode",
+      "label": "Success?",
+      "params": {
+        "x": 1184,
+        "y": 339
+      }
+    },
+    {
+      "id": "tp80gjkiA12BJw7D-QOTH",
+      "name": "ActivityNode",
+      "label": "Onboard new\ncustomer",
+      "params": {
+        "x": 1184,
+        "y": 229
+      }
+    },
+    {
+      "id": "uWnqel2bX8I96dEk7qMZU",
+      "name": "DecisionNode",
+      "label": "",
+      "params": {
+        "x": 1354,
+        "y": 339
+      }
+    },
+    {
+      "id": "v_iB1YRUPdhdWFVO0R61P",
+      "name": "ActivityNode",
+      "label": "Welcome new \ncustomer",
+      "params": {
+        "x": 1354,
+        "y": 229
+      }
+    },
+    {
+      "id": "ehBEco1HCjG4GRkHo138y",
+      "name": "EndNode",
+      "label": "Customer \nonboarded",
+      "params": {
+        "x": 1494,
+        "y": 229
+      }
+    },
+    {
+      "id": "rcxYMvILUIVM6ATiP93Pi",
+      "name": "EndNode",
+      "label": "Customer\n declined",
+      "params": {
+        "x": 1494,
+        "y": 339
+      }
+    },
+    {
+      "id": "H4LEvMV4FrbRB4d5ABCKI",
+      "name": "TextNode",
+      "label": "Yes\n\n",
+      "params": {
+        "x": 884,
+        "y": 209
+      }
+    },
+    {
+      "id": "VpmzyhVoWnIsP3MLfVsn_",
+      "name": "TextNode",
+      "label": "No\n\n",
+      "params": {
+        "x": 894,
+        "y": 319
+      }
+    },
+    {
+      "id": "FxB6cBu-pGHPwdVueVQVI",
+      "name": "TextNode",
+      "label": "Unknown\n\n",
+      "params": {
+        "x": 874,
+        "y": 429
+      }
+    },
+    {
+      "id": "hiLvLO4QDk_T3UIGR-dp9",
+      "name": "TextNode",
+      "label": "Pass\n\n",
+      "params": {
+        "x": 1184,
+        "y": 279
+      }
+    },
+    {
+      "id": "AegMQKuUC2OI254PGw4Fo",
+      "name": "TextNode",
+      "label": "Fail\n\n",
+      "params": {
+        "x": 1214,
+        "y": 319
+      }
+    }
+  ]
+}

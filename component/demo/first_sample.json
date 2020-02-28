@@ -1,0 +1,125 @@
+{
+  "version": "1.0",
+  "diagram": "UML",
+
+  "indicators": [],
+  "links": [
+    {
+      "from": "lKVZhdcbaoAT1gfujeivB",
+      "to": "TBnHQXcywzecBUUmzyX61",
+      "points": [
+        {
+          "x": 450,
+          "y": 120
+        },
+        {
+          "x": 450,
+          "y": 170
+        }
+      ]
+    },
+    {
+      "from": "TBnHQXcywzecBUUmzyX61",
+      "to": "Y-rIQtao2RgVOFCTG1Bj7",
+      "points": [
+        {
+          "x": 420,
+          "y": 200
+        },
+        {
+          "x": 360,
+          "y": 290
+        }
+      ]
+    },
+    {
+      "from": "TBnHQXcywzecBUUmzyX61",
+      "to": "1RIwLypCSjUISsl1M-cxH",
+      "points": [
+        {
+          "x": 480,
+          "y": 200
+        },
+        {
+          "x": 540,
+          "y": 290
+        }
+      ]
+    },
+    {
+      "from": "Y-rIQtao2RgVOFCTG1Bj7",
+      "to": "B0EwOrfRN0zmEFhLV3hVK",
+      "points": [
+        {
+          "x": 360,
+          "y": 350
+        },
+        {
+          "x": 450,
+          "y": 480
+        }
+      ]
+    },
+    {
+      "from": "1RIwLypCSjUISsl1M-cxH",
+      "to": "B0EwOrfRN0zmEFhLV3hVK",
+      "points": [
+        {
+          "x": 540,
+          "y": 350
+        },
+        {
+          "x": 450,
+          "y": 480
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "Y-rIQtao2RgVOFCTG1Bj7",
+      "name": "ActivityNode",
+      "label": "",
+      "params": {
+        "x": 360,
+        "y": 320
+      }
+    },
+    {
+      "id": "1RIwLypCSjUISsl1M-cxH",
+      "name": "ActivityNode",
+      "label": "",
+      "params": {
+        "x": 540,
+        "y": 320
+      }
+    },
+    {
+      "id": "TBnHQXcywzecBUUmzyX61",
+      "name": "DecisionNode",
+      "label": "",
+      "params": {
+        "x": 450,
+        "y": 200
+      }
+    },
+    {
+      "id": "lKVZhdcbaoAT1gfujeivB",
+      "name": "StartNode",
+      "label": "",
+      "params": {
+        "x": 450,
+        "y": 100
+      }
+    },
+    {
+      "id": "B0EwOrfRN0zmEFhLV3hVK",
+      "name": "EndNode",
+      "label": "",
+      "params": {
+        "x": 450,
+        "y": 500
+      }
+    }
+  ]
+}

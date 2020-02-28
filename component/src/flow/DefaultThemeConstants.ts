@@ -1,0 +1,61 @@
+export const LINE_HEIGHT = 16;
+export const FONT_SIZE = 14;
+export const FONT_NAME = 'Open Sans, sans-serif';
+
+
+export const GRID_COLOR = '#F5F5F5';
+export const GRID_MAIN_LINE_COLOR = '#EEEEEE';
+
+export const GRID_STEP = 10;
+export const GRID_WIDTH = 1;
+export const GRID_MAIN_LINE_STEP = 8;
+export const GRID_MAIN_LINE_WIDTH = 2;
+
+
+export const LINE_COLOR = 'rgba(83,83,83,0.7)';
+export const LINE_WIDTH = 2;
+
+
+export const SHAPE_BORDER_WIDTH = 3;
+
+export const SHAPE_SELECTION_COLOR = '#373859';
+export const SHAPE_SELECTION_MARGIN = 10;
+export const SHAPE_SELECTION_BORDER_WIDTH = 1;
+
+export const SHAPE_PREVIEW_COLOR = '#898989';
+export const SHAPE_PREVIEW_BACKGROUND_COLOR = '#FFFFFF';
+
+export const SHAPE_LABEL_COLOR = '#3A3A3A';
+export const SHAPE_LABEL_WIDTH = 120;
+export const SHAPE_LABEL_HEIGHT = 60;
+export const SHAPE_LABEL_PADDING = 5;
+
+
+export const INDICATOR_DEFAULT_COLOR = '#FFFFFF';
+export const INDICATOR_DEFAULT_BACKGROUND_COLOR = '#AAAAAA';
+export const INDICATOR_SUCCESS_BACKGROUND_COLOR = '#3C763D';
+export const INDICATOR_INFO_BACKGROUND_COLOR = '#31708F';
+export const INDICATOR_WARN_BACKGROUND_COLOR = '#8A6D3B';
+export const INDICATOR_ERROR_BACKGROUND_COLOR = '#A94442';
+
+export const TEXT_NODE_BORDER_COLOR_ACTIVE = 'rgba(77, 144, 254, 0.5)';
+
+export const ACTIVITY_BORDER_COLOR = '#8EC9CB';
+export const ACTIVITY_BORDER_COLOR_HOVER = '#56A4A7';
+export const ACTIVITY_BORDER_COLOR_ACTIVE = '#448588';
+export const ACTIVITY_BACKGROUND_COLOR = '#B9E5E6';
+
+export const DECISION_BORDER_COLOR = '#ECD5A1';
+export const DECISION_BORDER_COLOR_HOVER = '#DABA71';
+export const DECISION_BORDER_COLOR_ACTIVE = '#D0B26E';
+export const DECISION_BACKGROUND_COLOR = '#FAE8BE';
+
+export const END_NODE_BORDER_COLOR = '#EF8C7F';
+export const END_NODE_BORDER_COLOR_HOVER = '#D06254';
+export const END_NODE_BORDER_COLOR_ACTIVE = '#B65D51';
+export const END_NODE_BACKGROUND_COLOR = '#FFFFFF';
+
+export const START_NODE_BORDER_COLOR = '#90BD61';
+export const START_NODE_BORDER_COLOR_HOVER = '#77A844';
+export const START_NODE_BORDER_COLOR_ACTIVE = '#658D3B';
+export const START_NODE_BACKGROUND_COLOR = '#B9DE91';

@@ -1,0 +1,45 @@
+{
+  "name": "flowrigami",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "prebuild": "rimraf build && mkdirp build && ncp index.html build/index.html && ncp index.css build/index.css && ncp demo build/demo",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.ts --progress --profile --colors --display-entrypoints=false --display-chunks=false --hide-modules",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "nanoid": "2.1.8"
+  },
+  "devDependencies": {
+    "@types/chai": "4.2.7",
+    "@types/mocha": "5.2.7",
+    "@types/nanoid": "2.1.0",
+    "@types/node": "12.12.18",
+    "@types/optimize-css-assets-webpack-plugin": "5.0.1",
+    "@types/stats.js": "0.17.0",
+    "@types/terser-webpack-plugin": "2.2.0",
+    "@types/webpack": "4.41.0",
+    "@types/webpack-dev-server": "3.9.0",
+    "chai": "4.2.0",
+    "cross-env": "6.0.3",
+    "css-loader": "3.3.2",
+    "stats.js": "0.17.0",
+    "html-loader": "0.5.5",
+    "mkdirp": "0.5.1",
+    "mocha": "6.2.2",
+    "ncp": "2.0.0",
+    "optimize-css-assets-webpack-plugin": "5.0.3",
+    "rimraf": "3.0.0",
+    "style-loader": "1.0.1",
+    "terser-webpack-plugin": "2.3.0",
+    "ts-loader": "6.2.1",
+    "ts-node": "8.5.4",
+    "tsconfig-paths": "3.9.0",
+    "typescript": "3.7.3",
+    "webpack": "4.41.3",
+    "webpack-cli": "3.3.10",
+    "webpack-dev-server": "3.9.0"
+  }
+}

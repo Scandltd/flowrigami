@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "module": "none",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "outDir": "./build",
+    "paths": {
+      "@app/*": ["src/*"]
+    },
+    "sourceMap": false,
+    "strict": true,
+    "target": "es6"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

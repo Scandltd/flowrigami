@@ -1,0 +1,825 @@
+{
+  "version": "1.0",
+  "diagram": "UML",
+
+  "indicators": [],
+  "links": [
+    {
+      "from": "9pbSsQA70-_K-bPbSLXxs",
+      "to": "bLK5JeFzDhBPyNZsTaZtl",
+      "points": [
+        {
+          "x": 680,
+          "y": 520
+        },
+        {
+          "x": 740,
+          "y": 520
+        }
+      ]
+    },
+    {
+      "from": "bLK5JeFzDhBPyNZsTaZtl",
+      "to": "rvbw0sqZUcSe4-5T5iq7I",
+      "points": [
+        {
+          "x": 860,
+          "y": 520
+        },
+        {
+          "x": 920,
+          "y": 520
+        }
+      ]
+    },
+    {
+      "from": "Jtfrt240JbyJurWhHsy7p",
+      "to": "NWRGipPTRf74u26PFroOU",
+      "points": [
+        {
+          "x": 1740,
+          "y": 520
+        },
+        {
+          "x": 1800,
+          "y": 520
+        }
+      ]
+    },
+    {
+      "from": "NWRGipPTRf74u26PFroOU",
+      "to": "bLK5JeFzDhBPyNZsTaZtl",
+      "points": [
+        {
+          "x": 1830,
+          "y": 550
+        },
+        {
+          "x": 1830,
+          "y": 630
+        },
+        {
+          "x": 800,
+          "y": 628.75
+        },
+        {
+          "x": 800,
+          "y": 550
+        }
+      ]
+    },
+    {
+      "from": "uxXpHXX9rxCZQeBxxTjMU",
+      "to": "bLK5JeFzDhBPyNZsTaZtl",
+      "points": [
+        {
+          "x": 2160,
+          "y": 550
+        },
+        {
+          "x": 2160,
+          "y": 680
+        },
+        {
+          "x": 800,
+          "y": 678.75
+        },
+        {
+          "x": 800,
+          "y": 578.75
+        },
+        {
+          "x": 800,
+          "y": 550
+        }
+      ]
+    },
+    {
+      "from": "6Sl5W1OyYYsER8jlnhMy6",
+      "to": "RPtMnP4khUliVusEGf27e",
+      "points": [
+        {
+          "x": 1200,
+          "y": 520
+        },
+        {
+          "x": 1260,
+          "y": 520
+        }
+      ]
+    },
+    {
+      "from": "uxXpHXX9rxCZQeBxxTjMU",
+      "to": "HkiiMzTxcL7X0jr5j1lKs",
+      "points": [
+        {
+          "x": 2190,
+          "y": 520
+        },
+        {
+          "x": 2270,
+          "y": 520
+        }
+      ]
+    },
+    {
+      "from": "HkiiMzTxcL7X0jr5j1lKs",
+      "to": "q0lwIvjq2tEWAfa2ypR7A",
+      "points": [
+        {
+          "x": 2300,
+          "y": 490
+        },
+        {
+          "x": 2340,
+          "y": 450
+        }
+      ]
+    },
+    {
+      "from": "q0lwIvjq2tEWAfa2ypR7A",
+      "to": "GyulMHoQ8pRl9XcDwbT7-",
+      "points": [
+        {
+          "x": 2460,
+          "y": 450
+        },
+        {
+          "x": 2530,
+          "y": 450
+        }
+      ]
+    },
+    {
+      "from": "GyulMHoQ8pRl9XcDwbT7-",
+      "to": "mqWuEsz15spb7EUnAlSJ5",
+      "points": [
+        {
+          "x": 2590,
+          "y": 450
+        },
+        {
+          "x": 2690,
+          "y": 500
+        }
+      ]
+    },
+    {
+      "from": "GyulMHoQ8pRl9XcDwbT7-",
+      "to": "bLK5JeFzDhBPyNZsTaZtl",
+      "points": [
+        {
+          "x": 2560,
+          "y": 420
+        },
+        {
+          "x": 2560,
+          "y": 370
+        },
+        {
+          "x": 800,
+          "y": 370
+        },
+        {
+          "x": 800,
+          "y": 478.75
+        },
+        {
+          "x": 800,
+          "y": 490
+        }
+      ]
+    },
+    {
+      "from": "mqWuEsz15spb7EUnAlSJ5",
+      "to": "c8VPeVYGDJMv-B7EH6Z_E",
+      "points": [
+        {
+          "x": 2720,
+          "y": 530
+        },
+        {
+          "x": 2770,
+          "y": 530
+        }
+      ]
+    },
+    {
+      "from": "HkiiMzTxcL7X0jr5j1lKs",
+      "to": "mqWuEsz15spb7EUnAlSJ5",
+      "points": [
+        {
+          "x": 2300,
+          "y": 550
+        },
+        {
+          "x": 2300,
+          "y": 605
+        },
+        {
+          "x": 2690,
+          "y": 605
+        },
+        {
+          "x": 2690,
+          "y": 560
+        }
+      ]
+    },
+    {
+      "from": "c8VPeVYGDJMv-B7EH6Z_E",
+      "to": "T7t5XUOVMy2PzEyP6kokE",
+      "points": [
+        {
+          "x": 2890,
+          "y": 530
+        },
+        {
+          "x": 2950,
+          "y": 530
+        }
+      ]
+    },
+    {
+      "from": "T7t5XUOVMy2PzEyP6kokE",
+      "to": "bLK5JeFzDhBPyNZsTaZtl",
+      "points": [
+        {
+          "x": 2980,
+          "y": 560
+        },
+        {
+          "x": 2980,
+          "y": 730
+        },
+        {
+          "x": 800,
+          "y": 730
+        },
+        {
+          "x": 800,
+          "y": 580
+        },
+        {
+          "x": 800,
+          "y": 550
+        }
+      ]
+    },
+    {
+      "from": "T7t5XUOVMy2PzEyP6kokE",
+      "to": "dryTJ00c5UG7ctpQs_sgt",
+      "points": [
+        {
+          "x": 3010,
+          "y": 530
+        },
+        {
+          "x": 3090,
+          "y": 530
+        }
+      ]
+    },
+    {
+      "from": "dryTJ00c5UG7ctpQs_sgt",
+      "to": "TCed4mEnlAB_scIUU1H8Z",
+      "points": [
+        {
+          "x": 3210,
+          "y": 530
+        },
+        {
+          "x": 3280,
+          "y": 530
+        }
+      ]
+    },
+    {
+      "from": "TCed4mEnlAB_scIUU1H8Z",
+      "to": "q7TNGMMefDzzm2QOTmvjt",
+      "points": [
+        {
+          "x": 3400,
+          "y": 530
+        },
+        {
+          "x": 3440,
+          "y": 530
+        }
+      ]
+    },
+    {
+      "from": "q7TNGMMefDzzm2QOTmvjt",
+      "to": "bLK5JeFzDhBPyNZsTaZtl",
+      "points": [
+        {
+          "x": 3470,
+          "y": 500
+        },
+        {
+          "x": 3470,
+          "y": 340
+        },
+        {
+          "x": 800,
+          "y": 340
+        },
+        {
+          "x": 800,
+          "y": 470
+        },
+        {
+          "x": 800,
+          "y": 490
+        }
+      ]
+    },
+    {
+      "from": "q7TNGMMefDzzm2QOTmvjt",
+      "to": "JbHtnwSxlKhL12MyFYMxN",
+      "points": [
+        {
+          "x": 3500,
+          "y": 530
+        },
+        {
+          "x": 3590,
+          "y": 530
+        }
+      ]
+    },
+    {
+      "from": "JbHtnwSxlKhL12MyFYMxN",
+      "to": "nbpWwnKwXA9EFEBCd4lrb",
+      "points": [
+        {
+          "x": 3710,
+          "y": 530
+        },
+        {
+          "x": 3760,
+          "y": 530
+        }
+      ]
+    },
+    {
+      "from": "nbpWwnKwXA9EFEBCd4lrb",
+      "to": "qmTavkn4iNqDQ6doePPU4",
+      "points": [
+        {
+          "x": 3880,
+          "y": 530
+        },
+        {
+          "x": 3930,
+          "y": 530
+        }
+      ]
+    },
+    {
+      "from": "5BtJqKWVYBHBIzTV1Bm2I",
+      "to": "9pbSsQA70-_K-bPbSLXxs",
+      "points": [
+        {
+          "x": 500,
+          "y": 520
+        },
+        {
+          "x": 560,
+          "y": 520
+        }
+      ]
+    },
+    {
+      "from": "P70oymK16njVyVud--8VH",
+      "to": "5BtJqKWVYBHBIzTV1Bm2I",
+      "points": [
+        {
+          "x": 310,
+          "y": 520
+        },
+        {
+          "x": 380,
+          "y": 520
+        }
+      ]
+    },
+    {
+      "from": "rvbw0sqZUcSe4-5T5iq7I",
+      "to": "6YadYWs0OUSebiSksgAPp",
+      "points": [
+        {
+          "x": 920,
+          "y": 490
+        },
+        {
+          "x": 1000,
+          "y": 470
+        }
+      ]
+    },
+    {
+      "from": "6YadYWs0OUSebiSksgAPp",
+      "to": "6Sl5W1OyYYsER8jlnhMy6",
+      "points": [
+        {
+          "x": 1120,
+          "y": 470
+        },
+        {
+          "x": 1200,
+          "y": 490
+        }
+      ]
+    },
+    {
+      "from": "bRlOs1-jjOhIbsEUBv2eF",
+      "to": "6Sl5W1OyYYsER8jlnhMy6",
+      "points": [
+        {
+          "x": 1120,
+          "y": 570
+        },
+        {
+          "x": 1200,
+          "y": 550
+        }
+      ]
+    },
+    {
+      "from": "rvbw0sqZUcSe4-5T5iq7I",
+      "to": "bRlOs1-jjOhIbsEUBv2eF",
+      "points": [
+        {
+          "x": 920,
+          "y": 550
+        },
+        {
+          "x": 1000,
+          "y": 570
+        }
+      ]
+    },
+    {
+      "from": "RPtMnP4khUliVusEGf27e",
+      "to": "hHj4OUJpWU5Yu8eDfcD3E",
+      "points": [
+        {
+          "x": 1380,
+          "y": 520
+        },
+        {
+          "x": 1440,
+          "y": 520
+        }
+      ]
+    },
+    {
+      "from": "hHj4OUJpWU5Yu8eDfcD3E",
+      "to": "Jtfrt240JbyJurWhHsy7p",
+      "points": [
+        {
+          "x": 1560,
+          "y": 520
+        },
+        {
+          "x": 1620,
+          "y": 520
+        }
+      ]
+    },
+    {
+      "from": "qmTavkn4iNqDQ6doePPU4",
+      "to": "pQgN2ePciU535L7Lj9e-I",
+      "points": [
+        {
+          "x": 4050,
+          "y": 530
+        },
+        {
+          "x": 4110,
+          "y": 530
+        }
+      ]
+    },
+    {
+      "from": "pQgN2ePciU535L7Lj9e-I",
+      "to": "sXAeUpNBXY7guBX9CwVQW",
+      "points": [
+        {
+          "x": 4230,
+          "y": 530
+        },
+        {
+          "x": 4300,
+          "y": 530
+        }
+      ]
+    },
+    {
+      "from": "sXAeUpNBXY7guBX9CwVQW",
+      "to": "F-MEtZeX4WCRolvTglRmI",
+      "points": [
+        {
+          "x": 4420,
+          "y": 530
+        },
+        {
+          "x": 4480,
+          "y": 530
+        }
+      ]
+    },
+    {
+      "from": "NWRGipPTRf74u26PFroOU",
+      "to": "JnLtWRMv3cN4w2fO59Lis",
+      "points": [
+        {
+          "x": 1860,
+          "y": 520
+        },
+        {
+          "x": 1950,
+          "y": 520
+        }
+      ]
+    },
+    {
+      "from": "JnLtWRMv3cN4w2fO59Lis",
+      "to": "uxXpHXX9rxCZQeBxxTjMU",
+      "points": [
+        {
+          "x": 2070,
+          "y": 520
+        },
+        {
+          "x": 2130,
+          "y": 520
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "P70oymK16njVyVud--8VH",
+      "name": "StartNode",
+      "label": "",
+      "params": {
+        "x": 290,
+        "y": 520
+      }
+    },
+    {
+      "id": "9pbSsQA70-_K-bPbSLXxs",
+      "name": "ActivityNode",
+      "label": "Vacancy opening",
+      "params": {
+        "x": 620,
+        "y": 520
+      }
+    },
+    {
+      "id": "bLK5JeFzDhBPyNZsTaZtl",
+      "name": "ActivityNode",
+      "label": "Searching for a \ncandidate",
+      "params": {
+        "x": 800,
+        "y": 520
+      }
+    },
+    {
+      "id": "rvbw0sqZUcSe4-5T5iq7I",
+      "name": "VerticalForkJoinNode",
+      "label": "",
+      "params": {
+        "x": 920,
+        "y": 520
+      }
+    },
+    {
+      "id": "6Sl5W1OyYYsER8jlnhMy6",
+      "name": "VerticalForkJoinNode",
+      "label": "",
+      "params": {
+        "x": 1200,
+        "y": 520
+      }
+    },
+    {
+      "id": "RPtMnP4khUliVusEGf27e",
+      "name": "ActivityNode",
+      "label": "Written or \nphone \ninterview",
+      "params": {
+        "x": 1320,
+        "y": 520
+      }
+    },
+    {
+      "id": "Jtfrt240JbyJurWhHsy7p",
+      "name": "ActivityNode",
+      "label": "Approval \nby head of\nthe department\n",
+      "params": {
+        "x": 1680,
+        "y": 520
+      }
+    },
+    {
+      "id": "NWRGipPTRf74u26PFroOU",
+      "name": "DecisionNode",
+      "label": "Was candidate \napproved?\n",
+      "params": {
+        "x": 1830,
+        "y": 520
+      }
+    },
+    {
+      "id": "uxXpHXX9rxCZQeBxxTjMU",
+      "name": "DecisionNode",
+      "label": "Was job \ninterview \nsuccessful?",
+      "params": {
+        "x": 2160,
+        "y": 520
+      }
+    },
+    {
+      "id": "HkiiMzTxcL7X0jr5j1lKs",
+      "name": "DecisionNode",
+      "label": "Is test task \nneeded?",
+      "params": {
+        "x": 2300,
+        "y": 520
+      }
+    },
+    {
+      "id": "q0lwIvjq2tEWAfa2ypR7A",
+      "name": "ActivityNode",
+      "label": "Candidate \nperforms \ntest task\n",
+      "params": {
+        "x": 2400,
+        "y": 450
+      }
+    },
+    {
+      "id": "GyulMHoQ8pRl9XcDwbT7-",
+      "name": "DecisionNode",
+      "label": "Was test task\nsuccessful?",
+      "params": {
+        "x": 2560,
+        "y": 450
+      }
+    },
+    {
+      "id": "c8VPeVYGDJMv-B7EH6Z_E",
+      "name": "ActivityNode",
+      "label": "Job offer \nto the candidate",
+      "params": {
+        "x": 2830,
+        "y": 530
+      }
+    },
+    {
+      "id": "mqWuEsz15spb7EUnAlSJ5",
+      "name": "DecisionNode",
+      "label": "",
+      "params": {
+        "x": 2690,
+        "y": 530
+      }
+    },
+    {
+      "id": "T7t5XUOVMy2PzEyP6kokE",
+      "name": "DecisionNode",
+      "label": "Has the \ncandidate \naccepted the\njob offer?",
+      "params": {
+        "x": 2980,
+        "y": 530
+      }
+    },
+    {
+      "id": "dryTJ00c5UG7ctpQs_sgt",
+      "name": "ActivityNode",
+      "label": "Hiring\nprocedure",
+      "params": {
+        "x": 3150,
+        "y": 530
+      }
+    },
+    {
+      "id": "TCed4mEnlAB_scIUU1H8Z",
+      "name": "ActivityNode",
+      "label": "Candidate's \nprobation",
+      "params": {
+        "x": 3340,
+        "y": 530
+      }
+    },
+    {
+      "id": "q7TNGMMefDzzm2QOTmvjt",
+      "name": "DecisionNode",
+      "label": "Was probation \nsuccessful?\n",
+      "params": {
+        "x": 3470,
+        "y": 530
+      }
+    },
+    {
+      "id": "JbHtnwSxlKhL12MyFYMxN",
+      "name": "ActivityNode",
+      "label": "Hired candidate\nworks in the\ncompany\n\n\n",
+      "params": {
+        "x": 3650,
+        "y": 530
+      }
+    },
+    {
+      "id": "nbpWwnKwXA9EFEBCd4lrb",
+      "name": "ActivityNode",
+      "label": "Termination of\nemployment \ncontract\n",
+      "params": {
+        "x": 3820,
+        "y": 530
+      }
+    },
+    {
+      "id": "qmTavkn4iNqDQ6doePPU4",
+      "name": "ActivityNode",
+      "label": "Processing\ndocuments for \ndismissal",
+      "params": {
+        "x": 3990,
+        "y": 530
+      }
+    },
+    {
+      "id": "F-MEtZeX4WCRolvTglRmI",
+      "name": "EndNode",
+      "label": "",
+      "params": {
+        "x": 4500,
+        "y": 530
+      }
+    },
+    {
+      "id": "5BtJqKWVYBHBIzTV1Bm2I",
+      "name": "ActivityNode",
+      "label": "Determination \nof requirements for a candidate",
+      "params": {
+        "x": 440,
+        "y": 520
+      }
+    },
+    {
+      "id": "6YadYWs0OUSebiSksgAPp",
+      "name": "ActivityNode",
+      "label": "Passive search",
+      "params": {
+        "x": 1060,
+        "y": 470
+      }
+    },
+    {
+      "id": "bRlOs1-jjOhIbsEUBv2eF",
+      "name": "ActivityNode",
+      "label": "Active search",
+      "params": {
+        "x": 1060,
+        "y": 570
+      }
+    },
+    {
+      "id": "hHj4OUJpWU5Yu8eDfcD3E",
+      "name": "ActivityNode",
+      "label": "Candidate's\n profile forming",
+      "params": {
+        "x": 1500,
+        "y": 520
+      }
+    },
+    {
+      "id": "pQgN2ePciU535L7Lj9e-I",
+      "name": "ActivityNode",
+      "label": "Final settlement",
+      "params": {
+        "x": 4170,
+        "y": 530
+      }
+    },
+    {
+      "id": "sXAeUpNBXY7guBX9CwVQW",
+      "name": "ActivityNode",
+      "label": "Exit interview",
+      "params": {
+        "x": 4360,
+        "y": 530
+      }
+    },
+    {
+      "id": "JnLtWRMv3cN4w2fO59Lis",
+      "name": "ActivityNode",
+      "label": "Job interview",
+      "params": {
+        "x": 2010,
+        "y": 520
+      }
+    }
+  ]
+}

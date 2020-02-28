@@ -1,0 +1,530 @@
+.fl {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  line-height: 1.33;
+
+  color: #3a3a3a;
+  background-color: white;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #373859;
+  overflow: hidden;
+}
+
+.fl * {
+  box-sizing: border-box;
+}
+
+/*
+ * SCROLLBAR
+ */
+.fl ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.fl ::-webkit-scrollbar-track {
+  background: #ccc;
+}
+
+.fl ::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 5px;
+}
+
+/*
+ * CHECKBOX
+ */
+.fl-checkbox {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.fl-checkbox input {
+  display: none;
+}
+
+.fl-checkbox .fl-checkbox-icon {
+  position: relative;
+  display: inline-block;
+  padding-left: 26px;
+  font-size: 12px;
+  line-height: 1.33;
+}
+
+.fl-checkbox .fl-checkbox-icon:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -2px;
+  left: 0;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 11px;
+  border: 1px solid #bdbdbd;
+  transition: border-color 0.2s ease;
+}
+
+.fl-checkbox .fl-checkbox-icon:hover:before {
+  border-color: #888;
+}
+
+.fl-checkbox input:checked + .fl-checkbox-icon:before {
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.85355 0.146455C9.6583 -0.0488183 9.34174 -0.0488183 9.14644 0.146455L3.15614 6.13682L0.853563 3.83424C0.65831 3.63897 0.341748 3.63899 0.146455 3.83424C-0.0488183 4.0295 -0.0488183 4.34606 0.146455 4.54133L2.80258 7.19742C2.99778 7.39268 3.31458 7.39254 3.50969 7.19742L9.85355 0.853563C10.0488 0.65831 10.0488 0.341728 9.85355 0.146455Z' fill='%23373859'/%3E%3C/svg%3E");
+}
+
+/*
+ * BUTTONS
+ */
+.fl [role='button'] {
+  cursor: pointer;
+}
+
+.fl button {
+  cursor: pointer;
+}
+
+.fl button:focus {
+  outline: none;
+}
+
+.fl-btn {
+  display: inline-block;
+  padding: 5px 13px;
+  font-size: 12px;
+  line-height: 1.25;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: white;
+  color: #373859;
+  border: 1px solid #373859;
+  border-radius: 3px;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+}
+
+.fl-btn-disabled {
+  color: #bdbdbd;
+  border: 1px solid #bdbdbd;
+  cursor: default !important;
+}
+
+.fl-btn:not(.fl-btn-disabled):hover {
+  color: white;
+  background-color: #373859;
+}
+
+.fl-btn-icon {
+  display: inline-block;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.fl-btn-icon svg {
+  display: block;
+}
+
+.fl-btn-icon.fl-btn-disabled {
+  opacity: 0.5;
+}
+
+/*
+ * DROPDOWN
+ */
+.fl-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.fl-dropdown-content {
+  visibility: hidden;
+  display: block;
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+  margin: 6px 0 0;
+  padding: 4px 0;
+  background-color: #fff;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+  transform: translateY(-5px);
+  transition: transform 0.2s ease;
+}
+
+.fl-dropdown.fl-to-right .fl-dropdown-content {
+  left: auto;
+  right: 0;
+}
+
+.fl-dropdown:hover .fl-dropdown-content {
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.fl-dropdown:hover > .fl-btn {
+  color: white;
+  background-color: #373859;
+}
+
+.fl-dropdown-content:before {
+  content: '';
+  display: block;
+  background-color: transparent;
+  position: absolute;
+  z-index: 1;
+  top: -6px;
+  left: 0;
+  width: 100%;
+  height: 6px;
+}
+
+.fl-dropdown-option {
+  display: block;
+  padding: 6px 12px;
+  color: black;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.fl-dropdown-option:hover {
+  background-color: #efefef;
+}
+
+/*
+ * CONTROLLER-GROUP (top/bottom panels)
+ */
+.fl-controller-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.fl-controller-item {
+  display: flex;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.fl-controller-item:last-child {
+  margin-right: 0;
+}
+
+.fl-controller-item .fl-btn-icon {
+  margin-right: 15px;
+}
+
+.fl-controller-item .fl-btn-icon:last-child {
+  margin-right: 0;
+}
+
+.fl-controller-group .fl-dropdown {
+  margin-right: 15px;
+}
+
+.fl-controller-group .fl-dropdown:last-child {
+  margin-right: 0;
+}
+
+
+/*
+ * PANEL (left/right panels)
+ */
+.fl-panel-controls {
+  position: absolute;
+  z-index: 1;
+  top: 5px;
+  left: 100%;
+  display: flex;
+  margin-left: 29px;
+  transform: rotate(90deg) translate3d(0, 0, 0);
+  transform-origin: 0 0;
+}
+
+.fl-panel-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  min-width: 28px;
+  margin-right: 5px;
+  padding: 5px;
+  background-color: #eaeaea;
+  border: 1px solid #c8c8c8;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in;
+}
+
+.fl-panel-control:hover {
+  background-color: white;
+}
+
+.fl-panel-control.is-active {
+  background-color: white;
+}
+
+.fl-panel-heading {
+  margin: 6px 0 20px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.375;
+}
+
+.fl-panel-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.fl-panel-toggler {
+  background-color: #fff;
+  border-color: #373859;
+}
+
+.fl-panel-toggler svg {
+  display: block;
+  transform: rotate(-90deg);
+}
+
+.fl-panel-toggler .icon-arrows {
+  width: 10px;
+  height: 10px;
+}
+
+.fl-panel-tab {
+  min-width: 64px;
+  text-align: center;
+}
+
+.fl-panel .icon-arrows {
+  display: none;
+}
+
+.fl-panel .icon-sign {
+  display: block;
+}
+
+.fl-panel.active .icon-arrows {
+  display: block;
+}
+
+.fl-panel.active .icon-sign {
+  display: none;
+}
+
+.fl-prop {
+  display: block;
+  margin-bottom: 21px;
+}
+
+.fl-prop-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 16px;
+}
+
+.fl-prop-value {
+  font-size: 14px;
+}
+
+.fl-prop input,
+.fl-prop textarea {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 8px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: #3a3a3a;
+  border: 1px solid #bdbdbd;
+  transition: border-color 0.3s ease;
+}
+
+.fl-prop textarea {
+  resize: vertical;
+}
+
+.fl-prop input:hover,
+.fl-prop input:focus,
+.fl-prop textarea:hover,
+.fl-prop textarea:focus {
+  outline: none;
+  border-color: #373859;
+}
+
+
+/*
+ * TOP TOOLBAR
+ */
+.fl-top-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 6px 30px;
+  border-bottom: 1px solid #373859;
+  background-color: white;
+}
+
+/*
+ * BOTTOM TOOLBAR
+ */
+.fl-bottom-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  min-height: 40px;
+  padding: 6px 30px;
+  background-color: white;
+  border-top: 1px solid #373859;
+}
+
+.fl-scale {
+  font-size: 14px;
+  line-height: 1.35;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: -6px;
+  margin-left: -9px;
+  cursor: default;
+}
+
+.fl-scale .fl-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 21px;
+  min-height: 21px;
+  margin-right: 0;
+}
+
+.fl-scale-value {
+  display: inline-block;
+  margin: 0 4px;
+  min-width: 36px;
+  text-align: right;
+  vertical-align: middle;
+}
+
+/*
+ * LIBRARY
+ */
+.fl-library {
+  position: absolute;
+  z-index: 1;
+  top: 40px;
+  left: 0;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  padding: 2px;
+  background-color: white;
+  border-right: 1px solid #373859;
+  transform: translate3d(-100%, 0, 0);
+  transition: transform 0.2s ease-in;
+}
+
+.fl-library.active {
+  transform: translate3d(0, 0, 0);
+}
+
+.fl-library-divider {
+  width: 80%;
+  height: 2px;
+  border: none;
+  background: rgba(189, 189, 189, 1);
+}
+
+/*
+ * WORKSPACE
+ */
+.fl-main-area {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: #ddd;
+}
+
+.fl-workspace {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+}
+
+.fl-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.fl-canvas-container > canvas {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.42);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.fl-canvas-container > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/*
+ * PROPERTIES PANEL
+ */
+.fl-properties-panel {
+  position: absolute;
+  top: 40px;
+  bottom: 40px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: 304px;
+  padding: 20px 30px;
+  background-color: white;
+  border-left: 1px solid #373859;
+  transform: translate3d(100%, 0, 0);
+  transition: transform 0.2s ease-in;
+}
+
+.fl-properties-panel.active {
+  transform: translate3d(0, 0, 0);
+}
+
+.fl-properties-panel .fl-panel-controls {
+  position: absolute;
+  top: 5px;
+  left: -30px;
+}
+
+.fl-properties-panel .fl-panel-control {
+  border: 1px solid #373859;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+}
+
+.fl-properties-panel .icon-arrows {
+  margin-top: -2px;
+}
