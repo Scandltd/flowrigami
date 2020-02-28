@@ -13,3 +13,6 @@ To build a runnable version in "build" folder please run these commands:
 
 `npm i`
 `npm run build`
+
+You can find demos and general description on the [Flowrigami official website](https://scand.com/products/flowrigami/).
+[Here](https://github.com/flowrigami/flowrigami/tree/master/docs/user-guide) you can find a user guide for the component.
