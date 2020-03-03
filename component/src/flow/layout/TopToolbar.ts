@@ -1,3 +1,4 @@
+import Context from '@app/flow/Context';
 import { GRID_STEP } from '@app/flow/DefaultThemeConstants';
 import Diagram from '@app/flow/diagram/Diagram';
 import { chartBorderDefinition } from '@app/flow/layout/workspace/Canvas';
@@ -8,8 +9,8 @@ import { checkboxChange, inputFileChange } from '@app/flow/utils/HtmlUtils';
 
 
 export default class TopToolbar {
-  private store: Store;
   private diagram: Diagram;
+  private store: Store;
 
   private showGridCheckbox: HTMLInputElement;
   private snapToGridCheckbox: HTMLInputElement;
@@ -22,9 +23,9 @@ export default class TopToolbar {
   private undoButton: HTMLLinkElement;
   private redoButton: HTMLLinkElement;
 
-  constructor(topToolbarElement: HTMLElement, store: Store, diagram: Diagram) {
-    this.store = store;
-    this.diagram = diagram;
+  constructor(context: Context, topToolbarElement: HTMLElement) {
+    this.diagram = context.diagram;
+    this.store = context.store;
 
     this.autoLayoutButton = topToolbarElement.querySelector('[name="fl_auto_layout"]') as HTMLLinkElement;
     this.undoButton = topToolbarElement.querySelector('[name="fl_undo_button"]') as HTMLLinkElement;
@@ -131,11 +132,11 @@ export default class TopToolbar {
 
   // TODO line width isn't printed correctly
   private handleSaveScaledPng = (exportPngButton: HTMLAnchorElement) => {
-    const { min, max } = chartBorderDefinition(this.store.nodeList, this.store.connectorList);
     const canvas = document.createElement('canvas') as HTMLCanvasElement;
-    const context = canvas.getContext('2d') as CanvasRenderingContext2D;
-    const detectionBorder = GRID_STEP*5;
+    const htmlLayer = document.createElement('div');
 
+    const detectionBorder = GRID_STEP*5;
+    const { min, max } = chartBorderDefinition(this.store.nodeList, this.store.connectorList);
     const diagramWidth = max.x - min.x + 2*detectionBorder;
     const diagramHeight = max.y - min.y + 2*detectionBorder;
     const quality = this.getQuality(diagramWidth, diagramHeight);
@@ -143,14 +144,23 @@ export default class TopToolbar {
     canvas.width = diagramWidth*quality;
     canvas.height = diagramHeight*quality;
 
-    let offsetX = (detectionBorder - min.x)*quality;
-    let offsetY = (detectionBorder - min.y)*quality;
+    const offsetX = (detectionBorder - min.x)*quality;
+    const offsetY = (detectionBorder - min.y)*quality;
 
-    context.translate(offsetX, offsetY);
-    context.scale(quality, quality);
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+    ctx.translate(offsetX, offsetY);
+    ctx.scale(quality, quality);
 
-    this.store.connectorList.forEach((link) => link.draw());
-    this.store.nodeList.forEach((node) => node.draw());
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const nodeFactory = this.diagram.createNodeFactory(canvas, htmlLayer);
+    this.store.nodeList.forEach((it) => {
+      nodeFactory.getNode(it.name, { x: it.x, y: it.y }).draw();
+    });
+    this.store.connectorList.forEach((it) => {
+      nodeFactory.getLink(it.points).draw();
+    });
 
     const fileName = 'UML.png';
     const imageUrl = canvas.toDataURL('image/png');

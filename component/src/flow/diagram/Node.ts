@@ -6,7 +6,7 @@ import Store from '@app/flow/store/Store';
 import nanoid from 'nanoid';
 
 
-export default abstract class NodeShape extends CanvasShape {
+export default abstract class Node extends CanvasShape {
   public x: number;
   public y: number;
   public points: AnchorPoint[] = [];

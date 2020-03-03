@@ -1,6 +1,6 @@
-import Edge from '@app/_redesign/graph/Edge';
-import Graph from '@app/_redesign/graph/Graph';
-import Vertex from '@app/_redesign/graph/Vertex';
+import Edge from '@app/graph/Edge';
+import Graph from '@app/graph/Graph';
+import Vertex from '@app/graph/Vertex';
 
 
 export default class UndirectedGraph implements Graph {

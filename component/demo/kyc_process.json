@@ -2,7 +2,48 @@
   "version": "1.0",
   "diagram": "UML",
 
-  "indicators": [],
+  "indicators": [
+    {
+      "name": "Indicator",
+      "id": "G9YgA-lBtDn1S8s6mfoiL",
+      "label": "",
+      "params": {
+        "x": 325,
+        "y": 277,
+        "radius": 20
+      }
+    },
+    {
+      "name": "Indicator",
+      "id": "Dohetv6qmEHFanvSzqH2R",
+      "label": "",
+      "params": {
+        "x": 954,
+        "y": 275,
+        "radius": 20
+      }
+    },
+    {
+      "name": "Indicator",
+      "id": "vtXwz2X_XObfNuUWlL0_c",
+      "label": "",
+      "params": {
+        "x": 1536,
+        "y": 203,
+        "radius": 20
+      }
+    },
+    {
+      "name": "Indicator",
+      "id": "__qiqPQtIiv3qZ3ypDXGh",
+      "label": "",
+      "params": {
+        "x": 1545,
+        "y": 322,
+        "radius": 20
+      }
+    }
+  ],
   "links": [
     {
       "from": "mj90dHaztHmivWkVlbPGx",

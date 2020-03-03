@@ -1,5 +1,5 @@
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import Node from '@app/flow/diagram/bpmn/Node';
+import BpmnNode from '../../../BpmnNode';
 import { previewStyles, selectionStyle, styles } from '@app/flow/diagram/bpmn/node/events/eventsStyles/StandardConstants';
 import Text from '@app/flow/diagram/bpmn/shapes/Text';
 import Coordinates from '@app/flow/graphics/canvas/Coordinates';
@@ -7,7 +7,7 @@ import CanvasCircle from '@app/flow/graphics/canvas/shapes/CanvasCircle';
 import Store from '@app/flow/store/Store';
 
 
-export default class Standard extends Node {
+export default class Standard extends BpmnNode {
   name = 'Standard';
 
   private circle: CanvasCircle;

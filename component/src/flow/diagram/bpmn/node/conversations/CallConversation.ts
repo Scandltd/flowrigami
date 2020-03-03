@@ -1,4 +1,4 @@
-import Node from '@app/flow/diagram/bpmn/Node';
+import BpmnNode from '../../BpmnNode';
 import { previewStyles, selectionStyle, styles } from '@app/flow/diagram/bpmn/node/conversations/CallConversationStyles';
 import Hexagon from '@app/flow/diagram/bpmn/shapes/Hexagon';
 import Text from '@app/flow/diagram/bpmn/shapes/Text';
@@ -6,7 +6,7 @@ import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 import Store from '@app/flow/store/Store';
 
 
-export default class CallConversation extends Node {
+export default class CallConversation extends BpmnNode {
   name = 'CallConversation';
 
   ctx: CanvasRenderingContext2D;

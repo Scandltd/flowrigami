@@ -1,22 +1,22 @@
-import Layout from '@app/flow/Layout';
+import Context from '@app/flow/Context';
 import ACTION from '@app/flow/store/ActionTypes';
 import Store from '@app/flow/store/Store';
 
 
 export default class BottomToolbar {
-  private layout: Layout;
   private store: Store;
+  private workspaceCanvas: HTMLCanvasElement; // @TODO no manual work here
 
   private centerWorkspaceButton: HTMLButtonElement;
   private increaseScaleButton: HTMLButtonElement;
   private decreaseScaleButton: HTMLButtonElement;
   private scaleText: HTMLElement;
 
-  constructor(layout: Layout, store: Store) {
-    this.layout = layout;
-    this.store = store;
+  constructor(context: Context) {
+    this.store = context.store;
+    this.workspaceCanvas = context.layout.workspaceCanvas;
 
-    const bottomToolbar = layout.bottomToolbar;
+    const bottomToolbar = context.layout.bottomToolbar;
     this.centerWorkspaceButton = bottomToolbar.querySelector('[name="fl_btn_center_workspace"]') as HTMLButtonElement;
     this.centerWorkspaceButton.onclick = this.handleCenterWorkspace;
 
@@ -32,7 +32,7 @@ export default class BottomToolbar {
   }
 
   private handleCenterWorkspace = () => {
-    const workspaceCanvas = this.layout.workspaceCanvas;
+    const workspaceCanvas = this.workspaceCanvas;
     const parentWidth = workspaceCanvas.parentElement!.offsetWidth;
     const parentHeight = workspaceCanvas.parentElement!.offsetHeight;
     workspaceCanvas.style.left = `${parentWidth > workspaceCanvas.width ? (parentWidth - workspaceCanvas.width)/2 : 0}px`;

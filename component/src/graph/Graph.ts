@@ -1,5 +1,5 @@
-import Edge from '@app/_redesign/graph/Edge';
-import Vertex from '@app/_redesign/graph/Vertex';
+import Edge from '@app/graph/Edge';
+import Vertex from '@app/graph/Vertex';
 
 
 export default interface Graph {

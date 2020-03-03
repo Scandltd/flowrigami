@@ -1,5 +1,5 @@
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import Node from '@app/flow/diagram/bpmn/Node';
+import BpmnNode from '../../BpmnNode';
 import {
   BORDER_RADIUS,
   previewStyles,
@@ -13,7 +13,7 @@ import CanvasRectangle from '@app/flow/graphics/canvas/shapes/CanvasRectangle';
 import Store from '@app/flow/store/Store';
 
 
-export default class CallActivityNode extends Node {
+export default class CallActivityNode extends BpmnNode {
   public name = 'CallActivityNode';
 
   private textArea: Text;

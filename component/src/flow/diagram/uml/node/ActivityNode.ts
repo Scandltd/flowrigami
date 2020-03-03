@@ -1,6 +1,6 @@
 import { SHAPE_SELECTION_STYLE } from '@app/flow/DefaultTheme';
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import NodeShape from '@app/flow/diagram/NodeShape';
+import Node from '@app/flow/diagram/Node';
 import {
   ACTIVITY_LABEL_STYLE,
   getAnchorPoints,
@@ -18,7 +18,7 @@ import CanvasText from '@app/flow/graphics/canvas/shapes/CanvasText';
 import Store from '@app/flow/store/Store';
 
 
-export default class ActivityNode extends NodeShape {
+export default class ActivityNode extends Node {
   public name = UmlNodes.ActivityNode;
 
   private rectangle: CanvasRectangle;

@@ -1,5 +1,5 @@
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import Node from '@app/flow/diagram/bpmn/Node';
+import BpmnNode from '../../BpmnNode';
 import {
   BORDER_RADIUS,
   innerFigureStyle,
@@ -15,7 +15,7 @@ import CanvasRhombus from '@app/flow/graphics/canvas/shapes/CanvasRhombus';
 import Store from '@app/flow/store/Store';
 
 
-export default class InclusiveNode extends Node {
+export default class InclusiveNode extends BpmnNode {
   name = 'InclusiveNode';
 
   private rhombus: CanvasRhombus;

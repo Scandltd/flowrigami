@@ -1,5 +1,4 @@
-import Diagram from '@app/flow/diagram/Diagram';
-import Layout from '@app/flow/Layout';
+import Context from '@app/flow/Context';
 import Canvas from '@app/flow/layout/workspace/Canvas';
 import CanvasEventListener from '@app/flow/layout/workspace/CanvasEventListener';
 import ACTION from '@app/flow/store/ActionTypes';
@@ -7,24 +6,18 @@ import Store from '@app/flow/store/Store';
 
 
 export default class Workspace {
-  private layout: Layout;
   private store: Store;
-  private diagram: Diagram;
-
+  private workspace: HTMLElement;
   private canvas: Canvas;
   private canvasEventListener: CanvasEventListener;
 
-  constructor(layout: Layout, store: Store, diagram: Diagram) {
-    this.layout = layout;
-    this.store = store;
-    this.diagram = diagram;
+  constructor(context: Context) {
+    this.store = context.store;
+    this.workspace = context.layout.workspace;
+    this.canvas = new Canvas(context);
+    this.canvasEventListener = new CanvasEventListener(context);
 
-    this.canvas = new Canvas(this.layout, this.store);
-
-    const ctx = this.layout.workspaceCanvas.getContext('2d') as CanvasRenderingContext2D;
-    this.canvasEventListener = new CanvasEventListener(this.layout.workspaceContainer, ctx, this.store, this.diagram);
-
-    this.layout.workspace.addEventListener('wheel', this.onMouseWheel, { passive: false });
+    this.workspace.addEventListener('wheel', this.onMouseWheel, { passive: false });
   }
 
   private onMouseWheel = (e: WheelEvent) => {
@@ -41,6 +34,6 @@ export default class Workspace {
     this.canvas.unmount();
     this.canvasEventListener.unmount();
 
-    this.layout.workspace.removeEventListener('wheel', this.onMouseWheel);
+    this.workspace.removeEventListener('wheel', this.onMouseWheel);
   }
 }

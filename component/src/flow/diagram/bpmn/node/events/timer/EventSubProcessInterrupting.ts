@@ -1,5 +1,5 @@
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import Node from '@app/flow/diagram/bpmn/Node';
+import BpmnNode from '../../../BpmnNode';
 import {
   innerFigureStyle,
   previewStyles,
@@ -13,7 +13,7 @@ import CanvasCircle from '@app/flow/graphics/canvas/shapes/CanvasCircle';
 import Store from '@app/flow/store/Store';
 
 
-export default class EventSubProcessInterrupting extends Node {
+export default class EventSubProcessInterrupting extends BpmnNode {
   name = 'EventSubProcessInterrupting';
 
   private circle: CanvasCircle;

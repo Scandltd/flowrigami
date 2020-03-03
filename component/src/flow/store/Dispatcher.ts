@@ -1,6 +1,6 @@
 import Indicator from '@app/flow/diagram/Indicator';
 import Link from '@app/flow/diagram/Link';
-import NodeShape from '@app/flow/diagram/NodeShape';
+import Node from '@app/flow/diagram/Node';
 import ACTION from '@app/flow/store/ActionTypes';
 import AddConnection from '@app/flow/store/history/impl/AddConnection';
 import AddIndicator from '@app/flow/store/history/impl/AddIndicator';
@@ -146,7 +146,7 @@ export default class Dispatcher extends Observable {
     this.store.selectedNode = null;
   };
 
-  private deleteNode = (selectedNode: NodeShape) => {
+  private deleteNode = (selectedNode: Node) => {
     const deletedConnections: Link[] = [];
     // delete lines with points of the shape
     this.store.connectorList = this.store.connectorList.filter(line => {

@@ -1,6 +1,6 @@
 import { SHAPE_LABEL_STYLE } from '@app/flow/DefaultTheme';
 import { SHAPE_LABEL_COLOR } from '@app/flow/DefaultThemeConstants';
-import NodeShape from '@app/flow/diagram/NodeShape';
+import Node from '@app/flow/diagram/Node';
 import { getPreviewRectangleParams, getRectangleParams, previewStyles, styles } from '@app/flow/diagram/uml/node/TextNodeConstants';
 import { UmlNodes } from '@app/flow/diagram/uml/UmlDiagramFactory';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
@@ -10,7 +10,7 @@ import TextParams from '@app/flow/graphics/TextParams';
 import Store from '@app/flow/store/Store';
 
 
-export default class TextNode extends NodeShape {
+export default class TextNode extends Node {
   public name = UmlNodes.TextNode;
 
   private textEditor: CanvasText;

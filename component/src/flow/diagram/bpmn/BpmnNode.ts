@@ -7,7 +7,7 @@ import nanoid from 'nanoid';
 
 
 // @TODO temporarily kept only for bpmn (must replaced width NodeShape)
-export default abstract class Node {
+export default abstract class BpmnNode {
   public id: string;
   public abstract name: string;
   public label = '';

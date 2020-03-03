@@ -22,7 +22,6 @@ export default abstract class CanvasShape implements Shape {
   }
 
   public isHover: boolean = false;
-  public isMoving: boolean = false;
 
   constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement) {
     this.canvas = canvas;

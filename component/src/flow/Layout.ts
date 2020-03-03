@@ -1,15 +1,17 @@
 import { GRID_MAIN_LINE_STEP, GRID_STEP } from '@app/flow/DefaultThemeConstants';
+import layoutHtml from '@app/flow/layout/layout.html';
+import bottomToolbarHtml from '@app/flow/layout/templates/bottom-toolbar.html';
+import libraryHtml from '@app/flow/layout/templates/library.html';
+import propertiesPanelHtml from '@app/flow/layout/templates/properties-panel.html';
+import topToolbarHtml from '@app/flow/layout/templates/top-toolbar.html';
+import workspaceHtml from '@app/flow/layout/templates/workspace.html';
+import flowrigami from '@app/flowrigami.css';
 import FlowrigamiOptions from '@app/FlowrigamiOptions';
-import html from '@app/flow/layout/layout.html';
-import bottomToolbar from '@app/flow/layout/templates/bottom-toolbar.html';
-import library from '@app/flow/layout/templates/library.html';
-import propertiesPanel from '@app/flow/layout/templates/properties-panel.html';
-import topToolbar from '@app/flow/layout/templates/top-toolbar.html';
-import workspace from '@app/flow/layout/templates/workspace.html';
+import normalize from '@app/normalize.min.css';
 
 
 export default class Layout {
-  private root: HTMLElement;
+  private shadowRoot: ShadowRoot;
   public container: HTMLElement;
 
   public workspace: HTMLElement;
@@ -23,8 +25,15 @@ export default class Layout {
   public propertiesPanel?: HTMLElement;
 
   constructor(root: HTMLElement, options: FlowrigamiOptions) {
-    this.root = root;
-    this.container = createLayout(root, options);
+    this.shadowRoot = root.shadowRoot || root.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = `
+<style>
+  ${normalize}
+  ${flowrigami}
+</style>
+`;
+
+    this.container = createLayout(this.shadowRoot, options);
     this.workspace = this.container.querySelector('.fl-workspace') as HTMLElement;
     this.workspaceContainer = initCanvasContainer(this.workspace);
     this.workspaceCanvas = initCanvas(this.workspace);
@@ -39,19 +48,24 @@ export default class Layout {
   }
 }
 
-function createLayout(parent: HTMLElement, options: FlowrigamiOptions) {
+function createLayout(root: ShadowRoot, options: FlowrigamiOptions) {
   const isViewMode = options.viewMode;
 
-  parent.innerHTML = html;
-  parent.innerHTML = parent.innerHTML.replace('{workspace}', workspace);
-  parent.innerHTML = parent.innerHTML.replace('{bottomToolbar}', bottomToolbar);
-  parent.innerHTML = parent.innerHTML.replace('{topToolbar}', isViewMode ? '' : topToolbar);
-  parent.innerHTML = parent.innerHTML.replace('{library}', isViewMode ? '' : library);
-  parent.innerHTML = parent.innerHTML.replace('{propertiesPanel}', isViewMode ? '' : propertiesPanel);
+  const innerHtml = layoutHtml.
+    replace('{workspace}', workspaceHtml).
+    replace('{bottomToolbar}', bottomToolbarHtml).
+    replace('{topToolbar}', isViewMode ? '' : topToolbarHtml).
+    replace('{library}', isViewMode ? '' : libraryHtml).
+    replace('{propertiesPanel}', isViewMode ? '' : propertiesPanelHtml);
 
-  const width = parent.clientWidth;
-  const height = parent.clientHeight;
-  const container = parent.querySelector('.fl') as HTMLInputElement;
+  const div = document.createElement('div');
+  div.innerHTML = innerHtml;
+
+  root.append(div.firstChild!);
+
+  const width = root.host.clientWidth;
+  const height = root.host.clientHeight;
+  const container = root.querySelector('.fl') as HTMLInputElement;
   container.style.width = `${width}px`;
   container.style.height = `${height}px`;
 

@@ -1,6 +1,6 @@
 import { SHAPE_LABEL_STYLE, SHAPE_SELECTION_STYLE } from '@app/flow/DefaultTheme';
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import NodeShape from '@app/flow/diagram/NodeShape';
+import Node from '@app/flow/diagram/Node';
 import {
   getAnchorPoints,
   getPreviewRhombusParams,
@@ -17,7 +17,7 @@ import CanvasText from '@app/flow/graphics/canvas/shapes/CanvasText';
 import Store from '@app/flow/store/Store';
 
 
-export default class DecisionNode extends NodeShape {
+export default class DecisionNode extends Node {
   public name = UmlNodes.DecisionNode;
 
   private preview: CanvasRhombus;

@@ -41,12 +41,12 @@ export default class UmlDiagramFactory implements DiagramFactory {
     return new Indicator(this.canvas, this.htmlLayer, params);
   }
 
-  public getNode(nodeType: string, nodeParams: any) {
+  public getNode(nodeName: string, nodeParams: any) {
     const coordinates = { x: nodeParams.x, y: nodeParams.y };
 
     let node = null;
 
-    switch (nodeType) {
+    switch (nodeName) {
       case UmlNodes.ActivityNode: {
         node = new ActivityNode(this.canvas, this.htmlLayer, nodeParams);
         break;

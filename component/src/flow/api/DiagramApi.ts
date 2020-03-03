@@ -1,4 +1,4 @@
-import Diagram from '@app/flow/diagram/Diagram';
+import Context from '@app/flow/Context';
 
 
 enum DIAGRAM_API_ERRORS {
@@ -12,13 +12,13 @@ export default class DiagramApi {
   public export: () => string;
   public import: (json: string) => void;
 
-  constructor(diagram: Diagram) {
+  constructor(context: Context) {
     this.clear = () => {
-      diagram.clear();
+      context.diagram.clear();
     };
 
     this.export = () => {
-      const exportObject = diagram.export();
+      const exportObject = context.diagram.export();
 
       return JSON.stringify(exportObject, null, 2);
     };
@@ -27,9 +27,9 @@ export default class DiagramApi {
       const importObject = JSON.parse(json);
 
       try {
-        diagram.import(importObject);
+        context.diagram.import(importObject);
       } catch (e) {
-        console.log(e);
+        console.error(e);
         throw new Error(DiagramApi.ERRORS.DIAGRAM_WRONG_IMPORT_FORMAT);
       }
     };

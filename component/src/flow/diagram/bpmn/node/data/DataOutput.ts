@@ -1,5 +1,5 @@
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import Node from '@app/flow/diagram/bpmn/Node';
+import BpmnNode from '../../BpmnNode';
 import { innerFigureFillStyle, previewStyles, selectionStyle, styles } from '@app/flow/diagram/bpmn/node/data/dataStyles';
 import Arrow from '@app/flow/diagram/bpmn/shapes/Arrow';
 import DataObj from '@app/flow/diagram/bpmn/shapes/DataObj';
@@ -9,7 +9,7 @@ import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 import Store from '@app/flow/store/Store';
 
 
-export default class DataOutput extends Node {
+export default class DataOutput extends BpmnNode {
   name = 'DataOutput';
 
   halfHeight: number;

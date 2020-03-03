@@ -1,5 +1,5 @@
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import Node from '@app/flow/diagram/bpmn/Node';
+import BpmnNode from '../../BpmnNode';
 import { previewStyles, selectionStyle, styles } from '@app/flow/diagram/bpmn/node/data/dataStyles';
 import Text from '@app/flow/diagram/bpmn/shapes/Text';
 import Coordinates from '@app/flow/graphics/canvas/Coordinates';
@@ -7,7 +7,7 @@ import Store from '@app/flow/store/Store';
 import { drawPath2D } from '@app/flow/utils/CanvasUtils';
 
 
-export default class DataStore extends Node {
+export default class DataStore extends BpmnNode {
   name = 'DataStore';
 
   private textArea: Text;

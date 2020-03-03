@@ -3,7 +3,6 @@ export default interface Shape {
   name: string;
   isActive: boolean;
   isHover: boolean;
-  isMoving: boolean;
 
   draw(): void;
 

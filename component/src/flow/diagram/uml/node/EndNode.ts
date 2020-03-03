@@ -1,6 +1,6 @@
 import { SHAPE_LABEL_STYLE, SHAPE_SELECTION_STYLE } from '@app/flow/DefaultTheme';
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import NodeShape from '@app/flow/diagram/NodeShape';
+import Node from '@app/flow/diagram/Node';
 import {
   dotPreviewStyle,
   dotStyle,
@@ -21,7 +21,7 @@ import CanvasText from '@app/flow/graphics/canvas/shapes/CanvasText';
 import Store from '@app/flow/store/Store';
 
 
-export default class EndNode extends NodeShape {
+export default class EndNode extends Node {
   public name = UmlNodes.EndNode;
 
   private circle: CanvasCircle;

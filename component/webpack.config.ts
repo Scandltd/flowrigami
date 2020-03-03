@@ -1,6 +1,6 @@
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import path from 'path';
-import TerserPlugin from 'terser-webpack-plugin';
+import TerserWebpackPlugin from 'terser-webpack-plugin';
 import webpack from 'webpack';
 
 
@@ -25,8 +25,7 @@ const webpackConfig: webpack.Configuration = {
         exclude: /node_modules/,
         test: /\.css$/,
         use: [
-          'style-loader',
-          'css-loader',
+          'raw-loader',
         ],
       },
       {
@@ -46,7 +45,7 @@ const webpackConfig: webpack.Configuration = {
     concatenateModules: isProduction,
     minimizer: [
       new OptimizeCSSAssetsPlugin({}),
-      new TerserPlugin({
+      new TerserWebpackPlugin({
         terserOptions: {
           output: {
             beautify: false,

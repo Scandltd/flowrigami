@@ -1,3 +1,4 @@
+import Context from '@app/flow/Context';
 import Diagram from '@app/flow/diagram/Diagram';
 import Indicator from '@app/flow/diagram/Indicator';
 import Coordinates from '@app/flow/graphics/canvas/Coordinates';
@@ -8,9 +9,9 @@ export default class Library {
   private libraryElement: HTMLElement;
   private toggleControl: HTMLElement;
 
-  constructor(libraryElement: HTMLElement, diagram: Diagram) {
+  constructor(context: Context, libraryElement: HTMLElement) {
+    this.diagram = context.diagram;
     this.libraryElement = libraryElement;
-    this.diagram = diagram;
 
     this.toggleControl = this.libraryElement.querySelector('.fl-panel-toggler') as HTMLElement;
     this.toggleControl.onclick = this.handleToggle;

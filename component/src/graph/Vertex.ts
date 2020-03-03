@@ -1,4 +1,4 @@
-import Edge from '@app/_redesign/graph/Edge';
+import Edge from '@app/graph/Edge';
 import nanoid from 'nanoid';
 
 

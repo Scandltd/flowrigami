@@ -44,13 +44,13 @@ export default class BpmnNodeFactory implements DiagramFactory {
     return new Indicator(this.canvas, this.htmlLayer, params);
   }
 
-  public getNode(nodeType: string, nodeParams: any) {
+  public getNode(nodeName: string, nodeParams: any) {
     const ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
     const coordinates = new Coordinates(nodeParams.x, nodeParams.y);
 
     let node = null;
 
-    switch (nodeType) {
+    switch (nodeName) {
       case BpmnNodes.End: {
         node = new End(ctx, coordinates);
         break;

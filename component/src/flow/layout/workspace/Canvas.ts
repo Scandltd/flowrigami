@@ -1,8 +1,8 @@
-import { GRID_STEP } from '@app/flow/DefaultThemeConstants';
+import Context from '@app/flow/Context';
+import { GRID_MAIN_LINE_STEP, GRID_STEP } from '@app/flow/DefaultThemeConstants';
 import { stats } from '@app/flow/development/stats';
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
 import CanvasGrid from '@app/flow/graphics/canvas/CanvasGrid';
-import Layout from '@app/flow/Layout';
 import ACTION from '@app/flow/store/ActionTypes';
 import Store from '@app/flow/store/Store';
 
@@ -24,19 +24,25 @@ export function chartBorderDefinition(nodes: any[], links: any[], offset = 10) {
 }
 
 export default class Canvas {
-  private layout: Layout;
   private store: Store;
+  private workspace: HTMLElement;
+  private workspaceContainer: HTMLElement;
+  private workspaceCanvas: HTMLCanvasElement;
+  private workspaceHtmlLayer: HTMLElement;
 
   private ctx: CanvasRenderingContext2D;
 
   private grid: CanvasGrid;
   private requestAnimationFrameId: number;
 
-  constructor(layout: Layout, store: Store) {
-    this.layout = layout;
-    this.store = store;
+  constructor(context: Context) {
+    this.store = context.store;
+    this.workspace = context.layout.workspace;
+    this.workspaceContainer = context.layout.workspaceContainer;
+    this.workspaceCanvas = context.layout.workspaceCanvas;
+    this.workspaceHtmlLayer = context.layout.workspaceHtmlLayer;
 
-    this.ctx = this.layout.workspaceCanvas.getContext('2d') as CanvasRenderingContext2D;
+    this.ctx = this.workspaceCanvas.getContext('2d') as CanvasRenderingContext2D;
     this.grid = new CanvasGrid(this.ctx);
 
     if (process.env.NODE_ENV === 'development') {
@@ -52,9 +58,12 @@ export default class Canvas {
 
     this.renderHtml();
 
-    document.addEventListener('keyup', this.onKeyUp);
-    document.addEventListener('keydown', this.onKeyDown);
+    if (!context.options.viewMode) {
+      document.addEventListener('keyup', this.onKeyUp);
+      document.addEventListener('keydown', this.onKeyDown);
+    }
 
+    this.store.subscribe(ACTION.IMPORT, this.autoSizeWorkspace);
     this.store.subscribe(ACTION.AUTO_LAYOUT, this.autoLayout);
     this.store.subscribe(ACTION.CHANGE_SCALE, this.handleChangeScale);
     this.store.subscribe(ACTION.SET_INDICATOR_EDIT, this.renderHtml);
@@ -64,7 +73,7 @@ export default class Canvas {
   private onKeyUp = (e: KeyboardEvent) => {
     if (e.target instanceof HTMLElement) {
       const tagName = e.target.tagName.toLowerCase();
-      if (this.layout.workspaceHtmlLayer.contains(e.target) || tagName === 'input' || tagName === 'textarea') {
+      if (this.workspaceHtmlLayer.contains(e.target) || tagName === 'input' || tagName === 'textarea') {
         return;
       }
     }
@@ -96,13 +105,13 @@ export default class Canvas {
   };
 
   private autoLayout = () => {
-    this.tryDecreaseWorkspace();
+    this.autoSizeWorkspace();
 
-    const parentWidth = this.layout.workspace.offsetWidth;
-    const parentHeight = this.layout.workspace.offsetHeight;
+    const parentWidth = this.workspace.offsetWidth;
+    const parentHeight = this.workspace.offsetHeight;
 
-    const canvasCenterX = this.layout.workspaceContainer.offsetWidth/2;
-    const canvasCenterY = this.layout.workspaceContainer.offsetHeight/2;
+    const canvasCenterX = this.workspaceContainer.offsetWidth/2;
+    const canvasCenterY = this.workspaceContainer.offsetHeight/2;
 
     const { min, max } = chartBorderDefinition(this.store.nodeList, this.store.connectorList);
     const diagramCenterX = min.x + (max.x - min.x)/2;
@@ -114,43 +123,29 @@ export default class Canvas {
     this.store.nodeList.forEach((node) => node.move(offsetX, offsetY));
     this.store.connectorList.forEach((link) => link.move(offsetX, offsetY));
 
-    this.layout.workspaceContainer.style.top = `${(parentHeight - this.layout.workspaceContainer.offsetHeight)/2}px`;
-    this.layout.workspaceContainer.style.left = `${(parentWidth - this.layout.workspaceContainer.offsetWidth)/2}px`;
+    this.workspaceContainer.style.top = `${(parentHeight - this.workspaceContainer.offsetHeight)/2}px`;
+    this.workspaceContainer.style.left = `${(parentWidth - this.workspaceContainer.offsetWidth)/2}px`;
   };
 
-  private tryDecreaseWorkspace = () => {
-    const detectionBorder = GRID_STEP*5;
-
-    const parentWidth = this.layout.workspace.offsetWidth;
-    const parentHeight = this.layout.workspace.offsetHeight;
-
-    const canvasWidth = this.layout.workspaceCanvas.width;
-    const canvasHeight = this.layout.workspaceCanvas.height;
+  private autoSizeWorkspace = () => {
+    const gridBlockPx = GRID_STEP*GRID_MAIN_LINE_STEP;
+    const parentWidth = this.workspace.offsetWidth;
+    const parentHeight = this.workspace.offsetHeight;
+    const minCanvasWidth = Math.trunc(parentWidth/gridBlockPx)*gridBlockPx;
+    const minCanvasHeight = Math.trunc(parentHeight/gridBlockPx)*gridBlockPx;
 
     const { min, max } = chartBorderDefinition(this.store.nodeList, this.store.connectorList);
-    const diagramWidth = max.x - min.x;
-    const diagramHeight = max.y - min.y;
 
-    let offsetX = 0;
-    let offsetY = 0;
+    const canvasWidth = Math.trunc(max.x/gridBlockPx)*gridBlockPx;
+    const canvasHeight = Math.trunc(max.y/gridBlockPx)*gridBlockPx;
 
-    if ((canvasWidth > parentWidth) && (canvasWidth > diagramWidth + 2*detectionBorder)) {
-      offsetX = min.x - detectionBorder;
-      this.layout.workspaceCanvas.width = Math.max(parentWidth, diagramWidth + 2*detectionBorder);
-    }
-
-    if ((canvasHeight > parentHeight) && (canvasHeight > diagramHeight + 2*detectionBorder)) {
-      offsetY = min.y - detectionBorder;
-      this.layout.workspaceCanvas.height = Math.max(parentHeight, diagramHeight + 2*detectionBorder);
-    }
-
-    this.store.nodeList.forEach((node) => node.move(offsetX, offsetY));
-    this.store.connectorList.forEach((link) => link.move(offsetX, offsetY));
+    this.workspaceCanvas.width = Math.max(canvasWidth + 2*gridBlockPx, minCanvasWidth);
+    this.workspaceCanvas.height = Math.max(canvasHeight + 2*gridBlockPx, minCanvasHeight);
   };
 
 
   private handleChangeScale = () => {
-    this.layout.workspaceContainer.style.transform = `scale(${this.store.scale})`;
+    this.workspaceContainer.style.transform = `scale(${this.store.scale})`;
   };
 
   private handleDelete = () => {
@@ -164,7 +159,7 @@ export default class Canvas {
   };
 
   public clear() {
-    this.ctx.clearRect(0, 0, this.layout.workspaceCanvas.width, this.layout.workspaceCanvas.height);
+    this.ctx.clearRect(0, 0, this.workspaceCanvas.width, this.workspaceCanvas.height);
   };
 
   @stats()
@@ -172,7 +167,7 @@ export default class Canvas {
     this.clear();
 
     if (this.store.grid.enabled) {
-      this.grid.draw(this.layout.workspaceCanvas.width, this.layout.workspaceCanvas.height);
+      this.grid.draw(this.workspaceCanvas.width, this.workspaceCanvas.height);
     }
 
     // @TODO some magic here: think over drawing order
@@ -218,7 +213,7 @@ export default class Canvas {
   }
 
   public renderHtml = () => {
-    const textLayer = this.layout.workspaceHtmlLayer;
+    const textLayer = this.workspaceHtmlLayer;
     while (textLayer.firstChild) {
       textLayer.removeChild(textLayer.firstChild);
     }
@@ -233,6 +228,7 @@ export default class Canvas {
     document.removeEventListener('keyup', this.onKeyUp);
     document.removeEventListener('keydown', this.onKeyDown);
 
+    this.store.unsubscribe(ACTION.IMPORT, this.autoSizeWorkspace);
     this.store.unsubscribe(ACTION.AUTO_LAYOUT, this.autoLayout);
     this.store.unsubscribe(ACTION.CHANGE_SCALE, this.handleChangeScale);
     this.store.unsubscribe(ACTION.SET_INDICATOR_EDIT, this.renderHtml);

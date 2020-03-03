@@ -1,6 +1,4 @@
 import Flowrigami from '@app/Flowrigami';
-import '@app/normalize.css';
-import '@app/flowrigami.css';
 
 
 declare global {

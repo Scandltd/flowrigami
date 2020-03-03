@@ -1,15 +1,15 @@
 import Link from '@app/flow/diagram/Link';
-import NodeShape from '@app/flow/diagram/NodeShape';
+import Node from '@app/flow/diagram/Node';
 import Action from '@app/flow/store/history/Action';
 import Store from '@app/flow/store/Store';
 
 
 export default class DeleteNode implements Action {
   private store: Store;
-  private node: NodeShape;
+  private node: Node;
   private links: Link[] = [];
 
-  constructor(store: Store, node: NodeShape, connections: Link[]) {
+  constructor(store: Store, node: Node, connections: Link[]) {
     this.store = store;
     this.node = node;
     this.links = connections;

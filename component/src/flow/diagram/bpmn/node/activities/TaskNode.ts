@@ -1,5 +1,5 @@
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import Node from '@app/flow/diagram/bpmn/Node';
+import BpmnNode from '../../BpmnNode';
 import { BORDER_RADIUS, previewStyles, SELECTION_MARGIN, selectionStyle, styles } from '@app/flow/diagram/bpmn/node/activities/TaskNodeConstants';
 import Text from '@app/flow/diagram/bpmn/shapes/Text';
 import Coordinates from '@app/flow/graphics/canvas/Coordinates';
@@ -7,7 +7,7 @@ import CanvasRectangle from '@app/flow/graphics/canvas/shapes/CanvasRectangle';
 import Store from '@app/flow/store/Store';
 
 
-export default class TaskNode extends Node {
+export default class TaskNode extends BpmnNode {
   public name = 'TaskNode';
 
   private textArea: Text;

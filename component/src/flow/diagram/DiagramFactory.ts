@@ -1,7 +1,7 @@
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
 import Indicator, { IndicatorParams } from '@app/flow/diagram/Indicator';
 import Link from '@app/flow/diagram/Link';
-import NodeShape from '@app/flow/diagram/NodeShape';
+import Node from '@app/flow/diagram/Node';
 
 
 export default interface DiagramFactory {
@@ -9,5 +9,5 @@ export default interface DiagramFactory {
 
   getIndicator(params: IndicatorParams): Indicator;
 
-  getNode(nodeType: string, nodeParams: any): NodeShape | any;
+  getNode(nodeName: string, nodeParams: any): Node | any;
 }

@@ -1,7 +1,7 @@
-import Edge from '@app/_redesign/graph/Edge';
-import Graph from '@app/_redesign/graph/Graph';
-import UndirectedGraph from '@app/_redesign/graph/graphs/UndirectedGraph';
-import Vertex from '@app/_redesign/graph/Vertex';
+import Edge from '@app/graph/Edge';
+import Graph from '@app/graph/Graph';
+import UndirectedGraph from '@app/graph/graphs/UndirectedGraph';
+import Vertex from '@app/graph/Vertex';
 import { expect } from 'chai';
 
 

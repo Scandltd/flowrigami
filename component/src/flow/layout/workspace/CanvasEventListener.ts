@@ -1,9 +1,10 @@
+import Context from '@app/flow/Context';
 import { GRID_STEP } from '@app/flow/DefaultThemeConstants';
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
 import Diagram from '@app/flow/diagram/Diagram';
 import Indicator from '@app/flow/diagram/Indicator';
 import Link from '@app/flow/diagram/Link';
-import NodeShape from '@app/flow/diagram/NodeShape';
+import Node from '@app/flow/diagram/Node';
 import DirectionalLink from '@app/flow/diagram/uml/link/DirectionalLink';
 import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 import { chartBorderDefinition } from '@app/flow/layout/workspace/Canvas';
@@ -13,7 +14,7 @@ import Store from '@app/flow/store/Store';
 
 
 export default class CanvasEventListener {
-  private canvasContainer: HTMLElement;
+  private workspaceContainer: HTMLElement;
   private ctx: CanvasRenderingContext2D;
   private store: Store;
   private diagram: Diagram;
@@ -21,19 +22,21 @@ export default class CanvasEventListener {
   private grabbing = false;
   private isMovableShape = true;
   private moveAction: MoveInstance | null = null;
-  private editedShape: Indicator | NodeShape | null = null;
+  private editedShape: Indicator | Node | null = null;
 
   private anchorPoint: AnchorPoint | null | undefined = null;
   private anchorPointLink: Link | null | undefined = null;
 
 
-  constructor(canvasContainer: HTMLElement, ctx: CanvasRenderingContext2D, store: Store, diagram: Diagram) {
-    this.canvasContainer = canvasContainer;
-    this.ctx = ctx;
-    this.store = store;
-    this.diagram = diagram;
+  constructor(context: Context) {
+    this.diagram = context.diagram;
+    this.store = context.store;
+    this.workspaceContainer = context.layout.workspaceContainer;
+    this.ctx = context.layout.workspaceCanvas.getContext('2d') as CanvasRenderingContext2D;
 
-    this.addEventListeners();
+    if (!context.options.viewMode) {
+      this.addEventListeners();
+    }
   }
 
   public unmount() {
@@ -41,27 +44,27 @@ export default class CanvasEventListener {
   }
 
   private addEventListeners = () => {
-    this.canvasContainer.addEventListener('mousemove', this.onMouseMove);
-    this.canvasContainer.addEventListener('mousedown', this.onMouseDown);
-    this.canvasContainer.addEventListener('mouseup', this.onMouseUp);
-    this.canvasContainer.addEventListener('mouseleave', this.onMouseUp);
-    this.canvasContainer.addEventListener('click', this.onMouseClick);
-    this.canvasContainer.addEventListener('dblclick', this.onMouseDbClick);
+    this.workspaceContainer.addEventListener('mousemove', this.onMouseMove);
+    this.workspaceContainer.addEventListener('mousedown', this.onMouseDown);
+    this.workspaceContainer.addEventListener('mouseup', this.onMouseUp);
+    this.workspaceContainer.addEventListener('mouseleave', this.onMouseUp);
+    this.workspaceContainer.addEventListener('click', this.onMouseClick);
+    this.workspaceContainer.addEventListener('dblclick', this.onMouseDbClick);
 
-    this.canvasContainer.addEventListener('dragover', this.onDragover);
-    this.canvasContainer.addEventListener('drop', this.onDrop);
+    this.workspaceContainer.addEventListener('dragover', this.onDragover);
+    this.workspaceContainer.addEventListener('drop', this.onDrop);
   };
 
   private removeEventListeners = () => {
-    this.canvasContainer.removeEventListener('mousemove', this.onMouseMove);
-    this.canvasContainer.removeEventListener('mousedown', this.onMouseDown);
-    this.canvasContainer.removeEventListener('mouseup', this.onMouseUp);
-    this.canvasContainer.removeEventListener('mouseleave', this.onMouseUp);
-    this.canvasContainer.removeEventListener('click', this.onMouseClick);
-    this.canvasContainer.removeEventListener('dblclick', this.onMouseDbClick);
+    this.workspaceContainer.removeEventListener('mousemove', this.onMouseMove);
+    this.workspaceContainer.removeEventListener('mousedown', this.onMouseDown);
+    this.workspaceContainer.removeEventListener('mouseup', this.onMouseUp);
+    this.workspaceContainer.removeEventListener('mouseleave', this.onMouseUp);
+    this.workspaceContainer.removeEventListener('click', this.onMouseClick);
+    this.workspaceContainer.removeEventListener('dblclick', this.onMouseDbClick);
 
-    this.canvasContainer.removeEventListener('dragover', this.onDragover);
-    this.canvasContainer.removeEventListener('drop', this.onDrop);
+    this.workspaceContainer.removeEventListener('dragover', this.onDragover);
+    this.workspaceContainer.removeEventListener('drop', this.onDrop);
   };
 
   private onMouseMove = (e: MouseEvent) => {
@@ -94,11 +97,11 @@ export default class CanvasEventListener {
     }
 
     if (this.grabbing) {
-      const top = this.canvasContainer.style.top ? parseInt(this.canvasContainer.style.top, 10) : 0;
-      const left = this.canvasContainer.style.left ? parseInt(this.canvasContainer.style.left, 10) : 0;
+      const top = this.workspaceContainer.style.top ? parseInt(this.workspaceContainer.style.top, 10) : 0;
+      const left = this.workspaceContainer.style.left ? parseInt(this.workspaceContainer.style.left, 10) : 0;
 
-      this.canvasContainer.style.top = `${top + e.movementY}px`;
-      this.canvasContainer.style.left = `${left + e.movementX}px`;
+      this.workspaceContainer.style.top = `${top + e.movementY}px`;
+      this.workspaceContainer.style.left = `${left + e.movementX}px`;
     }
 
     if (this.store.selectedNode || this.store.selectedConnector) {
@@ -130,12 +133,12 @@ export default class CanvasEventListener {
       const hoveredShape = this.store.nodeList.find((node) => node.includes(coordinates.x, coordinates.y));
       const hoveredLine = this.store.connectorList.find((link) => link.includes(coordinates));
       if (hoveredIndicator || hoveredShape || hoveredLine) {
-        this.canvasContainer.style.cursor = 'pointer';
+        this.workspaceContainer.style.cursor = 'pointer';
         if (hoveredShape && hoveredShape.getConnectionPoint(coordinates)) {
-          this.canvasContainer.style.cursor = 'crosshair';
+          this.workspaceContainer.style.cursor = 'crosshair';
         }
       } else {
-        this.canvasContainer.style.cursor = 'default';
+        this.workspaceContainer.style.cursor = 'default';
       }
     }
   };
@@ -154,35 +157,35 @@ export default class CanvasEventListener {
 
     const realCanvas = this.ctx.canvas;
     if (min.x < detectionBorder) {
-      const left = this.canvasContainer.style.left ? parseInt(this.canvasContainer.style.left, 10) : 0;
+      const left = this.workspaceContainer.style.left ? parseInt(this.workspaceContainer.style.left, 10) : 0;
 
-      this.canvasContainer.style.left = `${left - canvasAreaIncrement + scaleOffset}px`;
+      this.workspaceContainer.style.left = `${left - canvasAreaIncrement + scaleOffset}px`;
       realCanvas.width += canvasAreaIncrement;
       offsetX = canvasAreaIncrement;
       isWorkspaceResized = true;
     }
 
     if (min.y < detectionBorder) {
-      const top = this.canvasContainer.style.top ? parseInt(this.canvasContainer.style.top, 10) : 0;
+      const top = this.workspaceContainer.style.top ? parseInt(this.workspaceContainer.style.top, 10) : 0;
 
-      this.canvasContainer.style.top = `${top - canvasAreaIncrement + scaleOffset}px`;
+      this.workspaceContainer.style.top = `${top - canvasAreaIncrement + scaleOffset}px`;
       realCanvas.height += canvasAreaIncrement;
       offsetY = canvasAreaIncrement;
       isWorkspaceResized = true;
     }
 
     if (max.x + detectionBorder > realCanvas.width) {
-      const left = this.canvasContainer.style.left ? parseInt(this.canvasContainer.style.left, 10) : 0;
+      const left = this.workspaceContainer.style.left ? parseInt(this.workspaceContainer.style.left, 10) : 0;
 
-      this.canvasContainer.style.left = `${left - scaleOffset}px`;
+      this.workspaceContainer.style.left = `${left - scaleOffset}px`;
       realCanvas.width += canvasAreaIncrement;
       isWorkspaceResized = true;
     }
 
     if (max.y + detectionBorder > realCanvas.height) {
-      const top = this.canvasContainer.style.top ? parseInt(this.canvasContainer.style.top, 10) : 0;
+      const top = this.workspaceContainer.style.top ? parseInt(this.workspaceContainer.style.top, 10) : 0;
 
-      this.canvasContainer.style.top = `${top - scaleOffset}px`;
+      this.workspaceContainer.style.top = `${top - scaleOffset}px`;
       realCanvas.height += canvasAreaIncrement;
       isWorkspaceResized = true;
     }
@@ -216,7 +219,7 @@ export default class CanvasEventListener {
 
       this.store.dispatch(ACTION.SET_CONNECTION_POINT, detectedPoint);
     } else {
-      this.canvasContainer.style.cursor = 'grabbing';
+      this.workspaceContainer.style.cursor = 'grabbing';
       this.grabbing = true;
     }
 
@@ -234,7 +237,7 @@ export default class CanvasEventListener {
 
   private selectIndicator = (indicator: Indicator | null | undefined) => this.store.dispatch(ACTION.SET_INDICATOR, indicator);
 
-  private selectNode = (node: NodeShape | null | undefined) => this.store.dispatch(ACTION.SET_NODE, node);
+  private selectNode = (node: Node | null | undefined) => this.store.dispatch(ACTION.SET_NODE, node);
 
   private selectLink = (link: Link | null | undefined) => this.store.dispatch(ACTION.SET_CONNECTOR, link);
 
@@ -253,7 +256,7 @@ export default class CanvasEventListener {
     }
 
     if (this.grabbing) {
-      this.canvasContainer.style.cursor = 'default';
+      this.workspaceContainer.style.cursor = 'default';
       this.grabbing = false;
     }
 
@@ -344,13 +347,13 @@ export default class CanvasEventListener {
     }
   };
 
-  private getDetectedShapeSetNoActive<T extends NodeShape | Link>(shapes: T[], coordinates: Coordinates) {
+  private getDetectedShapeSetNoActive<T extends Node | Link>(shapes: T[], coordinates: Coordinates) {
     let detectedShape: T | undefined;
 
     shapes.forEach((it) => {
       it.isActive = false;
 
-      const isNodeShape = it instanceof NodeShape && it.includes(coordinates.x, coordinates.y);
+      const isNodeShape = it instanceof Node && it.includes(coordinates.x, coordinates.y);
       const isLinkShape = it instanceof Link && it.includes(coordinates);
       if (isNodeShape || isLinkShape) {
         detectedShape = it;

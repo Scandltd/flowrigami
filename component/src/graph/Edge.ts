@@ -1,4 +1,4 @@
-import Vertex from '@app/_redesign/graph/Vertex';
+import Vertex from '@app/graph/Vertex';
 import nanoid from 'nanoid';
 
 

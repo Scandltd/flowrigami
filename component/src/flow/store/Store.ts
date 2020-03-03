@@ -1,10 +1,11 @@
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
 import Indicator from '@app/flow/diagram/Indicator';
 import Link from '@app/flow/diagram/Link';
-import NodeShape from '@app/flow/diagram/NodeShape';
+import Node from '@app/flow/diagram/Node';
 import Dispatcher from '@app/flow/store/Dispatcher';
 import Action from '@app/flow/store/history/Action';
 import History from '@app/flow/store/history/History';
+import FlowrigamiOptions from '@app/FlowrigamiOptions';
 
 
 export default class Store {
@@ -20,19 +21,24 @@ export default class Store {
 
   // STATE
   selectedIndicator: Indicator | null | undefined = null;
-  selectedNode: NodeShape | null | undefined = null;
+  selectedNode: Node | null | undefined = null;
   selectedConnector: Link | null | undefined = null;
   selectedConnectionPoint: AnchorPoint | null | undefined = null;
   newConnector: Link | null | undefined = null;
 
   connectorList: Link[] = [];
   indicators: Indicator[] = [];
-  nodeList: NodeShape[] = [];
+  nodeList: Node[] = [];
+
   // STATE
 
-  constructor() {
+  constructor(options: FlowrigamiOptions) {
     this.dispatcher = new Dispatcher(this);
     this.history = new History();
+
+    if (options.viewMode) {
+      this.grid.enabled = false;
+    }
   }
 
   public dispatch = (action: string, payload: any = null) => {

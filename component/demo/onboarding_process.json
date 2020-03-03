@@ -1,20 +1,80 @@
 {
   "version": "1.0",
   "diagram": "UML",
-
-  "indicators": [],
+  "indicators": [
+    {
+      "name": "Indicator",
+      "id": "ULXBCpOpu93ZJUX2FgRmb",
+      "label": "",
+      "params": {
+        "x": 640,
+        "y": 236,
+        "radius": 20
+      }
+    },
+    {
+      "name": "Indicator",
+      "id": "sRuBw8NsiQ35sGnMtdmh4",
+      "label": "",
+      "params": {
+        "x": 1515,
+        "y": 236,
+        "radius": 20
+      }
+    },
+    {
+      "name": "Indicator",
+      "id": "ICbInk20RNMdHIRNgb7ER",
+      "label": "",
+      "params": {
+        "x": 1847,
+        "y": 236,
+        "radius": 20
+      }
+    },
+    {
+      "name": "Indicator",
+      "id": "tTzQIDI9l-jfdq8hsVrcP",
+      "label": "",
+      "params": {
+        "x": 2664,
+        "y": 236,
+        "radius": 20
+      }
+    },
+    {
+      "name": "Indicator",
+      "id": "LadDaoK_4qkvJmQ0BIRoX",
+      "label": "",
+      "params": {
+        "x": 3175,
+        "y": 236,
+        "radius": 20
+      }
+    },
+    {
+      "name": "Indicator",
+      "id": "lHcWI9egroLDCnAIoV9_f",
+      "label": "",
+      "params": {
+        "x": 3483,
+        "y": 236,
+        "radius": 20
+      }
+    }
+  ],
   "links": [
     {
       "from": "9pbSsQA70-_K-bPbSLXxs",
       "to": "bLK5JeFzDhBPyNZsTaZtl",
       "points": [
         {
-          "x": 680,
-          "y": 520
+          "x": 580,
+          "y": 300
         },
         {
-          "x": 740,
-          "y": 520
+          "x": 640,
+          "y": 300
         }
       ]
     },
@@ -23,12 +83,12 @@
       "to": "rvbw0sqZUcSe4-5T5iq7I",
       "points": [
         {
-          "x": 860,
-          "y": 520
+          "x": 760,
+          "y": 300
         },
         {
-          "x": 920,
-          "y": 520
+          "x": 820,
+          "y": 300
         }
       ]
     },
@@ -37,12 +97,12 @@
       "to": "NWRGipPTRf74u26PFroOU",
       "points": [
         {
-          "x": 1740,
-          "y": 520
+          "x": 1640,
+          "y": 300
         },
         {
-          "x": 1800,
-          "y": 520
+          "x": 1700,
+          "y": 300
         }
       ]
     },
@@ -51,20 +111,20 @@
       "to": "bLK5JeFzDhBPyNZsTaZtl",
       "points": [
         {
-          "x": 1830,
-          "y": 550
+          "x": 1730,
+          "y": 330
         },
         {
-          "x": 1830,
-          "y": 630
+          "x": 1730,
+          "y": 410
         },
         {
-          "x": 800,
-          "y": 628.75
+          "x": 700,
+          "y": 410
         },
         {
-          "x": 800,
-          "y": 550
+          "x": 700,
+          "y": 330
         }
       ]
     },
@@ -73,24 +133,24 @@
       "to": "bLK5JeFzDhBPyNZsTaZtl",
       "points": [
         {
-          "x": 2160,
-          "y": 550
+          "x": 2060,
+          "y": 330
         },
         {
-          "x": 2160,
-          "y": 680
+          "x": 2060,
+          "y": 460
         },
         {
-          "x": 800,
-          "y": 678.75
+          "x": 700,
+          "y": 460
         },
         {
-          "x": 800,
-          "y": 578.75
+          "x": 700,
+          "y": 360
         },
         {
-          "x": 800,
-          "y": 550
+          "x": 700,
+          "y": 330
         }
       ]
     },
@@ -99,12 +159,12 @@
       "to": "RPtMnP4khUliVusEGf27e",
       "points": [
         {
-          "x": 1200,
-          "y": 520
+          "x": 1100,
+          "y": 300
         },
         {
-          "x": 1260,
-          "y": 520
+          "x": 1160,
+          "y": 300
         }
       ]
     },
@@ -113,12 +173,12 @@
       "to": "HkiiMzTxcL7X0jr5j1lKs",
       "points": [
         {
-          "x": 2190,
-          "y": 520
+          "x": 2090,
+          "y": 300
         },
         {
-          "x": 2270,
-          "y": 520
+          "x": 2170,
+          "y": 300
         }
       ]
     },
@@ -127,12 +187,12 @@
       "to": "q0lwIvjq2tEWAfa2ypR7A",
       "points": [
         {
-          "x": 2300,
-          "y": 490
+          "x": 2200,
+          "y": 270
         },
         {
-          "x": 2340,
-          "y": 450
+          "x": 2240,
+          "y": 230
         }
       ]
     },
@@ -141,12 +201,12 @@
       "to": "GyulMHoQ8pRl9XcDwbT7-",
       "points": [
         {
-          "x": 2460,
-          "y": 450
+          "x": 2360,
+          "y": 230
         },
         {
-          "x": 2530,
-          "y": 450
+          "x": 2430,
+          "y": 230
         }
       ]
     },
@@ -155,12 +215,12 @@
       "to": "mqWuEsz15spb7EUnAlSJ5",
       "points": [
         {
-          "x": 2590,
-          "y": 450
+          "x": 2490,
+          "y": 230
         },
         {
-          "x": 2690,
-          "y": 500
+          "x": 2590,
+          "y": 270
         }
       ]
     },
@@ -169,24 +229,24 @@
       "to": "bLK5JeFzDhBPyNZsTaZtl",
       "points": [
         {
-          "x": 2560,
-          "y": 420
+          "x": 2460,
+          "y": 200
         },
         {
-          "x": 2560,
-          "y": 370
+          "x": 2460,
+          "y": 150
         },
         {
-          "x": 800,
-          "y": 370
+          "x": 700,
+          "y": 150
         },
         {
-          "x": 800,
-          "y": 478.75
+          "x": 700,
+          "y": 260
         },
         {
-          "x": 800,
-          "y": 490
+          "x": 700,
+          "y": 270
         }
       ]
     },
@@ -195,12 +255,12 @@
       "to": "c8VPeVYGDJMv-B7EH6Z_E",
       "points": [
         {
-          "x": 2720,
-          "y": 530
+          "x": 2620,
+          "y": 300
         },
         {
-          "x": 2770,
-          "y": 530
+          "x": 2670,
+          "y": 300
         }
       ]
     },
@@ -209,20 +269,20 @@
       "to": "mqWuEsz15spb7EUnAlSJ5",
       "points": [
         {
-          "x": 2300,
-          "y": 550
+          "x": 2200,
+          "y": 330
         },
         {
-          "x": 2300,
-          "y": 605
+          "x": 2200,
+          "y": 380
         },
         {
-          "x": 2690,
-          "y": 605
+          "x": 2590,
+          "y": 380
         },
         {
-          "x": 2690,
-          "y": 560
+          "x": 2590,
+          "y": 330
         }
       ]
     },
@@ -231,12 +291,12 @@
       "to": "T7t5XUOVMy2PzEyP6kokE",
       "points": [
         {
-          "x": 2890,
-          "y": 530
+          "x": 2790,
+          "y": 300
         },
         {
-          "x": 2950,
-          "y": 530
+          "x": 2850,
+          "y": 300
         }
       ]
     },
@@ -245,24 +305,24 @@
       "to": "bLK5JeFzDhBPyNZsTaZtl",
       "points": [
         {
-          "x": 2980,
-          "y": 560
+          "x": 2880,
+          "y": 330
         },
         {
-          "x": 2980,
-          "y": 730
+          "x": 2880,
+          "y": 510
         },
         {
-          "x": 800,
-          "y": 730
+          "x": 700,
+          "y": 510
         },
         {
-          "x": 800,
-          "y": 580
+          "x": 700,
+          "y": 360
         },
         {
-          "x": 800,
-          "y": 550
+          "x": 700,
+          "y": 330
         }
       ]
     },
@@ -271,12 +331,12 @@
       "to": "dryTJ00c5UG7ctpQs_sgt",
       "points": [
         {
-          "x": 3010,
-          "y": 530
+          "x": 2910,
+          "y": 300
         },
         {
-          "x": 3090,
-          "y": 530
+          "x": 2990,
+          "y": 300
         }
       ]
     },
@@ -285,12 +345,12 @@
       "to": "TCed4mEnlAB_scIUU1H8Z",
       "points": [
         {
-          "x": 3210,
-          "y": 530
+          "x": 3110,
+          "y": 300
         },
         {
-          "x": 3280,
-          "y": 530
+          "x": 3180,
+          "y": 300
         }
       ]
     },
@@ -299,12 +359,12 @@
       "to": "q7TNGMMefDzzm2QOTmvjt",
       "points": [
         {
-          "x": 3400,
-          "y": 530
+          "x": 3300,
+          "y": 300
         },
         {
-          "x": 3440,
-          "y": 530
+          "x": 3340,
+          "y": 300
         }
       ]
     },
@@ -313,24 +373,24 @@
       "to": "bLK5JeFzDhBPyNZsTaZtl",
       "points": [
         {
-          "x": 3470,
-          "y": 500
+          "x": 3370,
+          "y": 270
         },
         {
-          "x": 3470,
-          "y": 340
+          "x": 3370,
+          "y": 120
         },
         {
-          "x": 800,
-          "y": 340
+          "x": 700,
+          "y": 120
         },
         {
-          "x": 800,
-          "y": 470
+          "x": 700,
+          "y": 250
         },
         {
-          "x": 800,
-          "y": 490
+          "x": 700,
+          "y": 270
         }
       ]
     },
@@ -339,12 +399,12 @@
       "to": "JbHtnwSxlKhL12MyFYMxN",
       "points": [
         {
-          "x": 3500,
-          "y": 530
+          "x": 3400,
+          "y": 300
         },
         {
-          "x": 3590,
-          "y": 530
+          "x": 3490,
+          "y": 300
         }
       ]
     },
@@ -353,12 +413,12 @@
       "to": "nbpWwnKwXA9EFEBCd4lrb",
       "points": [
         {
-          "x": 3710,
-          "y": 530
+          "x": 3610,
+          "y": 300
         },
         {
-          "x": 3760,
-          "y": 530
+          "x": 3660,
+          "y": 300
         }
       ]
     },
@@ -367,12 +427,12 @@
       "to": "qmTavkn4iNqDQ6doePPU4",
       "points": [
         {
-          "x": 3880,
-          "y": 530
+          "x": 3780,
+          "y": 300
         },
         {
-          "x": 3930,
-          "y": 530
+          "x": 3830,
+          "y": 300
         }
       ]
     },
@@ -381,12 +441,12 @@
       "to": "9pbSsQA70-_K-bPbSLXxs",
       "points": [
         {
-          "x": 500,
-          "y": 520
+          "x": 400,
+          "y": 300
         },
         {
-          "x": 560,
-          "y": 520
+          "x": 460,
+          "y": 300
         }
       ]
     },
@@ -395,12 +455,12 @@
       "to": "5BtJqKWVYBHBIzTV1Bm2I",
       "points": [
         {
-          "x": 310,
-          "y": 520
+          "x": 210,
+          "y": 300
         },
         {
-          "x": 380,
-          "y": 520
+          "x": 280,
+          "y": 300
         }
       ]
     },
@@ -409,12 +469,12 @@
       "to": "6YadYWs0OUSebiSksgAPp",
       "points": [
         {
-          "x": 920,
-          "y": 490
+          "x": 820,
+          "y": 270
         },
         {
-          "x": 1000,
-          "y": 470
+          "x": 900,
+          "y": 250
         }
       ]
     },
@@ -423,12 +483,12 @@
       "to": "6Sl5W1OyYYsER8jlnhMy6",
       "points": [
         {
-          "x": 1120,
-          "y": 470
+          "x": 1020,
+          "y": 250
         },
         {
-          "x": 1200,
-          "y": 490
+          "x": 1100,
+          "y": 270
         }
       ]
     },
@@ -437,12 +497,12 @@
       "to": "6Sl5W1OyYYsER8jlnhMy6",
       "points": [
         {
-          "x": 1120,
-          "y": 570
+          "x": 1020,
+          "y": 350
         },
         {
-          "x": 1200,
-          "y": 550
+          "x": 1100,
+          "y": 330
         }
       ]
     },
@@ -451,12 +511,12 @@
       "to": "bRlOs1-jjOhIbsEUBv2eF",
       "points": [
         {
-          "x": 920,
-          "y": 550
+          "x": 820,
+          "y": 330
         },
         {
-          "x": 1000,
-          "y": 570
+          "x": 900,
+          "y": 350
         }
       ]
     },
@@ -465,12 +525,12 @@
       "to": "hHj4OUJpWU5Yu8eDfcD3E",
       "points": [
         {
-          "x": 1380,
-          "y": 520
+          "x": 1280,
+          "y": 300
         },
         {
-          "x": 1440,
-          "y": 520
+          "x": 1340,
+          "y": 300
         }
       ]
     },
@@ -479,12 +539,12 @@
       "to": "Jtfrt240JbyJurWhHsy7p",
       "points": [
         {
-          "x": 1560,
-          "y": 520
+          "x": 1460,
+          "y": 300
         },
         {
-          "x": 1620,
-          "y": 520
+          "x": 1520,
+          "y": 300
         }
       ]
     },
@@ -493,12 +553,12 @@
       "to": "pQgN2ePciU535L7Lj9e-I",
       "points": [
         {
-          "x": 4050,
-          "y": 530
+          "x": 3950,
+          "y": 300
         },
         {
-          "x": 4110,
-          "y": 530
+          "x": 4010,
+          "y": 300
         }
       ]
     },
@@ -507,12 +567,12 @@
       "to": "sXAeUpNBXY7guBX9CwVQW",
       "points": [
         {
-          "x": 4230,
-          "y": 530
+          "x": 4130,
+          "y": 300
         },
         {
-          "x": 4300,
-          "y": 530
+          "x": 4200,
+          "y": 300
         }
       ]
     },
@@ -521,12 +581,12 @@
       "to": "F-MEtZeX4WCRolvTglRmI",
       "points": [
         {
-          "x": 4420,
-          "y": 530
+          "x": 4320,
+          "y": 300
         },
         {
-          "x": 4480,
-          "y": 530
+          "x": 4380,
+          "y": 300
         }
       ]
     },
@@ -535,12 +595,12 @@
       "to": "JnLtWRMv3cN4w2fO59Lis",
       "points": [
         {
-          "x": 1860,
-          "y": 520
+          "x": 1760,
+          "y": 300
         },
         {
-          "x": 1950,
-          "y": 520
+          "x": 1850,
+          "y": 300
         }
       ]
     },
@@ -549,12 +609,12 @@
       "to": "uxXpHXX9rxCZQeBxxTjMU",
       "points": [
         {
-          "x": 2070,
-          "y": 520
+          "x": 1970,
+          "y": 300
         },
         {
-          "x": 2130,
-          "y": 520
+          "x": 2030,
+          "y": 300
         }
       ]
     }
@@ -565,8 +625,8 @@
       "name": "StartNode",
       "label": "",
       "params": {
-        "x": 290,
-        "y": 520
+        "x": 190,
+        "y": 300
       }
     },
     {
@@ -574,8 +634,8 @@
       "name": "ActivityNode",
       "label": "Vacancy opening",
       "params": {
-        "x": 620,
-        "y": 520
+        "x": 520,
+        "y": 300
       }
     },
     {
@@ -583,8 +643,8 @@
       "name": "ActivityNode",
       "label": "Searching for a \ncandidate",
       "params": {
-        "x": 800,
-        "y": 520
+        "x": 700,
+        "y": 300
       }
     },
     {
@@ -592,8 +652,8 @@
       "name": "VerticalForkJoinNode",
       "label": "",
       "params": {
-        "x": 920,
-        "y": 520
+        "x": 820,
+        "y": 300
       }
     },
     {
@@ -601,8 +661,8 @@
       "name": "VerticalForkJoinNode",
       "label": "",
       "params": {
-        "x": 1200,
-        "y": 520
+        "x": 1100,
+        "y": 300
       }
     },
     {
@@ -610,8 +670,8 @@
       "name": "ActivityNode",
       "label": "Written or \nphone \ninterview",
       "params": {
-        "x": 1320,
-        "y": 520
+        "x": 1220,
+        "y": 300
       }
     },
     {
@@ -619,8 +679,8 @@
       "name": "ActivityNode",
       "label": "Approval \nby head of\nthe department\n",
       "params": {
-        "x": 1680,
-        "y": 520
+        "x": 1580,
+        "y": 300
       }
     },
     {
@@ -628,8 +688,8 @@
       "name": "DecisionNode",
       "label": "Was candidate \napproved?\n",
       "params": {
-        "x": 1830,
-        "y": 520
+        "x": 1730,
+        "y": 300
       }
     },
     {
@@ -637,8 +697,8 @@
       "name": "DecisionNode",
       "label": "Was job \ninterview \nsuccessful?",
       "params": {
-        "x": 2160,
-        "y": 520
+        "x": 2060,
+        "y": 300
       }
     },
     {
@@ -646,8 +706,8 @@
       "name": "DecisionNode",
       "label": "Is test task \nneeded?",
       "params": {
-        "x": 2300,
-        "y": 520
+        "x": 2200,
+        "y": 300
       }
     },
     {
@@ -655,8 +715,8 @@
       "name": "ActivityNode",
       "label": "Candidate \nperforms \ntest task\n",
       "params": {
-        "x": 2400,
-        "y": 450
+        "x": 2300,
+        "y": 230
       }
     },
     {
@@ -664,8 +724,8 @@
       "name": "DecisionNode",
       "label": "Was test task\nsuccessful?",
       "params": {
-        "x": 2560,
-        "y": 450
+        "x": 2460,
+        "y": 230
       }
     },
     {
@@ -673,8 +733,8 @@
       "name": "ActivityNode",
       "label": "Job offer \nto the candidate",
       "params": {
-        "x": 2830,
-        "y": 530
+        "x": 2730,
+        "y": 300
       }
     },
     {
@@ -682,8 +742,8 @@
       "name": "DecisionNode",
       "label": "",
       "params": {
-        "x": 2690,
-        "y": 530
+        "x": 2590,
+        "y": 300
       }
     },
     {
@@ -691,8 +751,8 @@
       "name": "DecisionNode",
       "label": "Has the \ncandidate \naccepted the\njob offer?",
       "params": {
-        "x": 2980,
-        "y": 530
+        "x": 2880,
+        "y": 300
       }
     },
     {
@@ -700,8 +760,8 @@
       "name": "ActivityNode",
       "label": "Hiring\nprocedure",
       "params": {
-        "x": 3150,
-        "y": 530
+        "x": 3050,
+        "y": 300
       }
     },
     {
@@ -709,8 +769,8 @@
       "name": "ActivityNode",
       "label": "Candidate's \nprobation",
       "params": {
-        "x": 3340,
-        "y": 530
+        "x": 3240,
+        "y": 300
       }
     },
     {
@@ -718,8 +778,8 @@
       "name": "DecisionNode",
       "label": "Was probation \nsuccessful?\n",
       "params": {
-        "x": 3470,
-        "y": 530
+        "x": 3370,
+        "y": 300
       }
     },
     {
@@ -727,8 +787,8 @@
       "name": "ActivityNode",
       "label": "Hired candidate\nworks in the\ncompany\n\n\n",
       "params": {
-        "x": 3650,
-        "y": 530
+        "x": 3550,
+        "y": 300
       }
     },
     {
@@ -736,8 +796,8 @@
       "name": "ActivityNode",
       "label": "Termination of\nemployment \ncontract\n",
       "params": {
-        "x": 3820,
-        "y": 530
+        "x": 3720,
+        "y": 300
       }
     },
     {
@@ -745,8 +805,8 @@
       "name": "ActivityNode",
       "label": "Processing\ndocuments for \ndismissal",
       "params": {
-        "x": 3990,
-        "y": 530
+        "x": 3890,
+        "y": 300
       }
     },
     {
@@ -754,8 +814,8 @@
       "name": "EndNode",
       "label": "",
       "params": {
-        "x": 4500,
-        "y": 530
+        "x": 4400,
+        "y": 300
       }
     },
     {
@@ -763,8 +823,8 @@
       "name": "ActivityNode",
       "label": "Determination \nof requirements for a candidate",
       "params": {
-        "x": 440,
-        "y": 520
+        "x": 340,
+        "y": 300
       }
     },
     {
@@ -772,8 +832,8 @@
       "name": "ActivityNode",
       "label": "Passive search",
       "params": {
-        "x": 1060,
-        "y": 470
+        "x": 960,
+        "y": 250
       }
     },
     {
@@ -781,8 +841,8 @@
       "name": "ActivityNode",
       "label": "Active search",
       "params": {
-        "x": 1060,
-        "y": 570
+        "x": 960,
+        "y": 350
       }
     },
     {
@@ -790,8 +850,8 @@
       "name": "ActivityNode",
       "label": "Candidate's\n profile forming",
       "params": {
-        "x": 1500,
-        "y": 520
+        "x": 1400,
+        "y": 300
       }
     },
     {
@@ -799,8 +859,8 @@
       "name": "ActivityNode",
       "label": "Final settlement",
       "params": {
-        "x": 4170,
-        "y": 530
+        "x": 4070,
+        "y": 300
       }
     },
     {
@@ -808,8 +868,8 @@
       "name": "ActivityNode",
       "label": "Exit interview",
       "params": {
-        "x": 4360,
-        "y": 530
+        "x": 4260,
+        "y": 300
       }
     },
     {
@@ -817,8 +877,8 @@
       "name": "ActivityNode",
       "label": "Job interview",
       "params": {
-        "x": 2010,
-        "y": 520
+        "x": 1910,
+        "y": 300
       }
     }
   ]

@@ -1,5 +1,6 @@
+import Context from '@app/flow/Context';
 import Indicator from '@app/flow/diagram/Indicator';
-import NodeShape from '@app/flow/diagram/NodeShape';
+import Node from '@app/flow/diagram/Node';
 import ACTION from '@app/flow/store/ActionTypes';
 import Store from '@app/flow/store/Store';
 import { textareaChange } from '@app/flow/utils/HtmlUtils';
@@ -11,8 +12,8 @@ export default class PropertiesPanel {
   private propertiesPanelItems: HTMLElement;
   private propertiesPanelControl: HTMLElement;
 
-  constructor(propertiesPanel: HTMLElement, store: Store) {
-    this.store = store;
+  constructor(context: Context, propertiesPanel: HTMLElement) {
+    this.store = context.store;
 
     this.propertiesPanel = propertiesPanel;
     this.propertiesPanelItems = propertiesPanel.querySelector('.fl-panel-items') as HTMLElement;
@@ -35,7 +36,7 @@ export default class PropertiesPanel {
     }
   };
 
-  private displayProperties = (shape: Indicator | NodeShape) => {
+  private displayProperties = (shape: Indicator | Node) => {
     const panelBodyDocumentFragment = document.createDocumentFragment();
 
     const idLabel = this.createPropertyLabelElement('ID');

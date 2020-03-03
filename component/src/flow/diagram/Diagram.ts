@@ -2,7 +2,7 @@ import AnchorPoint from '@app/flow/diagram/AnchorPoint';
 import DiagramFactory from '@app/flow/diagram/DiagramFactory';
 import Indicator from '@app/flow/diagram/Indicator';
 import Link from '@app/flow/diagram/Link';
-import NodeShape from '@app/flow/diagram/NodeShape';
+import Node from '@app/flow/diagram/Node';
 import ExportObject from '@app/flow/exportimport/ExportObject';
 import LinkExportObject from '@app/flow/exportimport/LinkExportObject';
 import Coordinates from '@app/flow/graphics/canvas/Coordinates';
@@ -43,7 +43,7 @@ export default abstract class Diagram {
     return indicator.map((it: Indicator) => it.export());
   }
 
-  protected prepareLinks(links: Link[], nodes: NodeShape[]): LinkExportObject[] {
+  protected prepareLinks(links: Link[], nodes: Node[]): LinkExportObject[] {
     return links.map((link) => {
       let linePoints;
       if (link.isOrthogonal) {
@@ -69,8 +69,8 @@ export default abstract class Diagram {
     });
   }
 
-  protected prepareNodes(nodes: NodeShape[]) {
-    return nodes.map((node: NodeShape) => node.export());
+  protected prepareNodes(nodes: Node[]) {
+    return nodes.map((node: Node) => node.export());
   }
 
   public import(object: ExportObject) {
@@ -78,7 +78,7 @@ export default abstract class Diagram {
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     const indicators: Indicator[] = [];
     const links: Link[] = [];
-    const nodes: NodeShape[] = [];
+    const nodes: Node[] = [];
 
     object.indicators.forEach((it) => {
       const indicator = this.nodeFactory.getIndicator(it.params);

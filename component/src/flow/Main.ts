@@ -1,22 +1,17 @@
 import DiagramApi from '@app/flow/api/DiagramApi';
 import IndicatorApi from '@app/flow/api/IndicatorApi';
-import Diagram from '@app/flow/diagram/Diagram';
-import UmlDiagram from '@app/flow/diagram/uml/UmlDiagram';
+import Context from '@app/flow/Context';
 import Layout from '@app/flow/Layout';
 import BottomToolbar from '@app/flow/layout/BottomToolbar';
 import Library from '@app/flow/layout/Library';
 import PropertiesPanel from '@app/flow/layout/PropertiesPanel';
 import TopToolbar from '@app/flow/layout/TopToolbar';
 import Workspace from '@app/flow/layout/Workspace';
-import Store from '@app/flow/store/Store';
 import FlowrigamiOptions from '@app/FlowrigamiOptions';
 
 
 export default class Main {
-  private options: FlowrigamiOptions;
-  private layout: Layout;
-  private store: Store;
-  private diagram: Diagram;
+  private context: Context;
 
   public diagramApi: DiagramApi;
   public indicatorApi: IndicatorApi;
@@ -28,24 +23,22 @@ export default class Main {
   private propertiesPanel?: PropertiesPanel;
 
   constructor(root: HTMLElement, options: FlowrigamiOptions) {
-    this.options = options;
-    this.layout = new Layout(root, options);
-    this.store = new Store();
-    this.diagram = new UmlDiagram(this.store, this.layout.workspaceCanvas, this.layout.workspaceHtmlLayer);
+    const layout = new Layout(root, options);
+    this.context = new Context(layout, options);
 
-    this.diagramApi = new DiagramApi(this.diagram);
-    this.indicatorApi = new IndicatorApi(this.store);
+    this.diagramApi = new DiagramApi(this.context);
+    this.indicatorApi = new IndicatorApi(this.context);
 
-    this.workspace = new Workspace(this.layout, this.store, this.diagram);
-    this.bottomToolbar = new BottomToolbar(this.layout, this.store);
-    if (this.layout.library) {
-      this.library = new Library(this.layout.library, this.diagram);
+    this.workspace = new Workspace(this.context);
+    this.bottomToolbar = new BottomToolbar(this.context);
+    if (this.context.layout.library) {
+      this.library = new Library(this.context, this.context.layout.library);
     }
-    if (this.layout.topToolbar) {
-      this.topToolbar = new TopToolbar(this.layout.topToolbar, this.store, this.diagram);
+    if (this.context.layout.topToolbar) {
+      this.topToolbar = new TopToolbar(this.context, this.context.layout.topToolbar);
     }
-    if (this.layout.propertiesPanel) {
-      this.propertiesPanel = new PropertiesPanel(this.layout.propertiesPanel, this.store);
+    if (this.context.layout.propertiesPanel) {
+      this.propertiesPanel = new PropertiesPanel(this.context, this.context.layout.propertiesPanel);
     }
   }
 

@@ -1,12 +1,12 @@
 import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import NodeShape from '@app/flow/diagram/NodeShape';
+import Node from '@app/flow/diagram/Node';
 import { BORDER_RADIUS, styles } from '@app/flow/diagram/uml/node/ForkJoinConstants';
 import { UmlNodes } from '@app/flow/diagram/uml/UmlDiagramFactory';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 import CanvasRectangle from '@app/flow/graphics/canvas/shapes/CanvasRectangle';
 
 
-export default class VerticalForkJoinNode extends NodeShape {
+export default class VerticalForkJoinNode extends Node {
   public name = UmlNodes.VerticalForkJoinNode;
 
   private rectanglePreview: CanvasRectangle;
