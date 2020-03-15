@@ -7,11 +7,13 @@ You need to have *npm* installed on your OS. Please refer [here](https://www.npm
 To run the component in development mode please use the following commands:
 
 `npm i`
+
 `npm run dev`
 
 To build a runnable version in "build" folder please run these commands:
 
 `npm i`
+
 `npm run build`
 
 You can find demos and general description on the [Flowrigami official website](https://scand.com/products/flowrigami/).
