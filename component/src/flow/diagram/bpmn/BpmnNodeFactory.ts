@@ -1,4 +1,4 @@
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
+import Coordinates from '@app/flow/diagram/bpmn/Coordinates';
 import BoundaryInterrupting from '@app/flow/diagram/bpmn/node/events/message/BoundaryInterrupting';
 import BoundaryNonInterrupting from '@app/flow/diagram/bpmn/node/events/message/BoundaryNonInterrupting';
 import Catching from '@app/flow/diagram/bpmn/node/events/message/Catching';
@@ -7,10 +7,10 @@ import EventSubProcessInterrupting from '@app/flow/diagram/bpmn/node/events/mess
 import EventSubProcessNonInterrupting from '@app/flow/diagram/bpmn/node/events/message/EventSubProcessNonInterrupting';
 import Standard from '@app/flow/diagram/bpmn/node/events/message/Standard';
 import Throwing from '@app/flow/diagram/bpmn/node/events/message/Throwing';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
+import Indicator, { IndicatorParams } from '@app/flow/diagram/common/Indicator';
+import DirectionalLink from '@app/flow/diagram/common/link/DirectionalLink';
 import DiagramFactory from '@app/flow/diagram/DiagramFactory';
-import Indicator, { IndicatorParams } from '@app/flow/diagram/Indicator';
-import DirectionalLink from '@app/flow/diagram/uml/link/DirectionalLink';
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 
 
 export enum BpmnNodes {
@@ -27,17 +27,14 @@ export enum BpmnNodes {
 export default class BpmnNodeFactory implements DiagramFactory {
   private canvas: HTMLCanvasElement;
   private htmlLayer: HTMLElement;
-  private ctx: CanvasRenderingContext2D;
 
   constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement) {
     this.canvas = canvas;
     this.htmlLayer = htmlLayer;
-
-    this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
   }
 
   public getLink(points: AnchorPoint[]) {
-    return new DirectionalLink(this.ctx, points, points.length === 2);
+    return new DirectionalLink(this.canvas, this.htmlLayer, points, points.length === 2);
   }
 
   public getIndicator(params: IndicatorParams) {

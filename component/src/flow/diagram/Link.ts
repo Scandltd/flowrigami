@@ -1,34 +1,24 @@
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import nanoid from 'nanoid';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
+import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
+import CanvasShape from '@app/flow/graphics/canvas/CanvasShape';
 
 
-export default abstract class Link {
-  id: string;
-  points: AnchorPoint[];
-  // @TODO correct way how to link
-  // public abstract name: string;
-  // from: ConnectionPoint;
-  // to: ConnectionPoint;
+export default abstract class Link extends CanvasShape {
+  public points: AnchorPoint[];
+  // @TODO check is this necessary
+  public isOrthogonal = false;
 
-  isHover = false;
-  isActive = false;
-  isOrthogonal = false;
+  constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, points: AnchorPoint[]) {
+    super(canvas, htmlLayer);
 
-  constructor(points: AnchorPoint[]) {
-    if (points.length < 2) throw new Error('Link must contain at least 2 points');
-
-    this.id = nanoid();
     this.points = points;
   }
 
-  public abstract clone(): Link;
-
   public abstract draw(): void;
 
-  public abstract getDetectedPoint(coordinates: Coordinates): AnchorPoint | undefined;
+  public abstract getDetectedPoint(coordinates: CoordinatePoint): AnchorPoint | undefined;
 
-  public abstract includes(coordinates: Coordinates): boolean;
+  public abstract includes(x: number, y: number): boolean;
 
   public abstract move(dx: number, dy: number): void;
 

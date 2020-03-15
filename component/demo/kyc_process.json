@@ -6,8 +6,8 @@
     {
       "name": "Indicator",
       "id": "G9YgA-lBtDn1S8s6mfoiL",
-      "label": "",
       "params": {
+        "label": "",
         "x": 325,
         "y": 277,
         "radius": 20
@@ -16,8 +16,8 @@
     {
       "name": "Indicator",
       "id": "Dohetv6qmEHFanvSzqH2R",
-      "label": "",
       "params": {
+        "label": "",
         "x": 954,
         "y": 275,
         "radius": 20
@@ -26,8 +26,8 @@
     {
       "name": "Indicator",
       "id": "vtXwz2X_XObfNuUWlL0_c",
-      "label": "",
       "params": {
+        "label": "",
         "x": 1536,
         "y": 203,
         "radius": 20
@@ -36,8 +36,8 @@
     {
       "name": "Indicator",
       "id": "__qiqPQtIiv3qZ3ypDXGh",
-      "label": "",
       "params": {
+        "label": "",
         "x": 1545,
         "y": 322,
         "radius": 20
@@ -310,8 +310,8 @@
     {
       "id": "mj90dHaztHmivWkVlbPGx",
       "name": "StartNode",
-      "label": "Customer\naccount\nrequested\n",
       "params": {
+        "label": "Customer\naccount\nrequested\n",
         "x": 234,
         "y": 339
       }
@@ -319,8 +319,8 @@
     {
       "id": "zGo6_WgGN0xInUBpQCD9D",
       "name": "ActivityNode",
-      "label": "Create new \naccount",
       "params": {
+        "label": "Create new \naccount",
         "x": 384,
         "y": 339
       }
@@ -328,8 +328,8 @@
     {
       "id": "79e0T8DIUVXP1ZjXdQEro",
       "name": "VerticalForkJoinNode",
-      "label": "",
       "params": {
+        "label": "",
         "x": 504,
         "y": 339
       }
@@ -337,8 +337,8 @@
     {
       "id": "-3hbvvO37BLrl3LvSrw0z",
       "name": "ActivityNode",
-      "label": "Validate name \nand address",
       "params": {
+        "label": "Validate name \nand address",
         "x": 634,
         "y": 229
       }
@@ -346,8 +346,8 @@
     {
       "id": "0XnjrY5vsztwUagzdAxE_",
       "name": "ActivityNode",
-      "label": "Validate name\nfor interpol\nand PEP",
       "params": {
+        "label": "Validate name\nfor interpol\nand PEP",
         "x": 634,
         "y": 339
       }
@@ -355,8 +355,8 @@
     {
       "id": "VDxfxoC05n3cVBC7ubpwN",
       "name": "ActivityNode",
-      "label": "Verify account",
       "params": {
+        "label": "Verify account",
         "x": 634,
         "y": 449
       }
@@ -364,8 +364,8 @@
     {
       "id": "aWthboaLCf9SYYdb5BsZ4",
       "name": "VerticalForkJoinNode",
-      "label": "",
       "params": {
+        "label": "",
         "x": 764,
         "y": 339
       }
@@ -373,8 +373,8 @@
     {
       "id": "COqsaRT91iv3tF560HRqq",
       "name": "DecisionNode",
-      "label": "Certified?",
       "params": {
+        "label": "Certified?",
         "x": 864,
         "y": 339
       }
@@ -382,8 +382,8 @@
     {
       "id": "VfuQwcOGAXp44JjzLr26e",
       "name": "ActivityNode",
-      "label": "Manually review \nnew customer",
       "params": {
+        "label": "Manually review \nnew customer",
         "x": 1024,
         "y": 339
       }
@@ -391,8 +391,8 @@
     {
       "id": "UIK29kkuaBL4BaxwN7623",
       "name": "DecisionNode",
-      "label": "Success?",
       "params": {
+        "label": "Success?",
         "x": 1184,
         "y": 339
       }
@@ -400,8 +400,8 @@
     {
       "id": "tp80gjkiA12BJw7D-QOTH",
       "name": "ActivityNode",
-      "label": "Onboard new\ncustomer",
       "params": {
+        "label": "Onboard new\ncustomer",
         "x": 1184,
         "y": 229
       }
@@ -409,8 +409,8 @@
     {
       "id": "uWnqel2bX8I96dEk7qMZU",
       "name": "DecisionNode",
-      "label": "",
       "params": {
+        "label": "",
         "x": 1354,
         "y": 339
       }
@@ -418,8 +418,8 @@
     {
       "id": "v_iB1YRUPdhdWFVO0R61P",
       "name": "ActivityNode",
-      "label": "Welcome new \ncustomer",
       "params": {
+        "label": "Welcome new \ncustomer",
         "x": 1354,
         "y": 229
       }
@@ -427,8 +427,8 @@
     {
       "id": "ehBEco1HCjG4GRkHo138y",
       "name": "EndNode",
-      "label": "Customer \nonboarded",
       "params": {
+        "label": "Customer \nonboarded",
         "x": 1494,
         "y": 229
       }
@@ -436,8 +436,8 @@
     {
       "id": "rcxYMvILUIVM6ATiP93Pi",
       "name": "EndNode",
-      "label": "Customer\n declined",
       "params": {
+        "label": "Customer\n declined",
         "x": 1494,
         "y": 339
       }
@@ -445,46 +445,46 @@
     {
       "id": "H4LEvMV4FrbRB4d5ABCKI",
       "name": "TextNode",
-      "label": "Yes\n\n",
       "params": {
+        "label": "Yes\n\n",
         "x": 884,
-        "y": 209
+        "y": 205
       }
     },
     {
       "id": "VpmzyhVoWnIsP3MLfVsn_",
       "name": "TextNode",
-      "label": "No\n\n",
       "params": {
+        "label": "No\n\n",
         "x": 894,
-        "y": 319
+        "y": 315
       }
     },
     {
       "id": "FxB6cBu-pGHPwdVueVQVI",
       "name": "TextNode",
-      "label": "Unknown\n\n",
       "params": {
+        "label": "Unknown\n\n",
         "x": 874,
-        "y": 429
+        "y": 425
       }
     },
     {
       "id": "hiLvLO4QDk_T3UIGR-dp9",
       "name": "TextNode",
-      "label": "Pass\n\n",
       "params": {
+        "label": "Pass\n\n",
         "x": 1184,
-        "y": 279
+        "y": 275
       }
     },
     {
       "id": "AegMQKuUC2OI254PGw4Fo",
       "name": "TextNode",
-      "label": "Fail\n\n",
       "params": {
+        "label": "Fail\n\n",
         "x": 1214,
-        "y": 319
+        "y": 315
       }
     }
   ]

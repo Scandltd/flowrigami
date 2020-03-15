@@ -136,7 +136,7 @@ export default class TopToolbar {
     const htmlLayer = document.createElement('div');
 
     const detectionBorder = GRID_STEP*5;
-    const { min, max } = chartBorderDefinition(this.store.nodeList, this.store.connectorList);
+    const { min, max } = chartBorderDefinition(this.store.nodes, this.store.links);
     const diagramWidth = max.x - min.x + 2*detectionBorder;
     const diagramHeight = max.y - min.y + 2*detectionBorder;
     const quality = this.getQuality(diagramWidth, diagramHeight);
@@ -155,10 +155,12 @@ export default class TopToolbar {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     const nodeFactory = this.diagram.createNodeFactory(canvas, htmlLayer);
-    this.store.nodeList.forEach((it) => {
-      nodeFactory.getNode(it.name, { x: it.x, y: it.y }).draw();
+    this.store.nodes.forEach((it) => {
+      const node = nodeFactory.getNode(it.name, { x: it.x, y: it.y });
+      node.import(it.export());
+      node.draw();
     });
-    this.store.connectorList.forEach((it) => {
+    this.store.links.forEach((it) => {
       nodeFactory.getLink(it.points).draw();
     });
 

@@ -1,9 +1,9 @@
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
+import Coordinates from '@app/flow/diagram/bpmn/Coordinates';
 import NodeExportObject from '@app/flow/exportimport/NodeExportObject';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 import Store from '@app/flow/store/Store';
 import nanoid from 'nanoid';
+import BpmnAnchorPoint from './BpmnAnchorPoint';
 
 
 // @TODO temporarily kept only for bpmn (must replaced width NodeShape)
@@ -13,7 +13,7 @@ export default abstract class BpmnNode {
   public label = '';
 
   public coordinates: Coordinates;
-  public points: AnchorPoint[] = [];
+  public points: BpmnAnchorPoint[] = [];
 
   public isHover = false;
   public isActive = false;
@@ -32,17 +32,19 @@ export default abstract class BpmnNode {
 
   public export(): NodeExportObject {
     return {
-      id: this.id,
       name: this.name,
-      label: this.label,
-      params: { x: this.coordinates.x, y: this.coordinates.y },
+      id: this.id,
+      params: {
+        label: this.label,
+        x: this.coordinates.x,
+        y: this.coordinates.y
+      },
     };
   };
 
   public import(exportObject: NodeExportObject) {
     this.id = exportObject.id;
-    this.name = exportObject.name;
-    this.label = exportObject.label || '';
+    this.label = exportObject.params.label || '';
   }
 
   public abstract includes(coordinates: Coordinates): boolean;

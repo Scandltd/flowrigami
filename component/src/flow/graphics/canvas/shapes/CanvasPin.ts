@@ -1,69 +1,45 @@
+import Pin from '@app/flow/geometry/Pin';
 import CanvasShape from '@app/flow/graphics/canvas/CanvasShape';
 import ShapeStyle from '@app/flow/graphics/ShapeStyle';
 import { drawPath2D } from '@app/flow/utils/CanvasUtils';
+import { createPinPath2D } from '@app/flow/utils/Path2DUtils';
 
-
-export type PinParams = {
-  x: number;
-  y: number;
-  radius: number;
-  height?: number;
-}
 
 export default class CanvasPin extends CanvasShape {
   public name = 'CanvasPin';
 
-  private shapeStyle: ShapeStyle;
-  private x: number;
-  private y: number;
-  private radius: number;
-  private height: number;
+  private params: Pin;
+  private style: ShapeStyle;
+  private path2d: Path2D;
 
-  constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, shapeStyle: ShapeStyle, pinParams: PinParams) {
+  constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, style: ShapeStyle, params: Pin) {
     super(canvas, htmlLayer);
-    this.shapeStyle = shapeStyle;
-    this.x = pinParams.x;
-    this.y = pinParams.y;
-    this.radius = pinParams.radius;
-    this.height = pinParams.height || 1.5*pinParams.radius;
+    this.params = { ...params };
+    this.style = style;
+    this.path2d = createPinPath2D(this.params);
   }
 
   public draw() {
-    drawPath2D(this.ctx, this.createPath2D(), this.getShapeStyles());
+    drawPath2D(this.ctx, this.path2d, this.getCurrentStyle());
   }
 
-  private createPath2D() {
-    const radius = this.radius;
-    const height = this.height;
-    const x = this.x;
-    const y = this.y - (height - radius)/4;
-
-    const pin = new Path2D();
-    pin.moveTo(x, y - radius);
-    pin.arc(x, y, radius, -Math.PI/2, 0);
-    pin.bezierCurveTo(x + radius, y + 0.3*height, x + 0.5*radius, y + 0.7*height, x, y + height);
-    pin.bezierCurveTo(x - 0.5*radius, y + 0.7*height, x - radius, y + 0.3*height, x - radius, y);
-    pin.arc(x, y, radius, -Math.PI, -Math.PI/2);
-    pin.closePath();
-
-    return pin;
-  };
-
-  private getShapeStyles() {
-    const shapeStyle = this.shapeStyle;
-    return this.isActive ? (shapeStyle.active || shapeStyle) : (this.isHover ? (shapeStyle.hover || shapeStyle) : shapeStyle);
+  private getCurrentStyle() {
+    const style = this.style;
+    return this.isActive ? (style.active || style) : (this.isHover ? (style.hover || style) : style);
   }
 
   public includes(x: number, y: number) {
-    return this.ctx.isPointInPath(this.createPath2D(), x, y);
+    return this.ctx.isPointInPath(this.path2d, x, y);
   }
 
   public move(dx: number, dy: number) {
-    this.x += dx;
-    this.y += dy;
+    this.params.x += dx;
+    this.params.y += dy;
+
+    this.path2d = createPinPath2D(this.params);
   }
 
   public setStyle(shapeStyle: ShapeStyle) {
-    this.shapeStyle = shapeStyle;
+    this.style = shapeStyle;
   }
 }

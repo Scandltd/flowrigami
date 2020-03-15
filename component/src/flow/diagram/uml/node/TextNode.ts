@@ -4,14 +4,22 @@ import Node from '@app/flow/diagram/Node';
 import { getPreviewRectangleParams, getRectangleParams, previewStyles, styles } from '@app/flow/diagram/uml/node/TextNodeConstants';
 import { UmlNodes } from '@app/flow/diagram/uml/UmlDiagramFactory';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
+import CanvasText from '@app/flow/graphics/canvas/CanvasText';
 import CanvasRectangle from '@app/flow/graphics/canvas/shapes/CanvasRectangle';
-import CanvasText from '@app/flow/graphics/canvas/shapes/CanvasText';
 import TextParams from '@app/flow/graphics/TextParams';
 import Store from '@app/flow/store/Store';
 
 
 export default class TextNode extends Node {
   public name = UmlNodes.TextNode;
+
+  public get label() { return super.label; }
+  public set label(label: string) {
+    super.label = label;
+    this.textEditor.setText(super.label);
+
+    this.rectangle = this.createHoverRectangle();
+  }
 
   private textEditor: CanvasText;
   private rectangle: CanvasRectangle;
@@ -55,13 +63,6 @@ export default class TextNode extends Node {
 
     this.rectangle.move(dx, dy);
     this.textEditor.move(dx, dy);
-  }
-
-  public setLabel(label: string = '') {
-    super.setLabel(label);
-    this.textEditor.setText(label);
-
-    this.rectangle = this.createHoverRectangle();
   }
 
   public renderHtml(parent: HTMLElement, store: Store) {

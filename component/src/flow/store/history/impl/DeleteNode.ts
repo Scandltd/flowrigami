@@ -16,18 +16,11 @@ export default class DeleteNode implements Action {
   }
 
   execute = () => {
-    this.store.nodeList = this.store.nodeList.filter(node => node.id !== this.node.id);
-    this.store.connectorList = this.store.connectorList.filter((link) => {
-      const detectedPoint = link.points.find(linePoint => {
-        return this.node.points.find(point => point.id === linePoint.id);
-      });
-
-      return !detectedPoint;
-    });
+    this.store.deleteNodeById(this.node.id);
   };
 
   revert = () => {
-    this.store.nodeList.push(this.node);
-    this.store.connectorList = [...this.store.connectorList, ...this.links];
+    this.store.addNode(this.node);
+    this.store.addLinks(this.links);
   };
 }

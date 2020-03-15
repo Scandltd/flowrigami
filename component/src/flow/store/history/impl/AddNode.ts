@@ -13,10 +13,10 @@ export default class AddNode implements Action {
   }
 
   execute = () => {
-    this.store.nodeList.push(this.node);
+    this.store.addNode(this.node);
   };
 
   revert = () => {
-    this.store.nodeList = this.store.nodeList.filter(node => node.id !== this.node.id);
+    this.store.deleteNodeById(this.node.id);
   };
 }

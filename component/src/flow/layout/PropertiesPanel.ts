@@ -1,5 +1,5 @@
 import Context from '@app/flow/Context';
-import Indicator from '@app/flow/diagram/Indicator';
+import Indicator from '@app/flow/diagram/common/Indicator';
 import Node from '@app/flow/diagram/Node';
 import ACTION from '@app/flow/store/ActionTypes';
 import Store from '@app/flow/store/Store';

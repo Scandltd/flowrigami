@@ -1,7 +1,6 @@
 import Context from '@app/flow/Context';
+import Indicator from '@app/flow/diagram/common/Indicator';
 import Diagram from '@app/flow/diagram/Diagram';
-import Indicator from '@app/flow/diagram/Indicator';
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 
 
 export default class Library {
@@ -50,7 +49,7 @@ export default class Library {
       });
 
       canvas.addEventListener('mousemove', (e) => {
-        node.isHover = node.previewIncludes(new Coordinates(e.offsetX, e.offsetY));
+        node.isHover = node.previewIncludes({ x: e.offsetX, y: e.offsetY });
         canvas.style.cursor = node.isHover ? 'pointer' : 'default';
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);

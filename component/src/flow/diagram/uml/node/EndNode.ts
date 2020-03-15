@@ -1,5 +1,5 @@
 import { SHAPE_LABEL_STYLE, SHAPE_SELECTION_STYLE } from '@app/flow/DefaultTheme';
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
 import Node from '@app/flow/diagram/Node';
 import {
   dotPreviewStyle,
@@ -16,13 +16,19 @@ import {
 } from '@app/flow/diagram/uml/node/EndNodeConstants';
 import { UmlNodes } from '@app/flow/diagram/uml/UmlDiagramFactory';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
+import CanvasText from '@app/flow/graphics/canvas/CanvasText';
 import CanvasCircle from '@app/flow/graphics/canvas/shapes/CanvasCircle';
-import CanvasText from '@app/flow/graphics/canvas/shapes/CanvasText';
 import Store from '@app/flow/store/Store';
 
 
 export default class EndNode extends Node {
   public name = UmlNodes.EndNode;
+
+  public get label() { return super.label; }
+  public set label(label: string) {
+    super.label = label;
+    this.textEditor.setText(super.label);
+  }
 
   private circle: CanvasCircle;
   private textEditor: CanvasText;
@@ -44,12 +50,12 @@ export default class EndNode extends Node {
     this.textEditor = new CanvasText(canvas, htmlLayer, getTextParams(params), SHAPE_LABEL_STYLE);
 
     const [top, right, bottom, left] = getAnchorPoints(params);
-    this.points = [
+    this.createConnectionPoints([
       new AnchorPoint(this.ctx, top, AnchorPoint.Orientation.Top),
       new AnchorPoint(this.ctx, right, AnchorPoint.Orientation.Right),
       new AnchorPoint(this.ctx, bottom, AnchorPoint.Orientation.Bottom),
       new AnchorPoint(this.ctx, left, AnchorPoint.Orientation.Left),
-    ];
+    ]);
   }
 
   public draw() {
@@ -92,11 +98,6 @@ export default class EndNode extends Node {
     this.circle.move(dx, dy);
     this.dot.move(dx, dy);
     this.circleSelection.move(dx, dy);
-  }
-
-  public setLabel(label: string = '') {
-    super.setLabel(label);
-    this.textEditor.setText(label);
   }
 
   public renderHtml(parent: HTMLElement, store: Store) {

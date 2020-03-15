@@ -1,6 +1,7 @@
 export default interface Shape {
+  readonly name: string;
+
   id: string;
-  name: string;
   isActive: boolean;
   isHover: boolean;
 

@@ -5,8 +5,8 @@
     {
       "name": "Indicator",
       "id": "ULXBCpOpu93ZJUX2FgRmb",
-      "label": "",
       "params": {
+        "label": "",
         "x": 640,
         "y": 236,
         "radius": 20
@@ -15,8 +15,8 @@
     {
       "name": "Indicator",
       "id": "sRuBw8NsiQ35sGnMtdmh4",
-      "label": "",
       "params": {
+        "label": "",
         "x": 1515,
         "y": 236,
         "radius": 20
@@ -25,8 +25,8 @@
     {
       "name": "Indicator",
       "id": "ICbInk20RNMdHIRNgb7ER",
-      "label": "",
       "params": {
+        "label": "",
         "x": 1847,
         "y": 236,
         "radius": 20
@@ -35,8 +35,8 @@
     {
       "name": "Indicator",
       "id": "tTzQIDI9l-jfdq8hsVrcP",
-      "label": "",
       "params": {
+        "label": "",
         "x": 2664,
         "y": 236,
         "radius": 20
@@ -45,8 +45,8 @@
     {
       "name": "Indicator",
       "id": "LadDaoK_4qkvJmQ0BIRoX",
-      "label": "",
       "params": {
+        "label": "",
         "x": 3175,
         "y": 236,
         "radius": 20
@@ -55,8 +55,8 @@
     {
       "name": "Indicator",
       "id": "lHcWI9egroLDCnAIoV9_f",
-      "label": "",
       "params": {
+        "label": "",
         "x": 3483,
         "y": 236,
         "radius": 20
@@ -623,8 +623,8 @@
     {
       "id": "P70oymK16njVyVud--8VH",
       "name": "StartNode",
-      "label": "",
       "params": {
+        "label": "",
         "x": 190,
         "y": 300
       }
@@ -632,8 +632,8 @@
     {
       "id": "9pbSsQA70-_K-bPbSLXxs",
       "name": "ActivityNode",
-      "label": "Vacancy opening",
       "params": {
+        "label": "Vacancy opening",
         "x": 520,
         "y": 300
       }
@@ -641,8 +641,8 @@
     {
       "id": "bLK5JeFzDhBPyNZsTaZtl",
       "name": "ActivityNode",
-      "label": "Searching for a \ncandidate",
       "params": {
+        "label": "Searching for a \ncandidate",
         "x": 700,
         "y": 300
       }
@@ -650,8 +650,8 @@
     {
       "id": "rvbw0sqZUcSe4-5T5iq7I",
       "name": "VerticalForkJoinNode",
-      "label": "",
       "params": {
+        "label": "",
         "x": 820,
         "y": 300
       }
@@ -659,8 +659,8 @@
     {
       "id": "6Sl5W1OyYYsER8jlnhMy6",
       "name": "VerticalForkJoinNode",
-      "label": "",
       "params": {
+        "label": "",
         "x": 1100,
         "y": 300
       }
@@ -668,8 +668,8 @@
     {
       "id": "RPtMnP4khUliVusEGf27e",
       "name": "ActivityNode",
-      "label": "Written or \nphone \ninterview",
       "params": {
+        "label": "Written or \nphone \ninterview",
         "x": 1220,
         "y": 300
       }
@@ -677,8 +677,8 @@
     {
       "id": "Jtfrt240JbyJurWhHsy7p",
       "name": "ActivityNode",
-      "label": "Approval \nby head of\nthe department\n",
       "params": {
+        "label": "Approval \nby head of\nthe department\n",
         "x": 1580,
         "y": 300
       }
@@ -686,8 +686,8 @@
     {
       "id": "NWRGipPTRf74u26PFroOU",
       "name": "DecisionNode",
-      "label": "Was candidate \napproved?\n",
       "params": {
+        "label": "Was candidate \napproved?\n",
         "x": 1730,
         "y": 300
       }
@@ -695,8 +695,8 @@
     {
       "id": "uxXpHXX9rxCZQeBxxTjMU",
       "name": "DecisionNode",
-      "label": "Was job \ninterview \nsuccessful?",
       "params": {
+        "label": "Was job \ninterview \nsuccessful?",
         "x": 2060,
         "y": 300
       }
@@ -704,8 +704,8 @@
     {
       "id": "HkiiMzTxcL7X0jr5j1lKs",
       "name": "DecisionNode",
-      "label": "Is test task \nneeded?",
       "params": {
+        "label": "Is test task \nneeded?",
         "x": 2200,
         "y": 300
       }
@@ -713,8 +713,8 @@
     {
       "id": "q0lwIvjq2tEWAfa2ypR7A",
       "name": "ActivityNode",
-      "label": "Candidate \nperforms \ntest task\n",
       "params": {
+        "label": "Candidate \nperforms \ntest task\n",
         "x": 2300,
         "y": 230
       }
@@ -722,8 +722,8 @@
     {
       "id": "GyulMHoQ8pRl9XcDwbT7-",
       "name": "DecisionNode",
-      "label": "Was test task\nsuccessful?",
       "params": {
+        "label": "Was test task\nsuccessful?",
         "x": 2460,
         "y": 230
       }
@@ -731,8 +731,8 @@
     {
       "id": "c8VPeVYGDJMv-B7EH6Z_E",
       "name": "ActivityNode",
-      "label": "Job offer \nto the candidate",
       "params": {
+        "label": "Job offer \nto the candidate",
         "x": 2730,
         "y": 300
       }
@@ -740,8 +740,8 @@
     {
       "id": "mqWuEsz15spb7EUnAlSJ5",
       "name": "DecisionNode",
-      "label": "",
       "params": {
+        "label": "",
         "x": 2590,
         "y": 300
       }
@@ -749,8 +749,8 @@
     {
       "id": "T7t5XUOVMy2PzEyP6kokE",
       "name": "DecisionNode",
-      "label": "Has the \ncandidate \naccepted the\njob offer?",
       "params": {
+        "label": "Has the \ncandidate \naccepted the\njob offer?",
         "x": 2880,
         "y": 300
       }
@@ -758,8 +758,8 @@
     {
       "id": "dryTJ00c5UG7ctpQs_sgt",
       "name": "ActivityNode",
-      "label": "Hiring\nprocedure",
       "params": {
+        "label": "Hiring\nprocedure",
         "x": 3050,
         "y": 300
       }
@@ -767,8 +767,8 @@
     {
       "id": "TCed4mEnlAB_scIUU1H8Z",
       "name": "ActivityNode",
-      "label": "Candidate's \nprobation",
       "params": {
+        "label": "Candidate's \nprobation",
         "x": 3240,
         "y": 300
       }
@@ -776,8 +776,8 @@
     {
       "id": "q7TNGMMefDzzm2QOTmvjt",
       "name": "DecisionNode",
-      "label": "Was probation \nsuccessful?\n",
       "params": {
+        "label": "Was probation \nsuccessful?\n",
         "x": 3370,
         "y": 300
       }
@@ -785,8 +785,8 @@
     {
       "id": "JbHtnwSxlKhL12MyFYMxN",
       "name": "ActivityNode",
-      "label": "Hired candidate\nworks in the\ncompany\n\n\n",
       "params": {
+        "label": "Hired candidate\nworks in the\ncompany\n\n\n",
         "x": 3550,
         "y": 300
       }
@@ -794,8 +794,8 @@
     {
       "id": "nbpWwnKwXA9EFEBCd4lrb",
       "name": "ActivityNode",
-      "label": "Termination of\nemployment \ncontract\n",
       "params": {
+        "label": "Termination of\nemployment \ncontract\n",
         "x": 3720,
         "y": 300
       }
@@ -803,8 +803,8 @@
     {
       "id": "qmTavkn4iNqDQ6doePPU4",
       "name": "ActivityNode",
-      "label": "Processing\ndocuments for \ndismissal",
       "params": {
+        "label": "Processing\ndocuments for \ndismissal",
         "x": 3890,
         "y": 300
       }
@@ -812,8 +812,8 @@
     {
       "id": "F-MEtZeX4WCRolvTglRmI",
       "name": "EndNode",
-      "label": "",
       "params": {
+        "label": "",
         "x": 4400,
         "y": 300
       }
@@ -821,8 +821,8 @@
     {
       "id": "5BtJqKWVYBHBIzTV1Bm2I",
       "name": "ActivityNode",
-      "label": "Determination \nof requirements for a candidate",
       "params": {
+        "label": "Determination \nof requirements for a candidate",
         "x": 340,
         "y": 300
       }
@@ -830,8 +830,8 @@
     {
       "id": "6YadYWs0OUSebiSksgAPp",
       "name": "ActivityNode",
-      "label": "Passive search",
       "params": {
+        "label": "Passive search",
         "x": 960,
         "y": 250
       }
@@ -839,8 +839,8 @@
     {
       "id": "bRlOs1-jjOhIbsEUBv2eF",
       "name": "ActivityNode",
-      "label": "Active search",
       "params": {
+        "label": "Active search",
         "x": 960,
         "y": 350
       }
@@ -848,8 +848,8 @@
     {
       "id": "hHj4OUJpWU5Yu8eDfcD3E",
       "name": "ActivityNode",
-      "label": "Candidate's\n profile forming",
       "params": {
+        "label": "Candidate's\n profile forming",
         "x": 1400,
         "y": 300
       }
@@ -857,8 +857,8 @@
     {
       "id": "pQgN2ePciU535L7Lj9e-I",
       "name": "ActivityNode",
-      "label": "Final settlement",
       "params": {
+        "label": "Final settlement",
         "x": 4070,
         "y": 300
       }
@@ -866,8 +866,8 @@
     {
       "id": "sXAeUpNBXY7guBX9CwVQW",
       "name": "ActivityNode",
-      "label": "Exit interview",
       "params": {
+        "label": "Exit interview",
         "x": 4260,
         "y": 300
       }
@@ -875,8 +875,8 @@
     {
       "id": "JnLtWRMv3cN4w2fO59Lis",
       "name": "ActivityNode",
-      "label": "Job interview",
       "params": {
+        "label": "Job interview",
         "x": 1910,
         "y": 300
       }

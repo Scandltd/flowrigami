@@ -1,10 +1,10 @@
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import BpmnNode from '../../BpmnNode';
+import Coordinates from '@app/flow/diagram/bpmn/Coordinates';
 import { previewStyles, selectionStyle, styles } from '@app/flow/diagram/bpmn/node/data/dataStyles';
 import Text from '@app/flow/diagram/bpmn/shapes/Text';
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 import Store from '@app/flow/store/Store';
 import { drawPath2D } from '@app/flow/utils/CanvasUtils';
+import BpmnAnchorPoint from '../../BpmnAnchorPoint';
+import BpmnNode from '../../BpmnNode';
 
 
 export default class DataStore extends BpmnNode {
@@ -29,10 +29,10 @@ export default class DataStore extends BpmnNode {
 
 
     this.points = [
-      new AnchorPoint(ctx, new Coordinates(coordinates.x, coordinates.y - this.halfHeight - 8), AnchorPoint.Orientation.Top),
-      new AnchorPoint(ctx, new Coordinates(coordinates.x + this.halfWidth, coordinates.y), AnchorPoint.Orientation.Right),
-      new AnchorPoint(ctx, new Coordinates(coordinates.x, coordinates.y + this.halfHeight + 8), AnchorPoint.Orientation.Bottom),
-      new AnchorPoint(ctx, new Coordinates(coordinates.x - this.halfWidth, coordinates.y), AnchorPoint.Orientation.Left),
+      new BpmnAnchorPoint(ctx, new Coordinates(coordinates.x, coordinates.y - this.halfHeight - 8), BpmnAnchorPoint.Orientation.Top),
+      new BpmnAnchorPoint(ctx, new Coordinates(coordinates.x + this.halfWidth, coordinates.y), BpmnAnchorPoint.Orientation.Right),
+      new BpmnAnchorPoint(ctx, new Coordinates(coordinates.x, coordinates.y + this.halfHeight + 8), BpmnAnchorPoint.Orientation.Bottom),
+      new BpmnAnchorPoint(ctx, new Coordinates(coordinates.x - this.halfWidth, coordinates.y), BpmnAnchorPoint.Orientation.Left),
     ];
   }
 

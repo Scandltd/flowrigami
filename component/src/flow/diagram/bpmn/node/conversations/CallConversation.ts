@@ -1,9 +1,9 @@
-import BpmnNode from '../../BpmnNode';
+import Coordinates from '@app/flow/diagram/bpmn/Coordinates';
 import { previewStyles, selectionStyle, styles } from '@app/flow/diagram/bpmn/node/conversations/CallConversationStyles';
 import Hexagon from '@app/flow/diagram/bpmn/shapes/Hexagon';
 import Text from '@app/flow/diagram/bpmn/shapes/Text';
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 import Store from '@app/flow/store/Store';
+import BpmnNode from '../../BpmnNode';
 
 
 export default class CallConversation extends BpmnNode {

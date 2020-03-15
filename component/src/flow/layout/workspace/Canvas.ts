@@ -1,7 +1,7 @@
 import Context from '@app/flow/Context';
 import { GRID_MAIN_LINE_STEP, GRID_STEP } from '@app/flow/DefaultThemeConstants';
 import { stats } from '@app/flow/development/stats';
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
 import CanvasGrid from '@app/flow/graphics/canvas/CanvasGrid';
 import ACTION from '@app/flow/store/ActionTypes';
 import Store from '@app/flow/store/Store';
@@ -24,6 +24,7 @@ export function chartBorderDefinition(nodes: any[], links: any[], offset = 10) {
 }
 
 export default class Canvas {
+  private context: Context;
   private store: Store;
   private workspace: HTMLElement;
   private workspaceContainer: HTMLElement;
@@ -36,6 +37,7 @@ export default class Canvas {
   private requestAnimationFrameId: number;
 
   constructor(context: Context) {
+    this.context = context;
     this.store = context.store;
     this.workspace = context.layout.workspace;
     this.workspaceContainer = context.layout.workspaceContainer;
@@ -58,10 +60,7 @@ export default class Canvas {
 
     this.renderHtml();
 
-    if (!context.options.viewMode) {
-      document.addEventListener('keyup', this.onKeyUp);
-      document.addEventListener('keydown', this.onKeyDown);
-    }
+    document.addEventListener('keydown', this.onKeyDown);
 
     this.store.subscribe(ACTION.IMPORT, this.autoSizeWorkspace);
     this.store.subscribe(ACTION.AUTO_LAYOUT, this.autoLayout);
@@ -70,37 +69,49 @@ export default class Canvas {
     this.store.subscribe(ACTION.SET_NODE_EDIT, this.renderHtml);
   }
 
-  private onKeyUp = (e: KeyboardEvent) => {
-    if (e.target instanceof HTMLElement) {
-      const tagName = e.target.tagName.toLowerCase();
-      if (this.workspaceHtmlLayer.contains(e.target) || tagName === 'input' || tagName === 'textarea') {
-        return;
-      }
-    }
-
-    switch (e.code) {
-      case 'Delete':
-        return this.handleDelete();
-      case 'Backspace':
-        return this.handleDelete();
-      case 'Escape':
-        return this.store.dispatch(ACTION.ESCAPE);
-      default:
-        return;
-    }
-  };
-
   private onKeyDown = (e: KeyboardEvent) => {
-    if (e.code === 'KeyZ' && e.ctrlKey && e.shiftKey) {
-      this.store.dispatch(ACTION.REDO);
-    } else if (e.code === 'KeyZ' && e.ctrlKey) {
-      this.store.dispatch(ACTION.UNDO);
-    } else if (e.key === '+' && e.ctrlKey) {
+    if (e.ctrlKey && (e.key === '+' || e.key === 'Add')) {
       this.store.dispatch(ACTION.CHANGE_SCALE, this.store.scale + 0.1);
       e.preventDefault();
-    } else if (e.key === '-' && e.ctrlKey) {
+    } else if (e.ctrlKey && (e.key === '-' || e.key === 'Subtract')) {
       this.store.dispatch(ACTION.CHANGE_SCALE, this.store.scale - 0.1);
       e.preventDefault();
+    }
+
+    if (!this.context.options.viewMode) {
+      if (e.ctrlKey && e.key.toLowerCase() === 'z') {
+        this.store.dispatch(e.shiftKey ? ACTION.REDO : ACTION.UNDO);
+        e.preventDefault();
+      }
+
+      const isTextEditing = () => {
+        if (!(e.target instanceof HTMLElement && e.target.shadowRoot)) {
+          return false;
+        }
+
+        const activeElement = e.target.shadowRoot.activeElement;
+        return activeElement instanceof HTMLElement && (
+          activeElement.contentEditable === 'true' ||
+          activeElement.tagName === 'INPUT' ||
+          activeElement.tagName === 'TEXTAREA'
+        );
+      };
+      if (isTextEditing()) {
+        return;
+      }
+
+      switch (e.key) {
+        case 'Backspace':
+        case 'Delete':
+          this.handleDelete();
+          e.preventDefault();
+          break;
+        case 'Escape':
+          this.store.dispatch(ACTION.ESCAPE);
+          e.preventDefault();
+          break;
+        default:
+      }
     }
   };
 
@@ -113,15 +124,16 @@ export default class Canvas {
     const canvasCenterX = this.workspaceContainer.offsetWidth/2;
     const canvasCenterY = this.workspaceContainer.offsetHeight/2;
 
-    const { min, max } = chartBorderDefinition(this.store.nodeList, this.store.connectorList);
+    const { min, max } = chartBorderDefinition(this.store.nodes, this.store.links);
     const diagramCenterX = min.x + (max.x - min.x)/2;
     const diagramCenterY = min.y + (max.y - min.y)/2;
 
     const offsetX = canvasCenterX - diagramCenterX;
     const offsetY = canvasCenterY - diagramCenterY;
 
-    this.store.nodeList.forEach((node) => node.move(offsetX, offsetY));
-    this.store.connectorList.forEach((link) => link.move(offsetX, offsetY));
+    this.store.moveAllIndicators(offsetX, offsetY);
+    this.store.moveAllLinks(offsetX, offsetY);
+    this.store.moveAllNodes(offsetX, offsetY);
 
     this.workspaceContainer.style.top = `${(parentHeight - this.workspaceContainer.offsetHeight)/2}px`;
     this.workspaceContainer.style.left = `${(parentWidth - this.workspaceContainer.offsetWidth)/2}px`;
@@ -134,13 +146,18 @@ export default class Canvas {
     const minCanvasWidth = Math.trunc(parentWidth/gridBlockPx)*gridBlockPx;
     const minCanvasHeight = Math.trunc(parentHeight/gridBlockPx)*gridBlockPx;
 
-    const { min, max } = chartBorderDefinition(this.store.nodeList, this.store.connectorList);
+    const { min, max } = chartBorderDefinition(this.store.nodes, this.store.links);
 
-    const canvasWidth = Math.trunc(max.x/gridBlockPx)*gridBlockPx;
-    const canvasHeight = Math.trunc(max.y/gridBlockPx)*gridBlockPx;
+    const diagramWidth = Math.trunc(max.x/gridBlockPx)*gridBlockPx;
+    const diagramHeight = Math.trunc(max.y/gridBlockPx)*gridBlockPx;
+    const canvasWidth = Math.max(diagramWidth + 2*gridBlockPx, minCanvasWidth);
+    const canvasHeight = Math.max(diagramHeight + 2*gridBlockPx, minCanvasHeight);
 
-    this.workspaceCanvas.width = Math.max(canvasWidth + 2*gridBlockPx, minCanvasWidth);
-    this.workspaceCanvas.height = Math.max(canvasHeight + 2*gridBlockPx, minCanvasHeight);
+    this.workspaceCanvas.width = canvasWidth;
+    this.workspaceCanvas.height = canvasHeight;
+
+    this.workspaceContainer.style.top = `${parentHeight > canvasHeight ? 0.5*(parentHeight - canvasHeight) : 0}px`;
+    this.workspaceContainer.style.left = `${parentWidth > canvasWidth ? 0.5*(parentWidth - canvasWidth) : 0}px`;
   };
 
 
@@ -171,25 +188,25 @@ export default class Canvas {
     }
 
     // @TODO some magic here: think over drawing order
-    this.store.nodeList.forEach((it) => {
+    this.store.nodes.forEach((it) => {
       if (!it.isHover || !it.isActive) {
         it.draw();
       }
     });
 
-    this.store.connectorList.forEach((it) => {
+    this.store.links.forEach((it) => {
       if (!it.isHover || !it.isActive) {
         it.draw();
       }
     });
 
-    this.store.nodeList.forEach((node) => {
+    this.store.nodes.forEach((node) => {
       if (node.isHover || node.isActive) {
         node.draw();
       }
     });
 
-    this.store.connectorList.forEach((it) => {
+    this.store.links.forEach((it) => {
       if (it.isHover || it.isActive) {
         it.draw();
       }
@@ -219,13 +236,12 @@ export default class Canvas {
     }
 
     this.store.indicators.forEach(it => it.renderHtml(textLayer, this.store));
-    this.store.nodeList.forEach(node => node.renderHtml(textLayer, this.store));
+    this.store.nodes.forEach(node => node.renderHtml(textLayer, this.store));
   };
 
   public unmount() {
     window.cancelAnimationFrame(this.requestAnimationFrameId);
 
-    document.removeEventListener('keyup', this.onKeyUp);
     document.removeEventListener('keydown', this.onKeyDown);
 
     this.store.unsubscribe(ACTION.IMPORT, this.autoSizeWorkspace);

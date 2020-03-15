@@ -1,42 +1,41 @@
-import Circle, { CircleParams } from '@app/flow/geometry/shapes/Circle';
+import Circle from '@app/flow/geometry/Circle';
 import CanvasShape from '@app/flow/graphics/canvas/CanvasShape';
 import ShapeStyle from '@app/flow/graphics/ShapeStyle';
 import { drawPath2D } from '@app/flow/utils/CanvasUtils';
+import { createCirclePath2D } from '@app/flow/utils/Path2DUtils';
 
 
 export default class CanvasCircle extends CanvasShape {
   public name = 'CanvasCircle';
 
-  private circle: Circle;
-  private shapeStyle: ShapeStyle;
+  private params: Circle;
+  private style: ShapeStyle;
+  private path2d: Path2D;
 
-  constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, shapeStyle: ShapeStyle, circleParams: CircleParams) {
+  constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, style: ShapeStyle, params: Circle) {
     super(canvas, htmlLayer);
-    this.circle = new Circle(circleParams);
-    this.shapeStyle = shapeStyle;
+    this.params = { ...params };
+    this.style = style;
+    this.path2d = createCirclePath2D(this.params);
   }
 
   public draw() {
-    drawPath2D(this.ctx, this.createPath2D(), this.getShapeStyles());
+    drawPath2D(this.ctx, this.path2d, this.getCurrentStyle());
   }
 
-  private createPath2D() {
-    const circle = new Path2D();
-    circle.arc(this.circle.x, this.circle.y, this.circle.radius, 0, 2*Math.PI);
-    return circle;
-  };
-
-  private getShapeStyles() {
-    const shapeStyle = this.shapeStyle;
+  private getCurrentStyle() {
+    const shapeStyle = this.style;
     return this.isActive ? (shapeStyle.active || shapeStyle) : (this.isHover ? (shapeStyle.hover || shapeStyle) : shapeStyle);
   }
 
   public includes(x: number, y: number) {
-    return this.ctx.isPointInPath(this.createPath2D(), x, y);
+    return this.ctx.isPointInPath(this.path2d, x, y);
   }
 
   public move(dx: number, dy: number) {
-    this.circle.x += dx;
-    this.circle.y += dy;
+    this.params.x += dx;
+    this.params.y += dy;
+
+    this.path2d = createCirclePath2D(this.params);
   }
 }

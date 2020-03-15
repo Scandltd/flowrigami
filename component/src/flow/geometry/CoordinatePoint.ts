@@ -1,3 +1,4 @@
-type CoordinatePoint = { x: number, y: number };
-
-export default CoordinatePoint;
+export default interface CoordinatePoint {
+  x: number;
+  y: number;
+}

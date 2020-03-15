@@ -1,4 +1,4 @@
-import Indicator from '@app/flow/diagram/Indicator';
+import Indicator from '@app/flow/diagram/common/Indicator';
 import Action from '@app/flow/store/history/Action';
 import Store from '@app/flow/store/Store';
 
@@ -13,10 +13,10 @@ export default class AddIndicator implements Action {
   }
 
   execute = () => {
-    this.store.indicators.push(this.indicator);
+    this.store.addIndicator(this.indicator);
   };
 
   revert = () => {
-    this.store.indicators = this.store.indicators.filter(node => node.id !== this.indicator.id);
+    this.store.deleteIndicatorById(this.indicator.id);
   };
 }

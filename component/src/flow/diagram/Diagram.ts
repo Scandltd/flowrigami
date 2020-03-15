@@ -1,11 +1,11 @@
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
+import Indicator from '@app/flow/diagram/common/Indicator';
+import DirectionalLink from '@app/flow/diagram/common/link/DirectionalLink';
 import DiagramFactory from '@app/flow/diagram/DiagramFactory';
-import Indicator from '@app/flow/diagram/Indicator';
 import Link from '@app/flow/diagram/Link';
 import Node from '@app/flow/diagram/Node';
 import ExportObject from '@app/flow/exportimport/ExportObject';
 import LinkExportObject from '@app/flow/exportimport/LinkExportObject';
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 import ACTION from '@app/flow/store/ActionTypes';
 import Store from '@app/flow/store/Store';
 
@@ -34,8 +34,8 @@ export default abstract class Diagram {
       diagram: this.name,
 
       indicators: this.prepareIndicators(this.store.indicators),
-      links: this.prepareLinks(this.store.connectorList, this.store.nodeList),
-      nodes: this.prepareNodes(this.store.nodeList),
+      links: this.prepareLinks(this.store.links, this.store.nodes),
+      nodes: this.prepareNodes(this.store.nodes),
     };
   };
 
@@ -88,8 +88,8 @@ export default abstract class Diagram {
     });
 
     object.nodes.forEach((it) => {
-      const nodeType = it.name;
-      const node = this.nodeFactory.getNode(nodeType, it.params);
+      const nodeName = it.name;
+      const node = this.nodeFactory.getNode(nodeName, it.params);
 
       if (node) {
         node.import(it);
@@ -99,22 +99,25 @@ export default abstract class Diagram {
 
     object.links.forEach((it) => {
       const points = it.points.map(({ x, y }, i) => {
-        const coordinates = new Coordinates(x, y);
-
         let connectionPoint;
         if (i === 0) {
           const from = nodes.find((node) => node.id === it.from);
-          connectionPoint = from!.getConnectionPoint(coordinates);
+          connectionPoint = from!.getConnectionPoint({ x, y });
         }
         if (i === it.points.length - 1) {
           const to = nodes.find((node) => node.id === it.to);
-          connectionPoint = to!.getConnectionPoint(coordinates);
+          connectionPoint = to!.getConnectionPoint({ x, y });
         }
 
-        return connectionPoint || new AnchorPoint(ctx, { x: coordinates.x, y: coordinates.y });
+        return connectionPoint || new AnchorPoint(ctx, { x, y });
       });
 
       const link = this.nodeFactory.getLink(points);
+
+      // @TODO
+      link.points[0].links.push(link as DirectionalLink);
+      link.points[link.points.length - 1].links.push(link as DirectionalLink);
+
       links.push(link);
     });
 

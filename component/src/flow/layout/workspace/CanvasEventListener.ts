@@ -1,12 +1,11 @@
 import Context from '@app/flow/Context';
 import { GRID_STEP } from '@app/flow/DefaultThemeConstants';
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
+import Indicator from '@app/flow/diagram/common/Indicator';
 import Diagram from '@app/flow/diagram/Diagram';
-import Indicator from '@app/flow/diagram/Indicator';
 import Link from '@app/flow/diagram/Link';
 import Node from '@app/flow/diagram/Node';
-import DirectionalLink from '@app/flow/diagram/uml/link/DirectionalLink';
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
+import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 import { chartBorderDefinition } from '@app/flow/layout/workspace/Canvas';
 import ACTION from '@app/flow/store/ActionTypes';
 import MoveInstance from '@app/flow/store/history/impl/MoveInstance';
@@ -14,10 +13,11 @@ import Store from '@app/flow/store/Store';
 
 
 export default class CanvasEventListener {
-  private workspaceContainer: HTMLElement;
-  private ctx: CanvasRenderingContext2D;
+  private context: Context;
   private store: Store;
   private diagram: Diagram;
+  private workspaceContainer: HTMLElement;
+  private ctx: CanvasRenderingContext2D;
 
   private grabbing = false;
   private isMovableShape = true;
@@ -29,14 +29,13 @@ export default class CanvasEventListener {
 
 
   constructor(context: Context) {
+    this.context = context;
     this.diagram = context.diagram;
     this.store = context.store;
     this.workspaceContainer = context.layout.workspaceContainer;
     this.ctx = context.layout.workspaceCanvas.getContext('2d') as CanvasRenderingContext2D;
 
-    if (!context.options.viewMode) {
-      this.addEventListeners();
-    }
+    this.addEventListeners();
   }
 
   public unmount() {
@@ -44,15 +43,18 @@ export default class CanvasEventListener {
   }
 
   private addEventListeners = () => {
-    this.workspaceContainer.addEventListener('mousemove', this.onMouseMove);
     this.workspaceContainer.addEventListener('mousedown', this.onMouseDown);
     this.workspaceContainer.addEventListener('mouseup', this.onMouseUp);
+    this.workspaceContainer.addEventListener('mousemove', this.onMouseMove);
     this.workspaceContainer.addEventListener('mouseleave', this.onMouseUp);
-    this.workspaceContainer.addEventListener('click', this.onMouseClick);
-    this.workspaceContainer.addEventListener('dblclick', this.onMouseDbClick);
 
-    this.workspaceContainer.addEventListener('dragover', this.onDragover);
-    this.workspaceContainer.addEventListener('drop', this.onDrop);
+    if (!this.context.options.viewMode) {
+      this.workspaceContainer.addEventListener('click', this.onMouseClick);
+      this.workspaceContainer.addEventListener('dblclick', this.onMouseDbClick);
+
+      this.workspaceContainer.addEventListener('dragover', this.onDragover);
+      this.workspaceContainer.addEventListener('drop', this.onDrop);
+    }
   };
 
   private removeEventListeners = () => {
@@ -68,6 +70,17 @@ export default class CanvasEventListener {
   };
 
   private onMouseMove = (e: MouseEvent) => {
+    if (this.grabbing) {
+      const top = this.workspaceContainer.style.top ? parseInt(this.workspaceContainer.style.top, 10) : 0;
+      const left = this.workspaceContainer.style.left ? parseInt(this.workspaceContainer.style.left, 10) : 0;
+
+      this.workspaceContainer.style.top = `${top + e.movementY}px`;
+      this.workspaceContainer.style.left = `${left + e.movementX}px`;
+      return;
+    }
+
+    if (this.context.options.viewMode) return;
+
     const dx = e.movementX/this.store.scale;
     const dy = e.movementY/this.store.scale;
 
@@ -96,45 +109,37 @@ export default class CanvasEventListener {
       }
     }
 
-    if (this.grabbing) {
-      const top = this.workspaceContainer.style.top ? parseInt(this.workspaceContainer.style.top, 10) : 0;
-      const left = this.workspaceContainer.style.left ? parseInt(this.workspaceContainer.style.left, 10) : 0;
-
-      this.workspaceContainer.style.top = `${top + e.movementY}px`;
-      this.workspaceContainer.style.left = `${left + e.movementX}px`;
-    }
-
     if (this.store.selectedNode || this.store.selectedConnector) {
       this.resizeWorkspace();
     }
   };
 
   private onHoverDetection = (e: MouseEvent) => {
-    const cursorCoordinates = this.getCursorCoordinates(e);
+    const { x, y } = this.getCursorCoordinates(e);
 
     this.store.indicators.forEach((it) => {
-      const isMouseIn = it.includes(cursorCoordinates.x, cursorCoordinates.y);
+      const isMouseIn = it.includes(x, y);
       if (!it.isActive) {it.isHover = isMouseIn;}
     });
-    this.store.nodeList.forEach((it) => {
-      const isMouseIn = it.includes(cursorCoordinates.x, cursorCoordinates.y);
+    this.store.nodes.forEach((it) => {
+      const isMouseIn = it.includes(x, y);
       if (!it.isActive) {it.isHover = isMouseIn;}
     });
-    this.store.connectorList.forEach(link => link.onHover(link.includes(cursorCoordinates)));
+    this.store.links.forEach(link => link.onHover(link.includes(x, y)));
   };
 
-  private getCursorCoordinates = (e: MouseEvent) => new Coordinates(e.offsetX, e.offsetY);
+  private getCursorCoordinates = (e: MouseEvent): CoordinatePoint => ({ x: e.offsetX, y: e.offsetY });
 
   private handleCursorMutation = (e: MouseEvent) => {
     if (!this.grabbing) {
-      const coordinates = this.getCursorCoordinates(e);
+      const { x, y } = this.getCursorCoordinates(e);
 
-      const hoveredIndicator = this.store.indicators.find((it) => it.includes(coordinates.x, coordinates.y));
-      const hoveredShape = this.store.nodeList.find((node) => node.includes(coordinates.x, coordinates.y));
-      const hoveredLine = this.store.connectorList.find((link) => link.includes(coordinates));
-      if (hoveredIndicator || hoveredShape || hoveredLine) {
+      const hoveredIndicator = this.store.findIndicatorByCoordinates(x, y);
+      const hoveredLink = this.store.findLinkByCoordinates(x, y);
+      const hoveredNode = this.store.findNodeByCoordinates(x, y);
+      if (hoveredIndicator || hoveredLink || hoveredNode) {
         this.workspaceContainer.style.cursor = 'pointer';
-        if (hoveredShape && hoveredShape.getConnectionPoint(coordinates)) {
+        if (hoveredNode && hoveredNode.getConnectionPoint({ x, y })) {
           this.workspaceContainer.style.cursor = 'crosshair';
         }
       } else {
@@ -144,7 +149,7 @@ export default class CanvasEventListener {
   };
 
   private resizeWorkspace = () => {
-    const { min, max } = chartBorderDefinition(this.store.nodeList, this.store.connectorList);
+    const { min, max } = chartBorderDefinition(this.store.nodes, this.store.links);
 
     // needs for fixing offset canvas when scale < 1
     const scaleOffset = (1 - this.store.scale)*100;
@@ -191,27 +196,33 @@ export default class CanvasEventListener {
     }
 
     if (isWorkspaceResized) {
-      this.store.nodeList.forEach((node) => node.move(offsetX, offsetY));
-      this.store.connectorList.forEach((link) => link.move(offsetX, offsetY));
+      this.store.moveAllIndicators(offsetX, offsetY);
+      this.store.moveAllLinks(offsetX, offsetY);
+      this.store.moveAllNodes(offsetX, offsetY);
     }
   };
 
   private onMouseDown = (e: MouseEvent) => {
-    this.isMovableShape = true;
+    if (this.context.options.viewMode) {
+      this.workspaceContainer.style.cursor = 'grabbing';
+      this.grabbing = true;
+      return;
+    }
 
-    const cursorCoordinates = this.getCursorCoordinates(e);
-    this.selectIndicator(this.store.indicators.find((it) => it.includes(cursorCoordinates.x, cursorCoordinates.y)));
-    this.selectNode(this.store.nodeList.find((node) => node.includes(cursorCoordinates.x, cursorCoordinates.y)));
-    this.selectLink(this.store.connectorList.find((link) => link.includes(cursorCoordinates)));
+    this.isMovableShape = true;
+    const { x, y } = this.getCursorCoordinates(e);
+
+    this.selectIndicator(this.store.findIndicatorByCoordinates(x, y));
+    this.selectNode(this.store.findNodeByCoordinates(x, y));
+    this.selectLink(this.store.findLinkByCoordinates(x, y));
 
     let pointConnection;
     if (this.store.selectedIndicator) {
       // ignore
     } else if (this.store.selectedNode) {
-      pointConnection = this.store.selectedNode.getConnectionPoint(cursorCoordinates);
+      pointConnection = this.store.selectedNode.getConnectionPoint({ x, y });
     } else if (this.store.selectedConnector) {
-
-      const detectedPoint = this.store.selectedConnector.getDetectedPoint(cursorCoordinates);
+      const detectedPoint = this.store.selectedConnector.getDetectedPoint({ x, y });
       if (detectedPoint) {
         this.anchorPoint = detectedPoint;
         this.anchorPointLink = this.store.selectedConnector;
@@ -227,7 +238,7 @@ export default class CanvasEventListener {
       this.isMovableShape = false;
 
       const nextPoint = new AnchorPoint(this.ctx, { x: pointConnection.x, y: pointConnection.y });
-      const directionalLink = new DirectionalLink(this.ctx, [pointConnection, nextPoint]);
+      const directionalLink = this.diagram.nodeFactory.getLink([pointConnection, nextPoint]);
       this.anchorPoint = nextPoint;
       this.anchorPointLink = directionalLink;
 
@@ -262,7 +273,6 @@ export default class CanvasEventListener {
 
     if (this.store.newConnector) {
       const cursorCoordinates = this.getCursorCoordinates(e);
-
       this.createConnection(cursorCoordinates, this.store.newConnector);
     }
 
@@ -272,15 +282,16 @@ export default class CanvasEventListener {
     this.store.dispatch(ACTION.SET_CONNECTION_POINT, null);
   };
 
-  private createConnection = (cursorCoordinates: Coordinates, newConnection: Link) => {
-    const connectedShape = this.store.nodeList.find((node) => node.includes(cursorCoordinates.x, cursorCoordinates.y));
+  private createConnection = ({ x, y }: CoordinatePoint, newConnection: Link) => {
+    const connectedNode = this.store.findNodeByCoordinates(x, y);
     let connectedPoint;
-    if (connectedShape) {
-      connectedPoint = connectedShape.getConnectionPoint(cursorCoordinates);
+    if (connectedNode) {
+      connectedPoint = connectedNode.getConnectionPoint({ x, y });
     }
 
     if (connectedPoint && (connectedPoint.x !== newConnection.points[0].x || connectedPoint.y !== newConnection.points[0].y)) {
-      const createdConnector = new DirectionalLink(this.ctx, [newConnection.points[0], connectedPoint]);
+      const createdConnector = this.diagram.nodeFactory.getLink([newConnection.points[0], connectedPoint]);
+
       this.store.dispatch(ACTION.ADD_CONNECTOR, createdConnector);
     }
     this.store.dispatch(ACTION.SET_NEW_CONNECTOR, null);
@@ -313,9 +324,9 @@ export default class CanvasEventListener {
   private onMouseClick = (e: MouseEvent) => {
     const cursorCoordinates = this.getCursorCoordinates(e);
 
-    const detectedIndicator = this.getDetectedIndicatorSetNoActive(this.store.indicators, cursorCoordinates);
-    const detectedNode = this.getDetectedShapeSetNoActive(this.store.nodeList, cursorCoordinates);
-    const detectedLine = this.getDetectedShapeSetNoActive(this.store.connectorList, cursorCoordinates);
+    const detectedIndicator = this.getDetectedShapeSetNoActive(this.store.indicators, cursorCoordinates);
+    const detectedNode = this.getDetectedShapeSetNoActive(this.store.nodes, cursorCoordinates);
+    const detectedLine = this.getDetectedShapeSetNoActive(this.store.links, cursorCoordinates);
 
     this.selectIndicator(detectedIndicator);
     this.selectNode(detectedNode);
@@ -335,40 +346,28 @@ export default class CanvasEventListener {
   private onMouseDbClick = (e: MouseEvent) => {
     const cursorCoordinates = this.getCursorCoordinates(e);
 
-    const detectedIndicator = this.getDetectedIndicatorSetNoActive(this.store.indicators, cursorCoordinates);
+    const detectedIndicator = this.getDetectedShapeSetNoActive(this.store.indicators, cursorCoordinates);
     if (detectedIndicator) {
       this.store.dispatch(ACTION.SET_INDICATOR_EDIT, { id: detectedIndicator.id, isEditing: true });
       return;
     }
 
-    const detectedNode = this.getDetectedShapeSetNoActive(this.store.nodeList, cursorCoordinates);
+    const detectedNode = this.getDetectedShapeSetNoActive(this.store.nodes, cursorCoordinates);
     if (detectedNode) {
       this.store.dispatch(ACTION.SET_NODE_EDIT, { id: detectedNode.id, isEditing: true });
     }
   };
 
-  private getDetectedShapeSetNoActive<T extends Node | Link>(shapes: T[], coordinates: Coordinates) {
+  private getDetectedShapeSetNoActive<T extends Indicator | Link | Node>(shapes: T[], { x, y }: CoordinatePoint) {
     let detectedShape: T | undefined;
 
     shapes.forEach((it) => {
       it.isActive = false;
 
-      const isNodeShape = it instanceof Node && it.includes(coordinates.x, coordinates.y);
-      const isLinkShape = it instanceof Link && it.includes(coordinates);
-      if (isNodeShape || isLinkShape) {
-        detectedShape = it;
-      }
-    });
-
-    return detectedShape ? detectedShape : null;
-  }
-
-  private getDetectedIndicatorSetNoActive(shapes: Indicator[], { x, y }: Coordinates) {
-    let detectedShape: Indicator | undefined;
-
-    shapes.forEach((it) => {
-      it.isActive = false;
-      if (it.includes(x, y)) {
+      const isIndicatorShape = it instanceof Indicator && it.includes(x, y);
+      const isLinkShape = it instanceof Link && it.includes(x, y);
+      const isNodeShape = it instanceof Node && it.includes(x, y);
+      if (isIndicatorShape || isLinkShape || isNodeShape) {
         detectedShape = it;
       }
     });

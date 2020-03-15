@@ -1,30 +1,25 @@
+import { POINT_BACKGROUND_COLOR, POINT_BORDER_COLOR, POINT_BORDER_WIDTH, POINT_DOT_RADIUS, POINT_RADIUS } from '@app/flow/DefaultThemeConstants';
+import Circle from '@app/flow/geometry/Circle';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
-import { CircleParams } from '@app/flow/geometry/shapes/Circle';
 import CanvasCircle from '@app/flow/graphics/canvas/shapes/CanvasCircle';
 import ShapeStyle from '@app/flow/graphics/ShapeStyle';
 import nanoid from 'nanoid';
 
 
-const CIRCLE_RADIUS = 4.5;
-const DOT_RADIUS = 1;
-
-const COLOR = 'rgba(83, 83, 83, 0.7)';
-const BACKGROUND_COLOR = 'rgba(255, 255, 255, 1)';
-
 const circleStyles: ShapeStyle = {
   border: {
-    color: COLOR,
+    color: POINT_BORDER_COLOR,
     style: 'solid',
-    width: 1,
+    width: POINT_BORDER_WIDTH,
   },
   background: {
-    color: BACKGROUND_COLOR
+    color: POINT_BACKGROUND_COLOR
   }
 };
 
 const dotStyles: ShapeStyle = {
   background: {
-    color: COLOR
+    color: POINT_BORDER_COLOR
   }
 };
 
@@ -38,7 +33,7 @@ enum Orientation {
   LeftRight = 'LEFT_RIGHT'
 }
 
-export default class AnchorPoint extends EventTarget {
+export default class BpmnAnchorPoint extends EventTarget {
   public static readonly Orientation = Orientation;
 
   public id: string;
@@ -57,8 +52,8 @@ export default class AnchorPoint extends EventTarget {
     this.y = y;
     this.orientation = orientation;
 
-    const circleParams: CircleParams = { x, y, radius: CIRCLE_RADIUS };
-    const dotParams: CircleParams = { x, y, radius: DOT_RADIUS };
+    const circleParams: Circle = { x, y, radius: POINT_RADIUS };
+    const dotParams: Circle = { x, y, radius: POINT_DOT_RADIUS };
 
     this.ctx = ctx;
     const canvas = ctx.canvas;
@@ -68,7 +63,7 @@ export default class AnchorPoint extends EventTarget {
   }
 
   public clone() {
-    return new (<typeof AnchorPoint>this.constructor)(this.ctx, { x: this.x, y: this.y }, this.orientation);
+    return new (<typeof BpmnAnchorPoint>this.constructor)(this.ctx, { x: this.x, y: this.y }, this.orientation);
   }
 
   // return terminal point of vector from initial coordinate
@@ -76,22 +71,22 @@ export default class AnchorPoint extends EventTarget {
     const delta = { x: target.x - this.x, y: target.y - this.y };
     const terminalPoint = { x: this.x, y: this.y };
     switch (this.orientation) {
-      case AnchorPoint.Orientation.Bottom:
+      case BpmnAnchorPoint.Orientation.Bottom:
         terminalPoint.y += length;
         break;
-      case AnchorPoint.Orientation.Top:
+      case BpmnAnchorPoint.Orientation.Top:
         terminalPoint.y -= length;
         break;
-      case AnchorPoint.Orientation.Left:
+      case BpmnAnchorPoint.Orientation.Left:
         terminalPoint.x -= length;
         break;
-      case AnchorPoint.Orientation.Right:
+      case BpmnAnchorPoint.Orientation.Right:
         terminalPoint.x += length;
         break;
-      case AnchorPoint.Orientation.LeftRight:
+      case BpmnAnchorPoint.Orientation.LeftRight:
         terminalPoint.x += length*Math.sign(delta.x);
         break;
-      case AnchorPoint.Orientation.TopBottom:
+      case BpmnAnchorPoint.Orientation.TopBottom:
         terminalPoint.y += length*Math.sign(delta.y);
         break;
       default:

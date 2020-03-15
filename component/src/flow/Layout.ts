@@ -11,7 +11,7 @@ import normalize from '@app/normalize.min.css';
 
 
 export default class Layout {
-  private shadowRoot: ShadowRoot;
+  public root: ShadowRoot;
   public container: HTMLElement;
 
   public workspace: HTMLElement;
@@ -25,15 +25,15 @@ export default class Layout {
   public propertiesPanel?: HTMLElement;
 
   constructor(root: HTMLElement, options: FlowrigamiOptions) {
-    this.shadowRoot = root.shadowRoot || root.attachShadow({ mode: 'open' });
-    this.shadowRoot.innerHTML = `
+    this.root = root.shadowRoot || root.attachShadow({ mode: 'open' });
+    this.root.innerHTML = `
 <style>
   ${normalize}
   ${flowrigami}
 </style>
 `;
 
-    this.container = createLayout(this.shadowRoot, options);
+    this.container = createLayout(this.root, options);
     this.workspace = this.container.querySelector('.fl-workspace') as HTMLElement;
     this.workspaceContainer = initCanvasContainer(this.workspace);
     this.workspaceCanvas = initCanvas(this.workspace);
@@ -61,7 +61,7 @@ function createLayout(root: ShadowRoot, options: FlowrigamiOptions) {
   const div = document.createElement('div');
   div.innerHTML = innerHtml;
 
-  root.append(div.firstChild!);
+  root.appendChild(div.firstChild!);
 
   const width = root.host.clientWidth;
   const height = root.host.clientHeight;

@@ -1,5 +1,4 @@
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import BpmnNode from '../../BpmnNode';
+import Coordinates from '@app/flow/diagram/bpmn/Coordinates';
 import {
   BORDER_RADIUS,
   previewStyles,
@@ -8,9 +7,10 @@ import {
   styles
 } from '@app/flow/diagram/bpmn/node/activities/EventSubProcessNodeConstants';
 import Text from '@app/flow/diagram/bpmn/shapes/Text';
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 import CanvasRectangle from '@app/flow/graphics/canvas/shapes/CanvasRectangle';
 import Store from '@app/flow/store/Store';
+import BpmnAnchorPoint from '../../BpmnAnchorPoint';
+import BpmnNode from '../../BpmnNode';
 
 
 export default class EventSubProcessNode extends BpmnNode {
@@ -67,10 +67,10 @@ export default class EventSubProcessNode extends BpmnNode {
     this.rectanglePreview = new CanvasRectangle(canvas, tmpHookDiv, previewStyles, rectanglePreviewParams);
 
     this.points = [
-      new AnchorPoint(ctx, new Coordinates(coordinates.x, coordinates.y - shapeHeight/2), AnchorPoint.Orientation.Top),
-      new AnchorPoint(ctx, new Coordinates(coordinates.x + shapeWidth/2, coordinates.y), AnchorPoint.Orientation.Right),
-      new AnchorPoint(ctx, new Coordinates(coordinates.x, coordinates.y + shapeHeight/2), AnchorPoint.Orientation.Bottom),
-      new AnchorPoint(ctx, new Coordinates(coordinates.x - shapeWidth/2, coordinates.y), AnchorPoint.Orientation.Left),
+      new BpmnAnchorPoint(ctx, new Coordinates(coordinates.x, coordinates.y - shapeHeight/2), BpmnAnchorPoint.Orientation.Top),
+      new BpmnAnchorPoint(ctx, new Coordinates(coordinates.x + shapeWidth/2, coordinates.y), BpmnAnchorPoint.Orientation.Right),
+      new BpmnAnchorPoint(ctx, new Coordinates(coordinates.x, coordinates.y + shapeHeight/2), BpmnAnchorPoint.Orientation.Bottom),
+      new BpmnAnchorPoint(ctx, new Coordinates(coordinates.x - shapeWidth/2, coordinates.y), BpmnAnchorPoint.Orientation.Left),
     ];
   }
 

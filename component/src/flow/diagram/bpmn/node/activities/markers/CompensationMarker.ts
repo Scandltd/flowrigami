@@ -1,5 +1,5 @@
+import Coordinates from '@app/flow/diagram/bpmn/Coordinates';
 import Shape from '@app/flow/diagram/bpmn/Shape';
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 import { drawPath2D } from '@app/flow/utils/CanvasUtils';
 
 

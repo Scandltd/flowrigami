@@ -1,5 +1,5 @@
 import Context from '@app/flow/Context';
-import { isIndicatorColorScheme } from '@app/flow/diagram/Indicator';
+import { isIndicatorColorScheme } from '@app/flow/diagram/common/Indicator';
 
 
 enum INDICATOR_API_ERRORS {
@@ -16,7 +16,7 @@ export default class IndicatorApi {
 
   constructor(context: Context) {
     this.getIndicatorValue = (id: string) => {
-      const indicator = context.store.indicators.find((it) => it.id === id);
+      const indicator = context.store.findIndicatorById(id);
       if (!indicator) {
         throw new Error(IndicatorApi.ERRORS.INDICATOR_NOT_FOUND);
       }
@@ -25,7 +25,7 @@ export default class IndicatorApi {
     };
 
     this.setIndicatorValue = (id: string, value: any, colorScheme?: any) => {
-      const indicator = context.store.indicators.find((it) => it.id === id);
+      const indicator = context.store.findIndicatorById(id);
       if (!indicator) {
         throw new Error(IndicatorApi.ERRORS.INDICATOR_NOT_FOUND);
       }

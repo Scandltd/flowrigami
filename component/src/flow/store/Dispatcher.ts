@@ -1,4 +1,6 @@
-import Indicator from '@app/flow/diagram/Indicator';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
+import Indicator from '@app/flow/diagram/common/Indicator';
+import DirectionalLink from '@app/flow/diagram/common/link/DirectionalLink';
 import Link from '@app/flow/diagram/Link';
 import Node from '@app/flow/diagram/Node';
 import ACTION from '@app/flow/store/ActionTypes';
@@ -35,24 +37,28 @@ export default class Dispatcher extends Observable {
         this.store.selectedNode = payload;
         break;
       case ACTION.SET_INDICATOR_EDIT: {
-        const indicator = this.store.indicators.find(node => node.id === payload.id);
+        const indicator = this.store.findIndicatorById(payload.id);
         if (indicator) {
           indicator.setEditing(payload.isEditing);
         }
         break;
       }
       case ACTION.SET_NODE_EDIT: {
-        const node = this.store.nodeList.find(node => node.id === payload.id);
+        const node = this.store.findNodeById(payload.id);
         if (node) {
-          node.setEditing(payload.isEditing);
+          node.isEditing = payload.isEditing;
         }
         break;
       }
       case ACTION.UPDATE_SHAPE_TEXT: {
-        const node = this.store.indicators.find(node => node.id === payload.id) ||
-          this.store.nodeList.find(node => node.id === payload.id);
-        if (node) {
-          node.setLabel(payload.text);
+        const indicator = this.store.findIndicatorById(payload.id);
+        if (indicator) {
+          indicator.label = payload.text;
+        } else {
+          const node = this.store.findNodeById(payload.id);
+          if (node) {
+            node.label = payload.text;
+          }
         }
         break;
       }
@@ -60,24 +66,20 @@ export default class Dispatcher extends Observable {
         this.store.selectedConnector = payload;
         break;
       case ACTION.SET_NEW_CONNECTOR:
-        if (payload) {
-          this.store.selectedConnectionPoint = payload.points[1];
-        }
         this.store.newConnector = payload;
         break;
       case ACTION.SET_CONNECTION_POINT:
         this.store.selectedConnectionPoint = payload;
         break;
       case ACTION.ADD_CONNECTOR:
-        this.store.archiveAction(new AddConnection(this.store, payload));
-        this.store.connectorList.push(payload);
+        this.createLink(payload);
         break;
       case ACTION.ADD_NODE:
-        this.store.nodeList.push(payload);
+        this.store.addNode(payload);
         this.store.archiveAction(new AddNode(this.store, payload));
         break;
       case ACTION.ADD_INDICATOR: {
-        this.store.indicators.push(payload);
+        this.store.addIndicator(payload);
         this.store.archiveAction(new AddIndicator(this.store, payload));
         break;
       }
@@ -88,18 +90,19 @@ export default class Dispatcher extends Observable {
         this.deleteNode(payload);
         break;
       case ACTION.DELETE_CONNECTOR:
-        this.deleteConnector(payload);
+        this.store.archiveAction(new DeleteConnection(this.store, payload));
+        this.deleteLink(payload);
         break;
       case ACTION.CLEAR_DIAGRAM: {
-        this.store.connectorList = [];
-        this.store.indicators = [];
-        this.store.nodeList = [];
+        this.store.deleteAllIndicators();
+        this.store.deleteAllLinks();
+        this.store.deleteAllNodes();
         break;
       }
       case ACTION.IMPORT: {
-        this.store.indicators = payload.indicators;
-        this.store.connectorList = payload.links;
-        this.store.nodeList = payload.nodes;
+        this.store.replaceAllIndicators(payload.indicators);
+        this.store.replaceAllLinks(payload.links);
+        this.store.replaceAllNodes(payload.nodes);
         break;
       }
       case ACTION.UNDO:
@@ -113,8 +116,8 @@ export default class Dispatcher extends Observable {
         this.store.selectedNode = null;
         this.store.newConnector = null;
         this.store.selectedConnector = null;
-        this.store.nodeList.forEach((node) => node.isActive = false);
-        this.store.connectorList.forEach((link) => link.isActive = false);
+        this.store.nodes.forEach((node) => node.isActive = false);
+        this.store.links.forEach((link) => link.isActive = false);
         break;
       case ACTION.GRID_VIEW: {
         this.store.grid.enabled = payload;
@@ -142,33 +145,42 @@ export default class Dispatcher extends Observable {
 
   private deleteIndicator = (indicator: Indicator) => {
     this.store.archiveAction(new DeleteIndicator(this.store, indicator));
-    this.store.indicators = this.store.indicators.filter(node => node.id !== indicator.id);
+    this.store.deleteIndicatorById(indicator.id);
     this.store.selectedNode = null;
   };
 
-  private deleteNode = (selectedNode: Node) => {
+  private deleteNode = (node: Node) => {
     const deletedConnections: Link[] = [];
-    // delete lines with points of the shape
-    this.store.connectorList = this.store.connectorList.filter(line => {
-      const detectedPoint = line.points.find(linePoint => {
-        return selectedNode.points.find(point => point.id === linePoint.id);
-      });
-      if (detectedPoint) {
-        deletedConnections.push(line);
-      }
 
-      return !detectedPoint;
+    node.points.forEach((it) => {
+      it.links.forEach((link) => {
+        deletedConnections.push(link);
+        this.deleteLink(link);
+      });
     });
 
-    this.store.archiveAction(new DeleteNode(this.store, selectedNode, deletedConnections));
-    this.store.nodeList = this.store.nodeList.filter((node) => node.id !== selectedNode.id);
     this.store.selectedNode = null;
+    this.store.deleteNodeById(node.id);
+    this.store.archiveAction(new DeleteNode(this.store, node, deletedConnections));
   };
 
-  private deleteConnector = (selectedConnector: Link) => {
-    this.store.archiveAction(new DeleteConnection(this.store, selectedConnector));
-    this.store.connectorList = this.store.connectorList.filter(line => line.id !== selectedConnector.id);
+  private createLink = (link: DirectionalLink) => {
+    const firstPoint = link.points[0] as AnchorPoint;
+    const lastPoint = link.points[link.points.length - 1] as AnchorPoint;
+    firstPoint.links.push(link);
+    lastPoint.links.push(link);
+
+    this.store.addLink(link);
+    this.store.archiveAction(new AddConnection(this.store, link));
+  };
+
+  private deleteLink = (link: Link) => {
+    const firstPoint = link.points[0] as AnchorPoint;
+    const lastPoint = link.points[link.points.length - 1] as AnchorPoint;
+    firstPoint.links = firstPoint.links.filter((it) => it !== link);
+    lastPoint.links = lastPoint.links.filter((it) => it !== link);
 
     this.store.selectedConnector = null;
+    this.store.deleteLinkById(link.id);
   };
 }

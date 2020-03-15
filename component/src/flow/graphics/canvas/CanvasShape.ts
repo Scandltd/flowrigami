@@ -4,24 +4,21 @@ import nanoid from 'nanoid';
 
 
 export default abstract class CanvasShape implements Shape {
+  public abstract name: string;
+
+  public id: string;
+
+  private _isActive: boolean = false;
+  public get isActive() { return this._isActive; }
+  public set isActive(value: boolean) { this._isActive = value; }
+
+  private _isHover: boolean = false;
+  public get isHover() { return this._isHover; }
+  public set isHover(value: boolean) { this._isHover = value; }
+
   protected canvas: HTMLCanvasElement;
   protected htmlLayer: HTMLElement;
   protected ctx: CanvasRenderingContext2D;
-
-  public abstract name: string;
-  public id: string;
-
-  private p_isActive: boolean = false;
-
-  public get isActive() {
-    return this.p_isActive;
-  }
-
-  public set isActive(isActive: boolean) {
-    this.p_isActive = isActive;
-  }
-
-  public isHover: boolean = false;
 
   constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement) {
     this.canvas = canvas;
@@ -35,14 +32,13 @@ export default abstract class CanvasShape implements Shape {
 
   public export(): ShapeExportObject {
     return {
-      id: this.id,
       name: this.name,
+      id: this.id,
     };
   };
 
   public import(object: ShapeExportObject) {
     this.id = object.id;
-    this.name = object.name;
   }
 
   public abstract includes(x: number, y: number): boolean;

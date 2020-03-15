@@ -1,5 +1,4 @@
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import BpmnNode from '../../../BpmnNode';
+import Coordinates from '@app/flow/diagram/bpmn/Coordinates';
 import {
   innerFigureStyle,
   previewStyles,
@@ -8,9 +7,10 @@ import {
 } from '@app/flow/diagram/bpmn/node/events/eventsStyles/BoundaryNonInterruptingConstants';
 import Pentagon from '@app/flow/diagram/bpmn/shapes/Pentagon';
 import Text from '@app/flow/diagram/bpmn/shapes/Text';
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 import CanvasCircle from '@app/flow/graphics/canvas/shapes/CanvasCircle';
 import Store from '@app/flow/store/Store';
+import BpmnAnchorPoint from '../../../BpmnAnchorPoint';
+import BpmnNode from '../../../BpmnNode';
 
 
 export default class BoundaryNonInterrupting extends BpmnNode {
@@ -41,10 +41,10 @@ export default class BoundaryNonInterrupting extends BpmnNode {
     const leftCorner = new Coordinates(coordinates.x - shapeRadius, coordinates.y);
 
     this.points = [
-      new AnchorPoint(ctx, leftCorner, AnchorPoint.Orientation.Left),
-      new AnchorPoint(ctx, topCorner, AnchorPoint.Orientation.Top),
-      new AnchorPoint(ctx, rightCorner, AnchorPoint.Orientation.Right),
-      new AnchorPoint(ctx, bottomCorner, AnchorPoint.Orientation.Bottom)
+      new BpmnAnchorPoint(ctx, leftCorner, BpmnAnchorPoint.Orientation.Left),
+      new BpmnAnchorPoint(ctx, topCorner, BpmnAnchorPoint.Orientation.Top),
+      new BpmnAnchorPoint(ctx, rightCorner, BpmnAnchorPoint.Orientation.Right),
+      new BpmnAnchorPoint(ctx, bottomCorner, BpmnAnchorPoint.Orientation.Bottom)
     ];
 
     const circleParams = {

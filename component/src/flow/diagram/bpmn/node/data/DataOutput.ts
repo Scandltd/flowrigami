@@ -1,12 +1,12 @@
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
-import BpmnNode from '../../BpmnNode';
+import Coordinates from '@app/flow/diagram/bpmn/Coordinates';
 import { innerFigureFillStyle, previewStyles, selectionStyle, styles } from '@app/flow/diagram/bpmn/node/data/dataStyles';
 import Arrow from '@app/flow/diagram/bpmn/shapes/Arrow';
 import DataObj from '@app/flow/diagram/bpmn/shapes/DataObj';
 import DataObjWithoutAngle from '@app/flow/diagram/bpmn/shapes/DataObjWithoutAngle';
 import Text from '@app/flow/diagram/bpmn/shapes/Text';
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
 import Store from '@app/flow/store/Store';
+import BpmnAnchorPoint from '../../BpmnAnchorPoint';
+import BpmnNode from '../../BpmnNode';
 
 
 export default class DataOutput extends BpmnNode {
@@ -81,10 +81,10 @@ export default class DataOutput extends BpmnNode {
     );
 
     this.points = [
-      new AnchorPoint(ctx, new Coordinates(coordinates.x, coordinates.y - this.halfHeight), AnchorPoint.Orientation.Top),
-      new AnchorPoint(ctx, new Coordinates(coordinates.x + this.halfWidth, coordinates.y), AnchorPoint.Orientation.Right),
-      new AnchorPoint(ctx, new Coordinates(coordinates.x, coordinates.y + this.halfHeight), AnchorPoint.Orientation.Bottom),
-      new AnchorPoint(ctx, new Coordinates(coordinates.x - this.halfWidth, coordinates.y), AnchorPoint.Orientation.Left),
+      new BpmnAnchorPoint(ctx, new Coordinates(coordinates.x, coordinates.y - this.halfHeight), BpmnAnchorPoint.Orientation.Top),
+      new BpmnAnchorPoint(ctx, new Coordinates(coordinates.x + this.halfWidth, coordinates.y), BpmnAnchorPoint.Orientation.Right),
+      new BpmnAnchorPoint(ctx, new Coordinates(coordinates.x, coordinates.y + this.halfHeight), BpmnAnchorPoint.Orientation.Bottom),
+      new BpmnAnchorPoint(ctx, new Coordinates(coordinates.x - this.halfWidth, coordinates.y), BpmnAnchorPoint.Orientation.Left),
     ];
   }
 

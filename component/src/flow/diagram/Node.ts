@@ -1,9 +1,8 @@
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
 import NodeExportObject from '@app/flow/exportimport/NodeExportObject';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 import CanvasShape from '@app/flow/graphics/canvas/CanvasShape';
 import Store from '@app/flow/store/Store';
-import nanoid from 'nanoid';
 
 
 export default abstract class Node extends CanvasShape {
@@ -11,49 +10,47 @@ export default abstract class Node extends CanvasShape {
   public y: number;
   public points: AnchorPoint[] = [];
 
-  private p_isEditing = false;
   private _label: string = '';
+  public get label() { return this._label; }
+  public set label(value: string) { this._label = value || ''; }
+
+  private _isEditing = false;
+  public get isEditing() { return this._isEditing; }
+  public set isEditing(isEditing: boolean) { this._isEditing = isEditing; }
 
   constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, { x, y }: CoordinatePoint) {
     super(canvas, htmlLayer);
-    this.id = nanoid();
     this.x = x;
     this.y = y;
   }
 
   public export(): NodeExportObject {
     return {
-      id: this.id,
       name: this.name,
-      label: this.label,
-      params: { x: this.x, y: this.y },
+      id: this.id,
+      params: {
+        label: this.label,
+        x: this.x,
+        y: this.y
+      },
     };
   };
 
   public import(exportObject: NodeExportObject) {
     this.id = exportObject.id;
-    this.name = exportObject.name;
-    this.setLabel(exportObject.label);
+    const { label, x, y } = exportObject.params;
+    this.label = label;
+    this.x = x;
+    this.y = y;
   }
 
   public getConnectionPoint(coordinates: CoordinatePoint) {
     return this.points.find(point => point.includes(coordinates));
   }
 
-  public get isEditing() {
-    return this.p_isEditing;
-  }
-
-  public setEditing(isEditing: boolean) {
-    this.p_isEditing = isEditing;
-  }
-
-  public get label() {
-    return this._label || '';
-  }
-
-  public setLabel(label: string = '') {
-    this._label = label;
+  protected createConnectionPoints(points: AnchorPoint[]) {
+    points.forEach((it) => { it.owner = this; });
+    this.points = points;
   }
 
   public renderHtml(parent: HTMLElement, store: Store) {};

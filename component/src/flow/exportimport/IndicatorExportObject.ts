@@ -1,4 +1,4 @@
-import { IndicatorParams } from '@app/flow/diagram/Indicator';
+import { IndicatorParams } from '@app/flow/diagram/common/Indicator';
 import ShapeExportObject from '@app/flow/exportimport/ShapeExportObject';
 
 

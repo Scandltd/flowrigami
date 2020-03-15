@@ -1,5 +1,6 @@
 import { SHAPE_LABEL_PADDING, TEXT_NODE_BORDER_COLOR_ACTIVE } from '@app/flow/DefaultThemeConstants';
-import CanvasShape from '@app/flow/graphics/canvas/CanvasShape';
+import ShapeExportObject from '@app/flow/exportimport/ShapeExportObject';
+import Shape from '@app/flow/graphics/Shape';
 import TextParams from '@app/flow/graphics/TextParams';
 import TextStyle from '@app/flow/graphics/TextStyle';
 import ACTION from '@app/flow/store/ActionTypes';
@@ -7,13 +8,31 @@ import Store from '@app/flow/store/Store';
 import { wrapText } from '@app/flow/utils/CanvasTextUtils';
 import { drawText, isPointInText, measureTextLine } from '@app/flow/utils/CanvasUtils';
 import { moveCursorToTheEnd } from '@app/flow/utils/HtmlUtils';
+import nanoid from 'nanoid';
 
 
-export default class CanvasText extends CanvasShape {
+export default class CanvasText implements Shape {
   public name = 'CanvasText';
 
+  public id: string;
+
+  private _isActive: boolean = false;
+  public get isActive() { return this._isActive; }
+  public set isActive(value: boolean) { this._isActive = value; }
+
+  private _isHover: boolean = false;
+  public get isHover() { return this._isHover; }
+  public set isHover(value: boolean) { this._isHover = value; }
+
+  protected canvas: HTMLCanvasElement;
+  protected htmlLayer: HTMLElement;
+  protected ctx: CanvasRenderingContext2D;
+
   private placeholder?: string;
-  private p_text: string;
+
+  private _text: string;
+  public get text() { return this._text; }
+  public setText(text: string = '') { this._text = text; }
 
   private x: number;
   private y: number;
@@ -22,14 +41,29 @@ export default class CanvasText extends CanvasShape {
   private textStyle: TextStyle;
 
   constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, params: TextParams, textStyle: TextStyle) {
-    super(canvas, htmlLayer);
+    this.canvas = canvas;
+    this.htmlLayer = htmlLayer;
+    this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+    this.id = nanoid();
     this.placeholder = params.placeholder;
-    this.p_text = params.text;
+    this._text = params.text;
     this.x = params.x;
     this.y = params.y;
     this.maxWidth = params.maxWidth;
     this.maxHeight = params.maxHeight;
     this.textStyle = textStyle;
+  }
+
+  public export(): ShapeExportObject {
+    return {
+      name: this.name,
+      id: this.id,
+    };
+  };
+
+  public import(object: ShapeExportObject) {
+    this.id = object.id;
   }
 
   public draw() {
@@ -62,25 +96,17 @@ export default class CanvasText extends CanvasShape {
     };
   }
 
-  public get text() {
-    return this.p_text;
-  }
 
-  public setText(text: string = '') {
-    this.p_text = text;
-  }
-
+  // @TODO must be removed from here
   public renderHtml(parent: HTMLElement, store: Store, id: string, isEditing: boolean) {
     if (isEditing) {
-      const editableArea = this.createTextEditor();
-      editableArea.onmousedown = (e) => {
+      const textEditor = this.createTextEditor(parent);
+      textEditor.focus();
+      textEditor.onmousedown = (e) => {
         e.stopPropagation();
       };
 
-      parent.appendChild(editableArea);
-
-      editableArea.focus();
-      moveCursorToTheEnd(editableArea);
+      moveCursorToTheEnd(textEditor);
 
       const closeEditor = () => {
         store.dispatch(ACTION.SET_INDICATOR_EDIT, { id: id, isEditing: false });
@@ -88,16 +114,17 @@ export default class CanvasText extends CanvasShape {
       };
 
       const outsideClickHandler = (e: MouseEvent) => {
-        this.setText(editableArea.innerText);
-        store.dispatch(ACTION.UPDATE_SHAPE_TEXT, { id: id, text: editableArea.innerText });
+        const text = textEditor.innerText.trim();
+        this.setText(text);
+        store.dispatch(ACTION.UPDATE_SHAPE_TEXT, { id: id, text: text });
 
-        if (editableArea !== e.target) {
+        if (textEditor !== e.target) {
           closeEditor();
           document.removeEventListener('mousedown', outsideClickHandler);
         }
       };
 
-      editableArea.addEventListener('keyup', (e: KeyboardEvent) => {
+      textEditor.addEventListener('keyup', (e: KeyboardEvent) => {
         if (e.code === 'Escape') {
           closeEditor();
           document.removeEventListener('mousedown', outsideClickHandler);
@@ -108,22 +135,15 @@ export default class CanvasText extends CanvasShape {
     }
   }
 
-  /**
-   * TODO: update when drawing logic is finalized
-   * Use textRows to determine absolute postion and styles for text area
-   */
-  private createTextEditor() {
+  private createTextEditor(parent: HTMLElement) {
     const { fontName, fontSize, lineHeight, align, verticalAlign } = this.textStyle;
 
-    const textEditor = document.createElement('div');
-    textEditor.setAttribute('contenteditable', 'true');
-    textEditor.appendChild(document.createTextNode(this.text));
-
     const left = align === 'center' ? this.getLeftIfAlignCenter() : this.x;
-    const top = this.y - 0.5*(verticalAlign === 'center' ? (this.maxHeight || lineHeight) : lineHeight);
-    const justifyContent = verticalAlign === 'center' ? 'center' : 'flex-start';
+    const top = this.y - 0.5*(verticalAlign === 'middle' ? (this.maxHeight || lineHeight) : 0);
+    const justifyContent = verticalAlign === 'middle' ? 'center' : 'flex-start';
 
-    Object.assign(textEditor.style, {
+    const container = document.createElement('div');
+    Object.assign(container.style, {
       position: 'absolute',
       top: `${top}px`,
       left: `${left}px`,
@@ -132,20 +152,36 @@ export default class CanvasText extends CanvasShape {
       flexDirection: 'column',
       justifyContent: justifyContent,
       padding: `${SHAPE_LABEL_PADDING}px`,
-      width: `${this.maxWidth}px`,
-      minHeight: `${this.maxHeight}px`,
+      ...(this.maxWidth ? { width: `${this.maxWidth}px` } : {}),
+      minHeight: `${this.maxHeight ? this.maxHeight : (lineHeight + 2*SHAPE_LABEL_PADDING)}px`,
       border: 'none',
       outline: `${TEXT_NODE_BORDER_COLOR_ACTIVE} solid 2px`,
-      outlineOffset:'-1px',
+      outlineOffset: '-1px',
+    });
 
+    const displayFlexFixer = document.createElement('div');
+    Object.assign(displayFlexFixer.style, {
+      textAlign: align,
+    });
+
+    const textEditor = document.createElement('div');
+    textEditor.setAttribute('contenteditable', 'true');
+    textEditor.innerHTML = this.text;
+    Object.assign(textEditor.style, {
+      outline: 'none',
       cursor: 'text',
       fontFamily: fontName,
       fontSize: `${fontSize}px`,
       lineHeight: `${lineHeight}px`,
-      textAlign: align,
+      display: 'inline-block',
+      verticalAlign: 'text-top', // fix for FF
       wordBreak: 'break-all',
       whiteSpace: 'pre-wrap',
     });
+
+    container.appendChild(displayFlexFixer);
+    displayFlexFixer.appendChild(textEditor);
+    parent.appendChild(container);
 
     return textEditor;
   }

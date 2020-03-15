@@ -41,14 +41,14 @@ function getLineDash(borderStyle: BorderStyle) {
 
 export function drawText(ctx: CanvasRenderingContext2D, style: TextStyle, params: TextParams) {
   const x = params.x + (style.align === 'center' ? 0 : SHAPE_LABEL_PADDING);
-  const y = params.y + style.fontSize/10 + (style.verticalAlign === 'center' ? 0 : SHAPE_LABEL_PADDING);
+  const y = params.y + (style.verticalAlign === 'middle' ? style.fontSize/10 : (style.fontSize/5 + SHAPE_LABEL_PADDING));
   const maxWidth = params.maxWidth ? params.maxWidth - 2*SHAPE_LABEL_PADDING : params.maxWidth;
   const maxHeight = params.maxHeight ? params.maxHeight - 2*SHAPE_LABEL_PADDING : params.maxHeight;
 
   const textLines = wrapText(ctx, style, params.text || params.placeholder || '', maxWidth, maxHeight);
   const textLinesLength = textLines.length > 3 ? 3 : textLines.length;
 
-  const verticalAlignmentCorrection = style.verticalAlign === 'center' ? -style.lineHeight*(textLinesLength - 1)/2 : 0;
+  const verticalAlignmentCorrection = style.verticalAlign === 'middle' ? -style.lineHeight*(textLinesLength - 1)/2 : 0;
 
   textLines.forEach((it, i) => {
     drawTextLine(ctx, style, it, x, y + verticalAlignmentCorrection + i*style.lineHeight);
@@ -71,6 +71,26 @@ export function drawTextLine(ctx: CanvasRenderingContext2D, style: TextStyle, te
       ctx.strokeText(text, x, y);
     }
   });
+}
+
+export function measureText(ctx: CanvasRenderingContext2D, style: TextStyle, params: TextParams) {
+  const x = params.x;
+  const y = params.y + (style.verticalAlign === 'middle' ? -style.lineHeight/2 : 0);
+  const maxWidth = params.maxWidth ? params.maxWidth - 2*SHAPE_LABEL_PADDING : params.maxWidth;
+  const maxHeight = params.maxHeight ? params.maxHeight - 2*SHAPE_LABEL_PADDING : params.maxHeight;
+
+  const textLines = wrapText(ctx, style, params.text || params.placeholder || '', maxWidth, maxHeight);
+  const textHeight = textLines.length*style.lineHeight;
+  const widthList = textLines.map((it) => measureTextLine(ctx, style, it).width);
+  if (maxWidth) {
+    widthList.push(maxWidth);
+  }
+
+  const width = Math.max(...widthList);
+  const height = maxHeight ? Math.max(maxHeight, textHeight) : textHeight;
+  return {
+    x, y, width, height
+  }
 }
 
 export function measureTextLine(ctx: CanvasRenderingContext2D, style: TextStyle, text: string) {
@@ -105,7 +125,7 @@ function withTextStyles(ctx: CanvasRenderingContext2D, style: TextStyle, callbac
 
   ctx.font = `${style.fontSize}px ${style.fontName}`;
   ctx.textAlign = style.align;
-  ctx.textBaseline = 'middle';
+  ctx.textBaseline = style.verticalAlign;
 
   callback();
 

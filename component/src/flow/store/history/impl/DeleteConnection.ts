@@ -13,10 +13,10 @@ export default class DeleteConnection implements Action {
   }
 
   execute = () => {
-    this.store.connectorList = this.store.connectorList.filter((link) => link.id !== this.link.id);
+    this.store.deleteLinkById(this.link.id);
   };
 
   revert = () => {
-    this.store.connectorList.push(this.link);
+    this.store.addLink(this.link);
   };
 }

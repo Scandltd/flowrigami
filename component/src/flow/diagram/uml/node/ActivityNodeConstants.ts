@@ -115,5 +115,5 @@ previewStyles.hover = {
 export const ACTIVITY_LABEL_STYLE: TextStyle = {
   ...SHAPE_LABEL_STYLE,
   align: 'center',
-  verticalAlign: 'center',
+  verticalAlign: 'middle',
 };

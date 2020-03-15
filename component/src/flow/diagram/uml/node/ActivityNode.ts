@@ -1,5 +1,5 @@
 import { SHAPE_SELECTION_STYLE } from '@app/flow/DefaultTheme';
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
 import Node from '@app/flow/diagram/Node';
 import {
   ACTIVITY_LABEL_STYLE,
@@ -13,13 +13,19 @@ import {
 } from '@app/flow/diagram/uml/node/ActivityNodeConstants';
 import { UmlNodes } from '@app/flow/diagram/uml/UmlDiagramFactory';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
+import CanvasText from '@app/flow/graphics/canvas/CanvasText';
 import CanvasRectangle from '@app/flow/graphics/canvas/shapes/CanvasRectangle';
-import CanvasText from '@app/flow/graphics/canvas/shapes/CanvasText';
 import Store from '@app/flow/store/Store';
 
 
 export default class ActivityNode extends Node {
   public name = UmlNodes.ActivityNode;
+
+  public get label() { return super.label; }
+  public set label(label: string) {
+    super.label = label;
+    this.textEditor.setText(super.label);
+  }
 
   private rectangle: CanvasRectangle;
   private selection: CanvasRectangle;
@@ -37,12 +43,12 @@ export default class ActivityNode extends Node {
     this.textEditor = new CanvasText(canvas, htmlLayer, getTextParams(params), ACTIVITY_LABEL_STYLE);
 
     const [top, right, bottom, left] = getAnchorPoints(params);
-    this.points = [
+    this.createConnectionPoints([
       new AnchorPoint(this.ctx, top, AnchorPoint.Orientation.Top),
       new AnchorPoint(this.ctx, right, AnchorPoint.Orientation.Right),
       new AnchorPoint(this.ctx, bottom, AnchorPoint.Orientation.Bottom),
       new AnchorPoint(this.ctx, left, AnchorPoint.Orientation.Left),
-    ];
+    ]);
   }
 
   public draw() {
@@ -83,11 +89,6 @@ export default class ActivityNode extends Node {
     this.selection.move(dx, dy);
     this.textEditor.move(dx, dy);
     this.points.forEach(point => point.move(dx, dy));
-  }
-
-  public setLabel(label: string = '') {
-    super.setLabel(label);
-    this.textEditor.setText(label);
   }
 
   public renderHtml(parent: HTMLElement, store: Store) {

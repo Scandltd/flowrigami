@@ -1,6 +1,7 @@
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
+import { LINE_COLOR, LINE_WIDTH } from '@app/flow/DefaultThemeConstants';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
 import Link from '@app/flow/diagram/Link';
-import Coordinates from '@app/flow/graphics/canvas/Coordinates';
+import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 import CanvasLine from '@app/flow/graphics/canvas/shapes/CanvasLine';
 import ShapeStyle from '@app/flow/graphics/ShapeStyle';
 import { createOrthogonalLine } from '@app/flow/utils/LineUtils';
@@ -11,33 +12,30 @@ const ARROW_LENGTH = 8;
 
 const styles: ShapeStyle = {
   border: {
-    width: 2,
-    color: 'rgba(83, 83, 83, 0.7)',
+    color: LINE_COLOR,
     style: 'solid',
+    width: LINE_WIDTH,
   },
 };
 
 export default class DirectionalLink extends Link {
-  private ctx: CanvasRenderingContext2D;
+  public name = 'DirectionalLink';
 
   private arrow: CanvasLine;
   private line: CanvasLine;
   private inflectionPoints: AnchorPoint[];
 
-  constructor(ctx: CanvasRenderingContext2D, points: AnchorPoint[], isOrthogonal: boolean = true) {
-    super(points);
-    this.ctx = ctx;
-    this.inflectionPoints = [];
+  constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, points: AnchorPoint[], isOrthogonal: boolean = true) {
+    super(canvas, htmlLayer, points);
 
+    this.isOrthogonal = isOrthogonal;
+    this.inflectionPoints = [];
     if (isOrthogonal) {
-      this.setOrthogonal(isOrthogonal);
       this.applyOrthogonality();
     }
 
-    const canvas = ctx.canvas;
-    const tmpHookDiv = document.createElement('div');
-    this.line = new CanvasLine(canvas, tmpHookDiv, styles, this.createLineParams(this.points));
-    this.arrow = new CanvasLine(canvas, tmpHookDiv, styles, this.createArrowParams(this.points));
+    this.line = new CanvasLine(canvas, htmlLayer, styles, this.createLineParams(this.points));
+    this.arrow = new CanvasLine(canvas, htmlLayer, styles, this.createArrowParams(this.points));
   }
 
   private createLineParams(points: AnchorPoint[]) {
@@ -72,14 +70,10 @@ export default class DirectionalLink extends Link {
 
   public draw() {
     const arrowParams = this.createArrowParams(this.points);
-    this.arrow.line.from = arrowParams.from;
-    this.arrow.line.midPoints = arrowParams.midPoints;
-    this.arrow.line.to = arrowParams.to;
+    this.arrow.updateParams(arrowParams);
 
     const lineParams = this.createLineParams(this.points);
-    this.line.line.from = lineParams.from;
-    this.line.line.midPoints = lineParams.midPoints;
-    this.line.line.to = lineParams.to;
+    this.line.updateParams(lineParams);
 
     this.arrow.draw();
     this.line.draw();
@@ -93,30 +87,17 @@ export default class DirectionalLink extends Link {
     }
   }
 
-  public includes(coordinates: Coordinates) {
-    return this.line.includes(coordinates.x, coordinates.y);
-  }
-
-  public applyOrthogonality = () => {
-    this.points = this.createOrthogonalPoints();
-    this.inflectionPoints = this.createInflectionPoints();
-  };
-
-  public setOrthogonal(isOrthogonal: boolean) {
-    if (this.isOrthogonal && !isOrthogonal) {
-      this.isOrthogonal = isOrthogonal;
-      this.points[0].removeEventListener('move', this.applyOrthogonality);
-      this.points[this.points.length - 1].removeEventListener('move', this.applyOrthogonality);
-    }
-    if (!this.isOrthogonal && isOrthogonal) {
-      this.isOrthogonal = isOrthogonal;
-      this.points[0].addEventListener('move', this.applyOrthogonality);
-      this.points[this.points.length - 1].addEventListener('move', this.applyOrthogonality);
-    }
+  public includes(x: number, y: number) {
+    return this.line.includes(x, y);
   }
 
   public onHover(isHover: boolean) {
     this.isHover = isHover;
+  }
+
+  public applyOrthogonality() {
+    this.points = this.createOrthogonalPoints();
+    this.inflectionPoints = this.createInflectionPoints();
   }
 
   private createOrthogonalPoints() {
@@ -137,7 +118,7 @@ export default class DirectionalLink extends Link {
       const mediumX = (prevPoint.x + nextPoint.x)/2;
       const mediumY = (prevPoint.y + nextPoint.y)/2;
 
-      points.push(new AnchorPoint(this.ctx, new Coordinates(mediumX, mediumY)));
+      points.push(new AnchorPoint(this.ctx, { x: mediumX, y: mediumY }));
     }
     return points;
   }
@@ -158,7 +139,7 @@ export default class DirectionalLink extends Link {
     }
   }
 
-  public getDetectedPoint(coordinates: Coordinates) {
+  public getDetectedPoint(coordinates: CoordinatePoint) {
     return this.inflectionPoints.find((point) => point.includes(coordinates)) ||
       this.points.find((point) => point.includes(coordinates));
   }
@@ -182,8 +163,9 @@ export default class DirectionalLink extends Link {
       this.inflectionPoints.splice(index, 1);
     } else if (pointIndex >= 0) {
       this.inflectionPoints = [];
+
       if (this.isOrthogonal) {
-        this.setOrthogonal(false);
+        this.isOrthogonal = false;
       }
     }
   }
@@ -200,10 +182,5 @@ export default class DirectionalLink extends Link {
     if (prevPoint && prevPoint.includes({ x: point.x, y: point.y }) || nextPoint && nextPoint.includes({ x: point.x, y: point.y })) {
       this.points = this.points.filter((it, i) => it.id !== point.id);
     }
-  }
-
-  // @TODO it must be clarified how to clone link
-  public clone() {
-    return new DirectionalLink(this.ctx, this.points.map(point => point.clone()));
   }
 }

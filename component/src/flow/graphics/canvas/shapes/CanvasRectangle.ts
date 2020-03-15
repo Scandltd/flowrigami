@@ -1,53 +1,41 @@
-import Rectangle, { RectangleParams } from '@app/flow/geometry/shapes/Rectangle';
+import Rectangle from '@app/flow/geometry/Rectangle';
 import CanvasShape from '@app/flow/graphics/canvas/CanvasShape';
 import ShapeStyle from '@app/flow/graphics/ShapeStyle';
 import { drawPath2D } from '@app/flow/utils/CanvasUtils';
-import { createClosedPath } from '@app/flow/utils/Path2DUtils';
+import { createRectanglePath2D } from '@app/flow/utils/Path2DUtils';
 
 
 export default class CanvasRectangle extends CanvasShape {
   public name = 'CanvasRectangle';
 
-  private rectangle: Rectangle;
-  private shapeStyle: ShapeStyle;
+  private params: Rectangle;
+  private style: ShapeStyle;
+  private path2d: Path2D;
 
-  constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, shapeStyle: ShapeStyle, rectangleParams: RectangleParams) {
+  constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, style: ShapeStyle, params: Rectangle) {
     super(canvas, htmlLayer);
-    this.rectangle = new Rectangle(rectangleParams);
-    this.shapeStyle = shapeStyle;
+    this.params = { ...params };
+    this.style = style;
+    this.path2d = createRectanglePath2D(this.params);
   }
 
   public draw() {
-    drawPath2D(this.ctx, this.createPath2D(), this.getShapeStyles());
+    drawPath2D(this.ctx, this.path2d, this.getCurrentStyle());
   }
 
-  private createPath2D() {
-    const x = this.rectangle.x;
-    const y = this.rectangle.y;
-    const halfWidth = this.rectangle.width/2;
-    const halfHeight = this.rectangle.height/2;
-
-    const leftTop = { x: x - halfWidth, y: y + halfHeight };
-    const rightTop = { x: x + halfWidth, y: y + halfHeight };
-    const rightBottom = { x: x + halfWidth, y: y - halfHeight };
-    const leftBottom = { x: x - halfWidth, y: y - halfHeight };
-
-    const borderRadius = this.rectangle.borderRadius;
-
-    return createClosedPath([leftTop, rightTop, rightBottom, leftBottom], borderRadius);
-  };
-
-  private getShapeStyles() {
-    const shapeStyle = this.shapeStyle;
+  private getCurrentStyle() {
+    const shapeStyle = this.style;
     return this.isActive ? (shapeStyle.active || shapeStyle) : (this.isHover ? (shapeStyle.hover || shapeStyle) : shapeStyle);
   }
 
   public includes(x: number, y: number) {
-    return this.ctx.isPointInPath(this.createPath2D(), x, y);
+    return this.ctx.isPointInPath(this.path2d, x, y);
   }
 
   public move(dx: number, dy: number) {
-    this.rectangle.x += dx;
-    this.rectangle.y += dy;
+    this.params.x += dx;
+    this.params.y += dy;
+
+    this.path2d = createRectanglePath2D(this.params);
   }
 }

@@ -14,7 +14,8 @@ export function areCoordinatesInRectangle(coordinates: CoordinatePoint, from: Co
     (Math.min(from.y, to.y) <= coordinates.y) && (coordinates.y <= Math.max(from.y, to.y));
 }
 
-export function areCoordinatesOnInfiniteLine(coordinates: CoordinatePoint, from: CoordinatePoint, to: CoordinatePoint, delta: number) {
+const LINE_DETECTION_DELTA = 10;
+export function areCoordinatesOnInfiniteLine(coordinates: CoordinatePoint, from: CoordinatePoint, to: CoordinatePoint) {
   const dx1 = to.x - from.x;
   const dy1 = to.y - from.y;
 
@@ -26,7 +27,7 @@ export function areCoordinatesOnInfiniteLine(coordinates: CoordinatePoint, from:
 
   const h = S/ab;
 
-  return Math.abs(h) < delta;
+  return Math.abs(h) < LINE_DETECTION_DELTA;
 }
 
 

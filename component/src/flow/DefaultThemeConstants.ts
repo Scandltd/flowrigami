@@ -12,6 +12,13 @@ export const GRID_MAIN_LINE_STEP = 8;
 export const GRID_MAIN_LINE_WIDTH = 2;
 
 
+export const POINT_BORDER_COLOR = 'rgba(83,83,83,0.7)';
+export const POINT_BACKGROUND_COLOR = '#FFFFFF';
+export const POINT_BORDER_WIDTH = 1;
+export const POINT_RADIUS = 4.5;
+export const POINT_DOT_RADIUS = 1;
+
+
 export const LINE_COLOR = 'rgba(83,83,83,0.7)';
 export const LINE_WIDTH = 2;
 

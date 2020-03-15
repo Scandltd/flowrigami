@@ -1,7 +1,7 @@
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
+import Indicator, { IndicatorParams } from '@app/flow/diagram/common/Indicator';
+import DirectionalLink from '@app/flow/diagram/common/link/DirectionalLink';
 import DiagramFactory from '@app/flow/diagram/DiagramFactory';
-import Indicator, { IndicatorParams } from '@app/flow/diagram/Indicator';
-import DirectionalLink from '@app/flow/diagram/uml/link/DirectionalLink';
 import ActivityNode from '@app/flow/diagram/uml/node/ActivityNode';
 import DecisionNode from '@app/flow/diagram/uml/node/DecisionNode';
 import EndNode from '@app/flow/diagram/uml/node/EndNode';
@@ -24,17 +24,14 @@ export enum UmlNodes {
 export default class UmlDiagramFactory implements DiagramFactory {
   private canvas: HTMLCanvasElement;
   private htmlLayer: HTMLElement;
-  private ctx: CanvasRenderingContext2D;
 
   constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement) {
     this.canvas = canvas;
     this.htmlLayer = htmlLayer;
-
-    this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
   }
 
   public getLink(points: AnchorPoint[]) {
-    return new DirectionalLink(this.ctx, points, points.length === 2);
+    return new DirectionalLink(this.canvas, this.htmlLayer, points, points.length === 2);
   }
 
   public getIndicator(params: IndicatorParams) {
@@ -42,38 +39,35 @@ export default class UmlDiagramFactory implements DiagramFactory {
   }
 
   public getNode(nodeName: string, nodeParams: any) {
-    const coordinates = { x: nodeParams.x, y: nodeParams.y };
-
     let node = null;
-
     switch (nodeName) {
       case UmlNodes.ActivityNode: {
         node = new ActivityNode(this.canvas, this.htmlLayer, nodeParams);
         break;
       }
       case UmlNodes.DecisionNode: {
-        node = new DecisionNode(this.canvas, this.htmlLayer, coordinates);
+        node = new DecisionNode(this.canvas, this.htmlLayer, nodeParams);
         break;
       }
       case UmlNodes.EndNode: {
-        node = new EndNode(this.canvas, this.htmlLayer, coordinates);
+        node = new EndNode(this.canvas, this.htmlLayer, nodeParams);
         break;
       }
       case UmlNodes.HorizontalForkJoinNode: {
-        node = new HorizontalForkJoinNode(this.canvas, this.htmlLayer, coordinates);
+        node = new HorizontalForkJoinNode(this.canvas, this.htmlLayer, nodeParams);
         break;
       }
       case UmlNodes.StartNode: {
-        node = new StartNode(this.canvas, this.htmlLayer, coordinates);
+        node = new StartNode(this.canvas, this.htmlLayer, nodeParams);
         break;
       }
       case UmlNodes.TextNode: {
-        const textParams = { placeholder: 'Text', text: '', ...coordinates};
+        const textParams = { placeholder: 'Text', text: '', ...nodeParams };
         node = new TextNode(this.canvas, this.htmlLayer, textParams);
         break;
       }
       case UmlNodes.VerticalForkJoinNode: {
-        node = new VerticalForkJoinNode(this.canvas, this.htmlLayer, coordinates);
+        node = new VerticalForkJoinNode(this.canvas, this.htmlLayer, nodeParams);
         break;
       }
       default: {

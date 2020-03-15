@@ -1,4 +1,4 @@
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 import * as MathUtils from '@app/flow/utils/MathUtils';
 

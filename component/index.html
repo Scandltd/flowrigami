@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Flowrigami</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
-  <link href="index.css" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap">
 </head>
 
 <body>
@@ -18,7 +18,36 @@
 
 <script src="flowrigami.js"></script>
 <script>
-  let flowrigami = new Flowrigami(document.getElementById('flowrigami'));
+  function addShadowDomPolyfillIfNeeded() {
+    return new Promise((resolve) => {
+      const shadowDomSupported = !!document.createElement('div').attachShadow;
+      if (shadowDomSupported) {
+        resolve();
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/shadydom/1.1.0/shadydom.min.js';
+      script.onload = resolve;
+      script.async = 0;
+
+      document.head.appendChild(script);
+    });
+  }
+
+  let flowrigami;
+  const container = document.getElementById('flowrigami');
+
+  function initializeFlowrigami(options) {
+    addShadowDomPolyfillIfNeeded().then(() => {
+      if (flowrigami) {
+        flowrigami.unmount();
+      }
+      flowrigami = new Flowrigami(container, options);
+    });
+  }
+
+  initializeFlowrigami();
 </script>
 
 
@@ -38,9 +67,7 @@
   </div>
   <script>
     const viewModeSwitcher = document.getElementById('view_mode_switcher');
-    viewModeSwitcher.onchange = (e) => {
-      flowrigami = new Flowrigami(document.getElementById('flowrigami'), { viewMode: e.target.checked });
-    }
+    viewModeSwitcher.onchange = (e) => initializeFlowrigami({ viewMode: e.target.checked });
   </script>
 
   <h3>
@@ -52,7 +79,7 @@
     </button>
 
     <button type="button" id="first_sample">
-      First sample
+      Simple sample
     </button>
 
     <button type="button" id="kyc_process">
@@ -70,7 +97,7 @@
     function importData(url) {
       fetch(url).
         then((res) => res.json()).
-        then((json) => flowrigami.diagramApi.import(JSON.stringify(json)))
+        then((json) => flowrigami.diagramApi.import(JSON.stringify(json)));
     }
 
     const firstSample = document.getElementById('first_sample');

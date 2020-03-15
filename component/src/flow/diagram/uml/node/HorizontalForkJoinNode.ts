@@ -1,4 +1,4 @@
-import AnchorPoint from '@app/flow/diagram/AnchorPoint';
+import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
 import Node from '@app/flow/diagram/Node';
 import { BORDER_RADIUS, styles } from '@app/flow/diagram/uml/node/ForkJoinConstants';
 import { UmlNodes } from '@app/flow/diagram/uml/UmlDiagramFactory';
@@ -36,11 +36,11 @@ export default class HorizontalForkJoinNode extends Node {
     this.rectangle = new CanvasRectangle(canvas, htmlLayer, styles, rectangleParams);
     this.rectanglePreview = new CanvasRectangle(canvas, htmlLayer, styles, rectanglePreviewParams);
 
-    this.points = [
+    this.createConnectionPoints([
       new AnchorPoint(this.ctx, { x: coordinates.x - shapeHalfWidth*3/4, y: coordinates.y }, AnchorPoint.Orientation.TopBottom),
       new AnchorPoint(this.ctx, { x: coordinates.x, y: coordinates.y }, AnchorPoint.Orientation.TopBottom),
       new AnchorPoint(this.ctx, { x: coordinates.x + shapeHalfWidth*3/4, y: coordinates.y }, AnchorPoint.Orientation.TopBottom),
-    ];
+    ]);
   }
 
   public draw() {

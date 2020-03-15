@@ -14,8 +14,8 @@ import {
 } from '@app/flow/DefaultThemeConstants';
 import IndicatorExportObject from '@app/flow/exportimport/IndicatorExportObject';
 import CanvasShape from '@app/flow/graphics/canvas/CanvasShape';
+import CanvasText from '@app/flow/graphics/canvas/CanvasText';
 import CanvasPin from '@app/flow/graphics/canvas/shapes/CanvasPin';
-import CanvasText from '@app/flow/graphics/canvas/shapes/CanvasText';
 import ShapeStyle from '@app/flow/graphics/ShapeStyle';
 import TextStyle from '@app/flow/graphics/TextStyle';
 import Store from '@app/flow/store/Store';
@@ -26,7 +26,7 @@ import { shortenNumber } from '@app/flow/utils/NumberUtils';
 type IndicatorColorScheme = 'success' | 'info' | 'warn' | 'error';
 
 export function isIndicatorColorScheme(style: any): style is IndicatorColorScheme {
-  return ['success', 'info', 'warn', 'error', undefined].includes(style);
+  return ['success', 'info', 'warn', 'error'].includes(style);
 }
 
 export type IndicatorParams = {
@@ -38,7 +38,13 @@ export type IndicatorParams = {
 export default class Indicator extends CanvasShape {
   public name = 'Indicator';
 
-  protected _label: string = '';
+  private _label: string = '';
+  public get label() { return this._label; }
+  public set label(label: string) {
+    this._label = label || '';
+    this.textEditor.setText(this.label);
+  }
+
   protected _isEditing = false;
 
   private value: number = 0;
@@ -76,7 +82,7 @@ export default class Indicator extends CanvasShape {
 
   public import(exportObject: IndicatorExportObject) {
     this.id = exportObject.id;
-    this.setLabel(exportObject.label);
+    this.label = exportObject.label;
   }
 
   public draw() {
@@ -117,15 +123,6 @@ export default class Indicator extends CanvasShape {
 
   public setEditing(isEditing: boolean) {
     this._isEditing = isEditing;
-  }
-
-  public get label() {
-    return this._label;
-  }
-
-  public setLabel(label: string = '') {
-    this._label = label;
-    this.textEditor.setText(label);
   }
 
   public getValue() {
@@ -192,7 +189,7 @@ function getPinLabelStyle(pinRadius: number, colorScheme?: IndicatorColorScheme)
     fontName: FONT_NAME,
     lineHeight: LINE_HEIGHT,
     align: 'center',
-    verticalAlign: 'center',
+    verticalAlign: 'middle',
 
     background: {
       color: color,
