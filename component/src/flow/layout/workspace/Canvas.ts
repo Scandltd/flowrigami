@@ -1,6 +1,5 @@
 import Context from '@app/flow/Context';
 import { GRID_MAIN_LINE_STEP, GRID_STEP } from '@app/flow/DefaultThemeConstants';
-import { stats } from '@app/flow/development/stats';
 import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
 import CanvasGrid from '@app/flow/graphics/canvas/CanvasGrid';
 import ACTION from '@app/flow/store/ActionTypes';
@@ -34,7 +33,7 @@ export default class Canvas {
   private ctx: CanvasRenderingContext2D;
 
   private grid: CanvasGrid;
-  private requestAnimationFrameId: number;
+  private requestAnimationFrameId?: number;
 
   constructor(context: Context) {
     this.context = context;
@@ -52,15 +51,14 @@ export default class Canvas {
       window.ctx = this.ctx;
     }
 
-    const animate = () => {
-      this.draw();
-      this.requestAnimationFrameId = window.requestAnimationFrame(animate);
-    };
-    this.requestAnimationFrameId = window.requestAnimationFrame(animate);
-
+    this.animate();
     this.renderHtml();
 
     document.addEventListener('keydown', this.onKeyDown);
+
+    this.store.subscribe(ACTION.CLEAR_DIAGRAM, this.animate);
+    this.store.subscribe(ACTION.DRAW, this.animate);
+    this.store.subscribe(ACTION.IMPORT, this.animate);
 
     this.store.subscribe(ACTION.IMPORT, this.autoSizeWorkspace);
     this.store.subscribe(ACTION.AUTO_LAYOUT, this.autoLayout);
@@ -68,6 +66,10 @@ export default class Canvas {
     this.store.subscribe(ACTION.SET_INDICATOR_EDIT, this.renderHtml);
     this.store.subscribe(ACTION.SET_NODE_EDIT, this.renderHtml);
   }
+
+  animate = () => {
+    this.requestAnimationFrameId = window.requestAnimationFrame(() => this.draw());
+  };
 
   private onKeyDown = (e: KeyboardEvent) => {
     if (e.ctrlKey && (e.key === '+' || e.key === 'Add')) {
@@ -97,6 +99,7 @@ export default class Canvas {
         );
       };
       if (isTextEditing()) {
+        this.store.dispatch(ACTION.DRAW);
         return;
       }
 
@@ -113,6 +116,8 @@ export default class Canvas {
         default:
       }
     }
+
+    this.store.dispatch(ACTION.DRAW);
   };
 
   private autoLayout = () => {
@@ -137,6 +142,8 @@ export default class Canvas {
 
     this.workspaceContainer.style.top = `${(parentHeight - this.workspaceContainer.offsetHeight)/2}px`;
     this.workspaceContainer.style.left = `${(parentWidth - this.workspaceContainer.offsetWidth)/2}px`;
+
+    this.store.dispatch(ACTION.DRAW);
   };
 
   private autoSizeWorkspace = () => {
@@ -173,13 +180,14 @@ export default class Canvas {
     } else if (this.store.selectedConnector) {
       this.store.dispatch(ACTION.DELETE_CONNECTOR, this.store.selectedConnector);
     }
+
+    this.store.dispatch(ACTION.DRAW);
   };
 
   public clear() {
     this.ctx.clearRect(0, 0, this.workspaceCanvas.width, this.workspaceCanvas.height);
   };
 
-  @stats()
   public draw() {
     this.clear();
 
@@ -240,9 +248,15 @@ export default class Canvas {
   };
 
   public unmount() {
-    window.cancelAnimationFrame(this.requestAnimationFrameId);
+    if (this.requestAnimationFrameId) {
+      window.cancelAnimationFrame(this.requestAnimationFrameId);
+    }
 
     document.removeEventListener('keydown', this.onKeyDown);
+
+    this.store.unsubscribe(ACTION.CLEAR_DIAGRAM, this.animate);
+    this.store.unsubscribe(ACTION.DRAW, this.animate);
+    this.store.unsubscribe(ACTION.IMPORT, this.animate);
 
     this.store.unsubscribe(ACTION.IMPORT, this.autoSizeWorkspace);
     this.store.unsubscribe(ACTION.AUTO_LAYOUT, this.autoLayout);

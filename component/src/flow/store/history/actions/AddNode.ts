@@ -12,11 +12,11 @@ export default class AddNode implements Action {
     this.node = node;
   }
 
-  execute = () => {
+  public redo = () => {
     this.store.addNode(this.node);
   };
 
-  revert = () => {
+  public undo = () => {
     this.store.deleteNodeById(this.node.id);
   };
 }

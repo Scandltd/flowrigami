@@ -12,11 +12,11 @@ export default class DeleteIndicator implements Action {
     this.indicator = indicator;
   }
 
-  execute = () => {
+  public redo = () => {
     this.store.deleteIndicatorById(this.indicator.id);
   };
 
-  revert = () => {
+  public undo = () => {
     this.store.addIndicator(this.indicator);
   };
 }

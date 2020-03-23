@@ -1,4 +1,3 @@
-import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
 import Indicator from '@app/flow/diagram/common/Indicator';
 import DirectionalLink from '@app/flow/diagram/common/link/DirectionalLink';
 import DiagramFactory from '@app/flow/diagram/DiagramFactory';
@@ -40,7 +39,16 @@ export default abstract class Diagram {
   };
 
   protected prepareIndicators(indicator: Indicator[]) {
-    return indicator.map((it: Indicator) => it.export());
+    return indicator.map((it: Indicator) => ({
+      params: it.getParams(),
+    }));
+  }
+
+  protected prepareNodes(nodes: Node[]) {
+    return nodes.map((node: Node) => ({
+      name: node.name,
+      params: node.getParams(),
+    }));
   }
 
   protected prepareLinks(links: Link[], nodes: Node[]): LinkExportObject[] {
@@ -69,47 +77,36 @@ export default abstract class Diagram {
     });
   }
 
-  protected prepareNodes(nodes: Node[]) {
-    return nodes.map((node: Node) => node.export());
-  }
-
   public import(object: ExportObject) {
-    const canvas = document.createElement('canvas') as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     const indicators: Indicator[] = [];
     const links: Link[] = [];
     const nodes: Node[] = [];
 
     object.indicators.forEach((it) => {
       const indicator = this.nodeFactory.getIndicator(it.params);
-      indicator.import(it);
-
       indicators.push(indicator);
     });
 
     object.nodes.forEach((it) => {
-      const nodeName = it.name;
-      const node = this.nodeFactory.getNode(nodeName, it.params);
-
+      const node = this.nodeFactory.getNode(it.name, it.params);
       if (node) {
-        node.import(it);
         nodes.push(node);
       }
     });
 
     object.links.forEach((it) => {
-      const points = it.points.map(({ x, y }, i) => {
+      const points = it.points.map((point, i) => {
         let connectionPoint;
         if (i === 0) {
           const from = nodes.find((node) => node.id === it.from);
-          connectionPoint = from!.getConnectionPoint({ x, y });
+          connectionPoint = from!.getConnectionPoint(point);
         }
         if (i === it.points.length - 1) {
           const to = nodes.find((node) => node.id === it.to);
-          connectionPoint = to!.getConnectionPoint({ x, y });
+          connectionPoint = to!.getConnectionPoint(point);
         }
 
-        return connectionPoint || new AnchorPoint(ctx, { x, y });
+        return connectionPoint || this.nodeFactory.getAnchorPoint(point);
       });
 
       const link = this.nodeFactory.getLink(points);

@@ -1,14 +1,26 @@
 import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
-import NodeExportObject from '@app/flow/exportimport/NodeExportObject';
+import NodeParams from '@app/flow/diagram/NodeParams';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
-import CanvasShape from '@app/flow/graphics/canvas/CanvasShape';
+import Shape from '@app/flow/graphics/Shape';
 import Store from '@app/flow/store/Store';
+import nanoid from 'nanoid';
 
 
-export default abstract class Node extends CanvasShape {
+export default abstract class Node implements Shape {
+  public abstract name: string;
+  public readonly id: string;
+
   public x: number;
   public y: number;
   public points: AnchorPoint[] = [];
+
+  private _isActive: boolean = false;
+  public get isActive() { return this._isActive; }
+  public set isActive(value: boolean) { this._isActive = value; }
+
+  private _isHover: boolean = false;
+  public get isHover() { return this._isHover; }
+  public set isHover(value: boolean) { this._isHover = value; }
 
   private _label: string = '';
   public get label() { return this._label; }
@@ -18,31 +30,35 @@ export default abstract class Node extends CanvasShape {
   public get isEditing() { return this._isEditing; }
   public set isEditing(isEditing: boolean) { this._isEditing = isEditing; }
 
-  constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, { x, y }: CoordinatePoint) {
-    super(canvas, htmlLayer);
-    this.x = x;
-    this.y = y;
+  protected canvas: HTMLCanvasElement;
+  protected htmlLayer: HTMLElement;
+  protected ctx: CanvasRenderingContext2D;
+
+  constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, params: NodeParams) {
+    this.canvas = canvas;
+    this.htmlLayer = htmlLayer;
+    this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+    this.id = params.id || nanoid();
+    this._label = params.label || '';
+    this.x = params.x;
+    this.y = params.y;
   }
 
-  public export(): NodeExportObject {
+  public getParams(): NodeParams {
     return {
-      name: this.name,
       id: this.id,
-      params: {
-        label: this.label,
-        x: this.x,
-        y: this.y
-      },
+      label: this.label,
+      x: this.x,
+      y: this.y
     };
   };
 
-  public import(exportObject: NodeExportObject) {
-    this.id = exportObject.id;
-    const { label, x, y } = exportObject.params;
-    this.label = label;
-    this.x = x;
-    this.y = y;
-  }
+  public abstract draw(): void;
+
+  public abstract includes(x: number, y: number): boolean;
+
+  public abstract move(dx: number, dy: number): void;
 
   public getConnectionPoint(coordinates: CoordinatePoint) {
     return this.points.find(point => point.includes(coordinates));

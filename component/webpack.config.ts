@@ -24,20 +24,12 @@ const webpackConfig: webpack.Configuration = {
       {
         exclude: /node_modules/,
         test: /\.css$/,
-        use: [
-          'raw-loader',
-        ],
+        use: 'raw-loader',
       },
       {
         exclude: /node_modules/,
         test: /\.html$/,
-        use: {
-          loader: 'html-loader',
-          options: {
-            collapseWhitespace: isProduction,
-            minimize: isProduction,
-          }
-        }
+        use: 'html-loader'
       },
     ],
   },

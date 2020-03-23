@@ -157,7 +157,6 @@ export default class TopToolbar {
     const nodeFactory = this.diagram.createNodeFactory(canvas, htmlLayer);
     this.store.nodes.forEach((it) => {
       const node = nodeFactory.getNode(it.name, { x: it.x, y: it.y });
-      node.import(it.export());
       node.draw();
     });
     this.store.links.forEach((it) => {

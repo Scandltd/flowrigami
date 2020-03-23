@@ -3,20 +3,20 @@ import Action from '@app/flow/store/history/Action';
 import Store from '@app/flow/store/Store';
 
 
-export default class DeleteConnection implements Action {
+export default class DeleteLink implements Action {
   private store: Store;
   private link: Link;
 
-  constructor(store: Store, connection: Link) {
+  constructor(store: Store, link: Link) {
     this.store = store;
-    this.link = connection;
+    this.link = link;
   }
 
-  execute = () => {
+  public redo = () => {
     this.store.deleteLinkById(this.link.id);
   };
 
-  revert = () => {
+  public undo = () => {
     this.store.addLink(this.link);
   };
 }

@@ -10,6 +10,7 @@ import {
   START_NODE_BORDER_COLOR_ACTIVE,
   START_NODE_BORDER_COLOR_HOVER
 } from '@app/flow/DefaultThemeConstants';
+import NodeParams from '@app/flow/diagram/NodeParams';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 import ShapeStyle from '@app/flow/graphics/ShapeStyle';
 
@@ -36,10 +37,10 @@ export const getCircleSelectionParams = ({ x, y }: CoordinatePoint) => ({
   radius: CIRCLE_RADIUS + SHAPE_SELECTION_MARGIN/2,
 });
 
-export const getTextParams = ({ x, y }: CoordinatePoint) => ({
-  text: '',
-  x: x + 0.5*CIRCLE_RADIUS,
-  y: y + 1.5*CIRCLE_RADIUS,
+export const getTextParams = (params: NodeParams) => ({
+  text: params.label || '',
+  x: params.x + 0.5*CIRCLE_RADIUS,
+  y: params.y + 1.5*CIRCLE_RADIUS,
   maxWidth: SHAPE_LABEL_WIDTH,
   maxHeight: SHAPE_LABEL_HEIGHT,
 });

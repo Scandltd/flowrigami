@@ -12,15 +12,15 @@ import {
   SHAPE_LABEL_WIDTH,
   SHAPE_SELECTION_BORDER_WIDTH
 } from '@app/flow/DefaultThemeConstants';
-import IndicatorExportObject from '@app/flow/exportimport/IndicatorExportObject';
-import CanvasShape from '@app/flow/graphics/canvas/CanvasShape';
 import CanvasText from '@app/flow/graphics/canvas/CanvasText';
 import CanvasPin from '@app/flow/graphics/canvas/shapes/CanvasPin';
+import Shape from '@app/flow/graphics/Shape';
 import ShapeStyle from '@app/flow/graphics/ShapeStyle';
 import TextStyle from '@app/flow/graphics/TextStyle';
 import Store from '@app/flow/store/Store';
 import { drawTextLine } from '@app/flow/utils/CanvasUtils';
 import { shortenNumber } from '@app/flow/utils/NumberUtils';
+import nanoid from 'nanoid';
 
 
 type IndicatorColorScheme = 'success' | 'info' | 'warn' | 'error';
@@ -29,65 +29,87 @@ export function isIndicatorColorScheme(style: any): style is IndicatorColorSchem
   return ['success', 'info', 'warn', 'error'].includes(style);
 }
 
-export type IndicatorParams = {
+export interface IndicatorParams {
+  id?: string;
+  label?: string;
   x: number;
   y: number;
   radius: number;
-};
+}
 
-export default class Indicator extends CanvasShape {
-  public name = 'Indicator';
+export default class Indicator implements Shape {
+  public readonly id: string;
 
-  private _label: string = '';
+  private _label: string;
   public get label() { return this._label; }
   public set label(label: string) {
-    this._label = label || '';
-    this.textEditor.setText(this.label);
+    this._label = label;
+    this.textEditor.text = this.label;
   }
 
-  protected _isEditing = false;
+  private x: number;
+  private y: number;
+  private radius: number;
 
   private value: number = 0;
   private colorScheme?: IndicatorColorScheme;
-  private params: IndicatorParams;
+
+  private _isActive: boolean = false;
+  public get isActive() { return this._isActive; }
+  public set isActive(value: boolean) { this._isActive = value; }
+
+  private _isHover: boolean = false;
+  public get isHover() { return this._isHover; }
+  public set isHover(value: boolean) { this._isHover = value; }
+
+  protected _isEditing = false;
+  public get isEditing() { return this._isEditing; }
+  public set isEditing(isEditing: boolean) { this._isEditing = isEditing; }
 
   private pin: CanvasPin;
   private pinHover: CanvasPin;
   private textEditor: CanvasText;
 
+  protected canvas: HTMLCanvasElement;
+  protected htmlLayer: HTMLElement;
+  protected ctx: CanvasRenderingContext2D;
+
   constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, params: IndicatorParams) {
-    super(canvas, htmlLayer);
-    this.params = params;
+    this.canvas = canvas;
+    this.htmlLayer = htmlLayer;
+    this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+    this.id = params.id || nanoid();
+    this._label = params.label || '';
+    this.x = params.x;
+    this.y = params.y;
+    this.radius = params.radius;
 
     this.pin = new CanvasPin(canvas, htmlLayer, getPinStyle(this.colorScheme), params);
     this.pinHover = new CanvasPin(canvas, htmlLayer, getPinHoverStyle(), { ...params, radius: 1.25*params.radius });
 
     this.textEditor = new CanvasText(canvas, htmlLayer, {
-      text: '',
-      x: params.x + 0.5*this.params.radius,
-      y: params.y + 1.5*this.params.radius,
+      text: this.label,
+      x: this.x + 0.5*this.radius,
+      y: this.y + 1.5*this.radius,
       maxWidth: SHAPE_LABEL_WIDTH,
       maxHeight: SHAPE_LABEL_HEIGHT,
     }, SHAPE_LABEL_STYLE);
   }
 
-  public export(): IndicatorExportObject {
+  public getParams(): IndicatorParams {
     return {
-      name: this.name,
       id: this.id,
-      label: this.label,
-      params: this.params,
+      label: this._label,
+      x: this.x,
+      y: this.y,
+      radius: this.radius,
     };
   };
 
-  public import(exportObject: IndicatorExportObject) {
-    this.id = exportObject.id;
-    this.label = exportObject.label;
-  }
-
   public draw() {
     this.pin.draw();
-    if (this.isHover) {
+    if (this.isHover || this.isActive) {
       this.pinHover.draw();
     }
     this.drawLabel();
@@ -99,9 +121,8 @@ export default class Indicator extends CanvasShape {
   }
 
   private drawLabel() {
-    const { x, y, radius } = this.params;
     const label = shortenNumber(this.value);
-    drawTextLine(this.ctx, getPinLabelStyle(radius, this.colorScheme), label, x, y);
+    drawTextLine(this.ctx, getPinLabelStyle(this.radius, this.colorScheme), label, this.x, this.y);
   }
 
   public includes(x: number, y: number) {
@@ -109,20 +130,12 @@ export default class Indicator extends CanvasShape {
   }
 
   public move(dx: number, dy: number) {
-    this.params.x += dx;
-    this.params.y += dy;
+    this.x += dx;
+    this.y += dy;
 
     this.pin.move(dx, dy);
     this.pinHover.move(dx, dy);
     this.textEditor.move(dx, dy);
-  }
-
-  public get isEditing() {
-    return this._isEditing;
-  }
-
-  public setEditing(isEditing: boolean) {
-    this._isEditing = isEditing;
   }
 
   public getValue() {

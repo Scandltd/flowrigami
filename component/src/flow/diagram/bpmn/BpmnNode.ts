@@ -33,19 +33,14 @@ export default abstract class BpmnNode {
   public export(): NodeExportObject {
     return {
       name: this.name,
-      id: this.id,
       params: {
+        id: this.id,
         label: this.label,
         x: this.coordinates.x,
         y: this.coordinates.y
       },
     };
   };
-
-  public import(exportObject: NodeExportObject) {
-    this.id = exportObject.id;
-    this.label = exportObject.params.label || '';
-  }
 
   public abstract includes(coordinates: Coordinates): boolean;
 

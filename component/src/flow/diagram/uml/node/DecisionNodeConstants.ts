@@ -10,6 +10,7 @@ import {
   SHAPE_PREVIEW_COLOR,
   SHAPE_SELECTION_MARGIN
 } from '@app/flow/DefaultThemeConstants';
+import NodeParams from '@app/flow/diagram/NodeParams';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 import ShapeStyle from '@app/flow/graphics/ShapeStyle';
 
@@ -43,15 +44,15 @@ export const getPreviewRhombusParams = ({ x, y }: CoordinatePoint) => ({
   borderRadius: DECISION_NODE_BORDER_RADIUS,
 });
 
-export const getTextParams = ({ x, y }: CoordinatePoint) => {
-  const [top, right, bottom, left] = getAnchorPoints({ x, y });
+export const getTextParams = (params: NodeParams) => {
+  const [top, right, bottom, left] = getAnchorPoints({ x: params.x, y: params.y });
   return {
-    text: '',
+    text: params.label || '',
     x: 0.5*(bottom.x + right.x),
     y: bottom.y,
     maxWidth: SHAPE_LABEL_WIDTH,
     maxHeight: SHAPE_LABEL_HEIGHT,
-  }
+  };
 };
 
 export const getAnchorPoints = ({ x, y }: CoordinatePoint) => ([

@@ -88,7 +88,7 @@ export default class Library {
 
     canvas.addEventListener('dragstart', (e) => {
       if (e.dataTransfer) {
-        e.dataTransfer.setData('indicator', indicator.name);
+        e.dataTransfer.setData('indicator', 'any');
       }
     });
 

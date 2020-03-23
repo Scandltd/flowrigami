@@ -23,7 +23,7 @@ export default class DecisionNode extends Node {
   public get label() { return super.label; }
   public set label(label: string) {
     super.label = label;
-    this.textEditor.setText(super.label);
+    this.textEditor.text = this.label;
   }
 
   private preview: CanvasRhombus;

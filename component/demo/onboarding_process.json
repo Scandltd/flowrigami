@@ -3,9 +3,8 @@
   "diagram": "UML",
   "indicators": [
     {
-      "name": "Indicator",
-      "id": "ULXBCpOpu93ZJUX2FgRmb",
       "params": {
+        "id": "ULXBCpOpu93ZJUX2FgRmb",
         "label": "",
         "x": 640,
         "y": 236,
@@ -13,9 +12,8 @@
       }
     },
     {
-      "name": "Indicator",
-      "id": "sRuBw8NsiQ35sGnMtdmh4",
       "params": {
+        "id": "sRuBw8NsiQ35sGnMtdmh4",
         "label": "",
         "x": 1515,
         "y": 236,
@@ -23,9 +21,8 @@
       }
     },
     {
-      "name": "Indicator",
-      "id": "ICbInk20RNMdHIRNgb7ER",
       "params": {
+        "id": "ICbInk20RNMdHIRNgb7ER",
         "label": "",
         "x": 1847,
         "y": 236,
@@ -33,9 +30,8 @@
       }
     },
     {
-      "name": "Indicator",
-      "id": "tTzQIDI9l-jfdq8hsVrcP",
       "params": {
+        "id": "tTzQIDI9l-jfdq8hsVrcP",
         "label": "",
         "x": 2664,
         "y": 236,
@@ -43,9 +39,8 @@
       }
     },
     {
-      "name": "Indicator",
-      "id": "LadDaoK_4qkvJmQ0BIRoX",
       "params": {
+        "id": "LadDaoK_4qkvJmQ0BIRoX",
         "label": "",
         "x": 3175,
         "y": 236,
@@ -53,9 +48,8 @@
       }
     },
     {
-      "name": "Indicator",
-      "id": "lHcWI9egroLDCnAIoV9_f",
       "params": {
+        "id": "lHcWI9egroLDCnAIoV9_f",
         "label": "",
         "x": 3483,
         "y": 236,
@@ -621,261 +615,261 @@
   ],
   "nodes": [
     {
-      "id": "P70oymK16njVyVud--8VH",
       "name": "StartNode",
       "params": {
+        "id": "P70oymK16njVyVud--8VH",
         "label": "",
         "x": 190,
         "y": 300
       }
     },
     {
-      "id": "9pbSsQA70-_K-bPbSLXxs",
       "name": "ActivityNode",
       "params": {
+        "id": "9pbSsQA70-_K-bPbSLXxs",
         "label": "Vacancy opening",
         "x": 520,
         "y": 300
       }
     },
     {
-      "id": "bLK5JeFzDhBPyNZsTaZtl",
       "name": "ActivityNode",
       "params": {
+        "id": "bLK5JeFzDhBPyNZsTaZtl",
         "label": "Searching for a \ncandidate",
         "x": 700,
         "y": 300
       }
     },
     {
-      "id": "rvbw0sqZUcSe4-5T5iq7I",
       "name": "VerticalForkJoinNode",
       "params": {
+        "id": "rvbw0sqZUcSe4-5T5iq7I",
         "label": "",
         "x": 820,
         "y": 300
       }
     },
     {
-      "id": "6Sl5W1OyYYsER8jlnhMy6",
       "name": "VerticalForkJoinNode",
       "params": {
+        "id": "6Sl5W1OyYYsER8jlnhMy6",
         "label": "",
         "x": 1100,
         "y": 300
       }
     },
     {
-      "id": "RPtMnP4khUliVusEGf27e",
       "name": "ActivityNode",
       "params": {
+        "id": "RPtMnP4khUliVusEGf27e",
         "label": "Written or \nphone \ninterview",
         "x": 1220,
         "y": 300
       }
     },
     {
-      "id": "Jtfrt240JbyJurWhHsy7p",
       "name": "ActivityNode",
       "params": {
+        "id": "Jtfrt240JbyJurWhHsy7p",
         "label": "Approval \nby head of\nthe department\n",
         "x": 1580,
         "y": 300
       }
     },
     {
-      "id": "NWRGipPTRf74u26PFroOU",
       "name": "DecisionNode",
       "params": {
+        "id": "NWRGipPTRf74u26PFroOU",
         "label": "Was candidate \napproved?\n",
         "x": 1730,
         "y": 300
       }
     },
     {
-      "id": "uxXpHXX9rxCZQeBxxTjMU",
       "name": "DecisionNode",
       "params": {
+        "id": "uxXpHXX9rxCZQeBxxTjMU",
         "label": "Was job \ninterview \nsuccessful?",
         "x": 2060,
         "y": 300
       }
     },
     {
-      "id": "HkiiMzTxcL7X0jr5j1lKs",
       "name": "DecisionNode",
       "params": {
+        "id": "HkiiMzTxcL7X0jr5j1lKs",
         "label": "Is test task \nneeded?",
         "x": 2200,
         "y": 300
       }
     },
     {
-      "id": "q0lwIvjq2tEWAfa2ypR7A",
       "name": "ActivityNode",
       "params": {
+        "id": "q0lwIvjq2tEWAfa2ypR7A",
         "label": "Candidate \nperforms \ntest task\n",
         "x": 2300,
         "y": 230
       }
     },
     {
-      "id": "GyulMHoQ8pRl9XcDwbT7-",
       "name": "DecisionNode",
       "params": {
+        "id": "GyulMHoQ8pRl9XcDwbT7-",
         "label": "Was test task\nsuccessful?",
         "x": 2460,
         "y": 230
       }
     },
     {
-      "id": "c8VPeVYGDJMv-B7EH6Z_E",
       "name": "ActivityNode",
       "params": {
+        "id": "c8VPeVYGDJMv-B7EH6Z_E",
         "label": "Job offer \nto the candidate",
         "x": 2730,
         "y": 300
       }
     },
     {
-      "id": "mqWuEsz15spb7EUnAlSJ5",
       "name": "DecisionNode",
       "params": {
+        "id": "mqWuEsz15spb7EUnAlSJ5",
         "label": "",
         "x": 2590,
         "y": 300
       }
     },
     {
-      "id": "T7t5XUOVMy2PzEyP6kokE",
       "name": "DecisionNode",
       "params": {
+        "id": "T7t5XUOVMy2PzEyP6kokE",
         "label": "Has the \ncandidate \naccepted the\njob offer?",
         "x": 2880,
         "y": 300
       }
     },
     {
-      "id": "dryTJ00c5UG7ctpQs_sgt",
       "name": "ActivityNode",
       "params": {
+        "id": "dryTJ00c5UG7ctpQs_sgt",
         "label": "Hiring\nprocedure",
         "x": 3050,
         "y": 300
       }
     },
     {
-      "id": "TCed4mEnlAB_scIUU1H8Z",
       "name": "ActivityNode",
       "params": {
+        "id": "TCed4mEnlAB_scIUU1H8Z",
         "label": "Candidate's \nprobation",
         "x": 3240,
         "y": 300
       }
     },
     {
-      "id": "q7TNGMMefDzzm2QOTmvjt",
       "name": "DecisionNode",
       "params": {
+        "id": "q7TNGMMefDzzm2QOTmvjt",
         "label": "Was probation \nsuccessful?\n",
         "x": 3370,
         "y": 300
       }
     },
     {
-      "id": "JbHtnwSxlKhL12MyFYMxN",
       "name": "ActivityNode",
       "params": {
+        "id": "JbHtnwSxlKhL12MyFYMxN",
         "label": "Hired candidate\nworks in the\ncompany\n\n\n",
         "x": 3550,
         "y": 300
       }
     },
     {
-      "id": "nbpWwnKwXA9EFEBCd4lrb",
       "name": "ActivityNode",
       "params": {
+        "id": "nbpWwnKwXA9EFEBCd4lrb",
         "label": "Termination of\nemployment \ncontract\n",
         "x": 3720,
         "y": 300
       }
     },
     {
-      "id": "qmTavkn4iNqDQ6doePPU4",
       "name": "ActivityNode",
       "params": {
+        "id": "qmTavkn4iNqDQ6doePPU4",
         "label": "Processing\ndocuments for \ndismissal",
         "x": 3890,
         "y": 300
       }
     },
     {
-      "id": "F-MEtZeX4WCRolvTglRmI",
       "name": "EndNode",
       "params": {
+        "id": "F-MEtZeX4WCRolvTglRmI",
         "label": "",
         "x": 4400,
         "y": 300
       }
     },
     {
-      "id": "5BtJqKWVYBHBIzTV1Bm2I",
       "name": "ActivityNode",
       "params": {
+        "id": "5BtJqKWVYBHBIzTV1Bm2I",
         "label": "Determination \nof requirements for a candidate",
         "x": 340,
         "y": 300
       }
     },
     {
-      "id": "6YadYWs0OUSebiSksgAPp",
       "name": "ActivityNode",
       "params": {
+        "id": "6YadYWs0OUSebiSksgAPp",
         "label": "Passive search",
         "x": 960,
         "y": 250
       }
     },
     {
-      "id": "bRlOs1-jjOhIbsEUBv2eF",
       "name": "ActivityNode",
       "params": {
+        "id": "bRlOs1-jjOhIbsEUBv2eF",
         "label": "Active search",
         "x": 960,
         "y": 350
       }
     },
     {
-      "id": "hHj4OUJpWU5Yu8eDfcD3E",
       "name": "ActivityNode",
       "params": {
+        "id": "hHj4OUJpWU5Yu8eDfcD3E",
         "label": "Candidate's\n profile forming",
         "x": 1400,
         "y": 300
       }
     },
     {
-      "id": "pQgN2ePciU535L7Lj9e-I",
       "name": "ActivityNode",
       "params": {
+        "id": "pQgN2ePciU535L7Lj9e-I",
         "label": "Final settlement",
         "x": 4070,
         "y": 300
       }
     },
     {
-      "id": "sXAeUpNBXY7guBX9CwVQW",
       "name": "ActivityNode",
       "params": {
+        "id": "sXAeUpNBXY7guBX9CwVQW",
         "label": "Exit interview",
         "x": 4260,
         "y": 300
       }
     },
     {
-      "id": "JnLtWRMv3cN4w2fO59Lis",
       "name": "ActivityNode",
       "params": {
+        "id": "JnLtWRMv3cN4w2fO59Lis",
         "label": "Job interview",
         "x": 1910,
         "y": 300

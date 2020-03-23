@@ -1,7 +1,7 @@
 import Action from '@app/flow/store/history/Action';
 
 
-export default class MoveInstance implements Action {
+export default class MoveShape implements Action {
   movableInstance: any;
   dx: number = 0;
   dy: number = 0;
@@ -15,11 +15,11 @@ export default class MoveInstance implements Action {
     this.dy = this.dy + dy;
   };
 
-  execute = () => {
+  public redo = () => {
     this.movableInstance.move(this.dx, this.dy);
   };
 
-  revert = () => {
+  public undo = () => {
     this.movableInstance.move(-this.dx, -this.dy);
   };
 }

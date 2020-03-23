@@ -1,7 +1,7 @@
 import { SHAPE_LABEL_STYLE } from '@app/flow/DefaultTheme';
 import { SHAPE_LABEL_COLOR } from '@app/flow/DefaultThemeConstants';
 import Node from '@app/flow/diagram/Node';
-import { getPreviewRectangleParams, getRectangleParams, previewStyles, styles } from '@app/flow/diagram/uml/node/TextNodeConstants';
+import { getPreviewRectangleParams, getRectangleParams, getTextParams, previewStyles, styles } from '@app/flow/diagram/uml/node/TextNodeConstants';
 import { UmlNodes } from '@app/flow/diagram/uml/UmlDiagramFactory';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 import CanvasText from '@app/flow/graphics/canvas/CanvasText';
@@ -16,7 +16,7 @@ export default class TextNode extends Node {
   public get label() { return super.label; }
   public set label(label: string) {
     super.label = label;
-    this.textEditor.setText(super.label);
+    this.textEditor.text = this.label;
 
     this.rectangle = this.createHoverRectangle();
   }
@@ -28,7 +28,7 @@ export default class TextNode extends Node {
   constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, params: TextParams) {
     super(canvas, htmlLayer, params);
 
-    this.textEditor = new CanvasText(canvas, htmlLayer, params, SHAPE_LABEL_STYLE);
+    this.textEditor = new CanvasText(canvas, htmlLayer, getTextParams(params), SHAPE_LABEL_STYLE);
     this.rectangle = this.createHoverRectangle();
     this.rectanglePreview = new CanvasRectangle(canvas, htmlLayer, previewStyles, getPreviewRectangleParams(params));
   }

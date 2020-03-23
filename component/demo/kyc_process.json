@@ -4,9 +4,8 @@
 
   "indicators": [
     {
-      "name": "Indicator",
-      "id": "G9YgA-lBtDn1S8s6mfoiL",
       "params": {
+        "id": "G9YgA-lBtDn1S8s6mfoiL",
         "label": "",
         "x": 325,
         "y": 277,
@@ -14,9 +13,8 @@
       }
     },
     {
-      "name": "Indicator",
-      "id": "Dohetv6qmEHFanvSzqH2R",
       "params": {
+        "id": "Dohetv6qmEHFanvSzqH2R",
         "label": "",
         "x": 954,
         "y": 275,
@@ -24,9 +22,8 @@
       }
     },
     {
-      "name": "Indicator",
-      "id": "vtXwz2X_XObfNuUWlL0_c",
       "params": {
+        "id": "vtXwz2X_XObfNuUWlL0_c",
         "label": "",
         "x": 1536,
         "y": 203,
@@ -34,9 +31,8 @@
       }
     },
     {
-      "name": "Indicator",
-      "id": "__qiqPQtIiv3qZ3ypDXGh",
       "params": {
+        "id": "__qiqPQtIiv3qZ3ypDXGh",
         "label": "",
         "x": 1545,
         "y": 322,
@@ -308,180 +304,180 @@
   ],
   "nodes": [
     {
-      "id": "mj90dHaztHmivWkVlbPGx",
       "name": "StartNode",
       "params": {
+        "id": "mj90dHaztHmivWkVlbPGx",
         "label": "Customer\naccount\nrequested\n",
         "x": 234,
         "y": 339
       }
     },
     {
-      "id": "zGo6_WgGN0xInUBpQCD9D",
       "name": "ActivityNode",
       "params": {
+        "id": "zGo6_WgGN0xInUBpQCD9D",
         "label": "Create new \naccount",
         "x": 384,
         "y": 339
       }
     },
     {
-      "id": "79e0T8DIUVXP1ZjXdQEro",
       "name": "VerticalForkJoinNode",
       "params": {
+        "id": "79e0T8DIUVXP1ZjXdQEro",
         "label": "",
         "x": 504,
         "y": 339
       }
     },
     {
-      "id": "-3hbvvO37BLrl3LvSrw0z",
       "name": "ActivityNode",
       "params": {
+        "id": "-3hbvvO37BLrl3LvSrw0z",
         "label": "Validate name \nand address",
         "x": 634,
         "y": 229
       }
     },
     {
-      "id": "0XnjrY5vsztwUagzdAxE_",
       "name": "ActivityNode",
       "params": {
+        "id": "0XnjrY5vsztwUagzdAxE_",
         "label": "Validate name\nfor interpol\nand PEP",
         "x": 634,
         "y": 339
       }
     },
     {
-      "id": "VDxfxoC05n3cVBC7ubpwN",
       "name": "ActivityNode",
       "params": {
+        "id": "VDxfxoC05n3cVBC7ubpwN",
         "label": "Verify account",
         "x": 634,
         "y": 449
       }
     },
     {
-      "id": "aWthboaLCf9SYYdb5BsZ4",
       "name": "VerticalForkJoinNode",
       "params": {
+        "id": "aWthboaLCf9SYYdb5BsZ4",
         "label": "",
         "x": 764,
         "y": 339
       }
     },
     {
-      "id": "COqsaRT91iv3tF560HRqq",
       "name": "DecisionNode",
       "params": {
+        "id": "COqsaRT91iv3tF560HRqq",
         "label": "Certified?",
         "x": 864,
         "y": 339
       }
     },
     {
-      "id": "VfuQwcOGAXp44JjzLr26e",
       "name": "ActivityNode",
       "params": {
+        "id": "VfuQwcOGAXp44JjzLr26e",
         "label": "Manually review \nnew customer",
         "x": 1024,
         "y": 339
       }
     },
     {
-      "id": "UIK29kkuaBL4BaxwN7623",
       "name": "DecisionNode",
       "params": {
+        "id": "UIK29kkuaBL4BaxwN7623",
         "label": "Success?",
         "x": 1184,
         "y": 339
       }
     },
     {
-      "id": "tp80gjkiA12BJw7D-QOTH",
       "name": "ActivityNode",
       "params": {
+        "id": "tp80gjkiA12BJw7D-QOTH",
         "label": "Onboard new\ncustomer",
         "x": 1184,
         "y": 229
       }
     },
     {
-      "id": "uWnqel2bX8I96dEk7qMZU",
       "name": "DecisionNode",
       "params": {
+        "id": "uWnqel2bX8I96dEk7qMZU",
         "label": "",
         "x": 1354,
         "y": 339
       }
     },
     {
-      "id": "v_iB1YRUPdhdWFVO0R61P",
       "name": "ActivityNode",
       "params": {
+        "id": "v_iB1YRUPdhdWFVO0R61P",
         "label": "Welcome new \ncustomer",
         "x": 1354,
         "y": 229
       }
     },
     {
-      "id": "ehBEco1HCjG4GRkHo138y",
       "name": "EndNode",
       "params": {
+        "id": "ehBEco1HCjG4GRkHo138y",
         "label": "Customer \nonboarded",
         "x": 1494,
         "y": 229
       }
     },
     {
-      "id": "rcxYMvILUIVM6ATiP93Pi",
       "name": "EndNode",
       "params": {
+        "id": "rcxYMvILUIVM6ATiP93Pi",
         "label": "Customer\n declined",
         "x": 1494,
         "y": 339
       }
     },
     {
-      "id": "H4LEvMV4FrbRB4d5ABCKI",
       "name": "TextNode",
       "params": {
+        "id": "H4LEvMV4FrbRB4d5ABCKI",
         "label": "Yes\n\n",
         "x": 884,
         "y": 205
       }
     },
     {
-      "id": "VpmzyhVoWnIsP3MLfVsn_",
       "name": "TextNode",
       "params": {
+        "id": "VpmzyhVoWnIsP3MLfVsn_",
         "label": "No\n\n",
         "x": 894,
         "y": 315
       }
     },
     {
-      "id": "FxB6cBu-pGHPwdVueVQVI",
       "name": "TextNode",
       "params": {
+        "id": "FxB6cBu-pGHPwdVueVQVI",
         "label": "Unknown\n\n",
         "x": 874,
         "y": 425
       }
     },
     {
-      "id": "hiLvLO4QDk_T3UIGR-dp9",
       "name": "TextNode",
       "params": {
+        "id": "hiLvLO4QDk_T3UIGR-dp9",
         "label": "Pass\n\n",
         "x": 1184,
         "y": 275
       }
     },
     {
-      "id": "AegMQKuUC2OI254PGw4Fo",
       "name": "TextNode",
       "params": {
+        "id": "AegMQKuUC2OI254PGw4Fo",
         "label": "Fail\n\n",
         "x": 1214,
         "y": 315

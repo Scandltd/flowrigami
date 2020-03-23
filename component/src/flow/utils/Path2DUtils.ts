@@ -45,9 +45,7 @@ export function createRectanglePath2D(rectangle: Rectangle) {
   const rightBottom = { x: x + halfWidth, y: y - halfHeight };
   const leftBottom = { x: x - halfWidth, y: y - halfHeight };
 
-  const borderRadius = rectangle.borderRadius;
-
-  return createClosedPath([leftTop, rightTop, rightBottom, leftBottom], borderRadius);
+  return createClosedPath([leftTop, rightTop, rightBottom, leftBottom], rectangle.borderRadius);
 }
 
 export function createRhombusPath2D(rhombus: Rhombus) {
@@ -75,7 +73,7 @@ export function createRhombusPath2D(rhombus: Rhombus) {
   return createClosedPath([top, right, bottom, left], borderRadius);
 }
 
-export function createClosedPath(points: CoordinatePoint[], radius: number) {
+export function createClosedPath(points: CoordinatePoint[], radius = 0) {
   const length = points.length;
   if (length < 3) {
     throw new Error('Failed to create a closed path: 3 or more points must be provided');

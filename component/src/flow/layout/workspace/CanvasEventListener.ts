@@ -7,8 +7,9 @@ import Link from '@app/flow/diagram/Link';
 import Node from '@app/flow/diagram/Node';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 import { chartBorderDefinition } from '@app/flow/layout/workspace/Canvas';
+import CanvasGrabbingEventListener from '@app/flow/layout/workspace/listeners/CanvasGrabbingEventListener';
 import ACTION from '@app/flow/store/ActionTypes';
-import MoveInstance from '@app/flow/store/history/impl/MoveInstance';
+import MoveShape from '@app/flow/store/history/actions/MoveShape';
 import Store from '@app/flow/store/Store';
 
 
@@ -19,9 +20,8 @@ export default class CanvasEventListener {
   private workspaceContainer: HTMLElement;
   private ctx: CanvasRenderingContext2D;
 
-  private grabbing = false;
   private isMovableShape = true;
-  private moveAction: MoveInstance | null = null;
+  private moveAction: MoveShape | null = null;
   private editedShape: Indicator | Node | null = null;
 
   private anchorPoint: AnchorPoint | null | undefined = null;
@@ -35,6 +35,7 @@ export default class CanvasEventListener {
     this.workspaceContainer = context.layout.workspaceContainer;
     this.ctx = context.layout.workspaceCanvas.getContext('2d') as CanvasRenderingContext2D;
 
+    new CanvasGrabbingEventListener(context);
     this.addEventListeners();
   }
 
@@ -47,6 +48,7 @@ export default class CanvasEventListener {
     this.workspaceContainer.addEventListener('mouseup', this.onMouseUp);
     this.workspaceContainer.addEventListener('mousemove', this.onMouseMove);
     this.workspaceContainer.addEventListener('mouseleave', this.onMouseUp);
+    // this.workspaceContainer.addEventListener('mouseenter', () => {});
 
     if (!this.context.options.viewMode) {
       this.workspaceContainer.addEventListener('click', this.onMouseClick);
@@ -70,23 +72,18 @@ export default class CanvasEventListener {
   };
 
   private onMouseMove = (e: MouseEvent) => {
-    if (this.grabbing) {
-      const top = this.workspaceContainer.style.top ? parseInt(this.workspaceContainer.style.top, 10) : 0;
-      const left = this.workspaceContainer.style.left ? parseInt(this.workspaceContainer.style.left, 10) : 0;
-
-      this.workspaceContainer.style.top = `${top + e.movementY}px`;
-      this.workspaceContainer.style.left = `${left + e.movementX}px`;
-      return;
-    }
-
     if (this.context.options.viewMode) return;
 
-    const dx = e.movementX/this.store.scale;
-    const dy = e.movementY/this.store.scale;
+    const devicePixelRatio = window.devicePixelRatio;
+    const canvasScale = this.store.scale;
+    const scale = devicePixelRatio*canvasScale;
+    // @TODO don't work in FF because FF adjust e.movementX/e.movementY according to the window.devicePixelRatio under the hood
+    const dx = e.movementX/scale;
+    const dy = e.movementY/scale;
 
     if (this.anchorPoint && this.anchorPointLink) {
       if (!this.moveAction) {
-        this.moveAction = new MoveInstance(this.anchorPointLink);
+        this.moveAction = new MoveShape(this.anchorPointLink);
       }
       this.moveAction.pushCoordinates(dx, dy);
       this.anchorPointLink.movePoint(this.anchorPoint, dx, dy);
@@ -101,7 +98,7 @@ export default class CanvasEventListener {
       const selectedShape = this.store.selectedIndicator || this.store.selectedNode;
       if (selectedShape) {
         if (!this.moveAction) {
-          this.moveAction = new MoveInstance(selectedShape);
+          this.moveAction = new MoveShape(selectedShape);
           this.editedShape = null;
         }
         this.moveAction.pushCoordinates(dx, dy);
@@ -112,18 +109,17 @@ export default class CanvasEventListener {
     if (this.store.selectedNode || this.store.selectedConnector) {
       this.resizeWorkspace();
     }
+    this.store.dispatch(ACTION.DRAW);
   };
 
   private onHoverDetection = (e: MouseEvent) => {
     const { x, y } = this.getCursorCoordinates(e);
 
     this.store.indicators.forEach((it) => {
-      const isMouseIn = it.includes(x, y);
-      if (!it.isActive) {it.isHover = isMouseIn;}
+      it.isHover = !it.isActive && it.includes(x, y);
     });
     this.store.nodes.forEach((it) => {
-      const isMouseIn = it.includes(x, y);
-      if (!it.isActive) {it.isHover = isMouseIn;}
+      it.isHover = !it.isActive && it.includes(x, y);
     });
     this.store.links.forEach(link => link.onHover(link.includes(x, y)));
   };
@@ -131,20 +127,18 @@ export default class CanvasEventListener {
   private getCursorCoordinates = (e: MouseEvent): CoordinatePoint => ({ x: e.offsetX, y: e.offsetY });
 
   private handleCursorMutation = (e: MouseEvent) => {
-    if (!this.grabbing) {
-      const { x, y } = this.getCursorCoordinates(e);
+    const { x, y } = this.getCursorCoordinates(e);
 
-      const hoveredIndicator = this.store.findIndicatorByCoordinates(x, y);
-      const hoveredLink = this.store.findLinkByCoordinates(x, y);
-      const hoveredNode = this.store.findNodeByCoordinates(x, y);
-      if (hoveredIndicator || hoveredLink || hoveredNode) {
-        this.workspaceContainer.style.cursor = 'pointer';
-        if (hoveredNode && hoveredNode.getConnectionPoint({ x, y })) {
-          this.workspaceContainer.style.cursor = 'crosshair';
-        }
-      } else {
-        this.workspaceContainer.style.cursor = 'default';
+    const hoveredIndicator = this.store.findIndicatorByCoordinates(x, y);
+    const hoveredLink = this.store.findLinkByCoordinates(x, y);
+    const hoveredNode = this.store.findNodeByCoordinates(x, y);
+    if (hoveredIndicator || hoveredLink || hoveredNode) {
+      this.workspaceContainer.style.cursor = 'pointer';
+      if (hoveredNode && hoveredNode.getConnectionPoint({ x, y })) {
+        this.workspaceContainer.style.cursor = 'crosshair';
       }
+    } else {
+      this.workspaceContainer.style.cursor = 'default';
     }
   };
 
@@ -203,12 +197,6 @@ export default class CanvasEventListener {
   };
 
   private onMouseDown = (e: MouseEvent) => {
-    if (this.context.options.viewMode) {
-      this.workspaceContainer.style.cursor = 'grabbing';
-      this.grabbing = true;
-      return;
-    }
-
     this.isMovableShape = true;
     const { x, y } = this.getCursorCoordinates(e);
 
@@ -229,9 +217,6 @@ export default class CanvasEventListener {
       }
 
       this.store.dispatch(ACTION.SET_CONNECTION_POINT, detectedPoint);
-    } else {
-      this.workspaceContainer.style.cursor = 'grabbing';
-      this.grabbing = true;
     }
 
     if (pointConnection) {
@@ -244,6 +229,8 @@ export default class CanvasEventListener {
 
       this.store.dispatch(ACTION.SET_NEW_CONNECTOR, directionalLink);
     }
+
+    this.store.dispatch(ACTION.DRAW);
   };
 
   private selectIndicator = (indicator: Indicator | null | undefined) => this.store.dispatch(ACTION.SET_INDICATOR, indicator);
@@ -266,11 +253,6 @@ export default class CanvasEventListener {
       this.anchorPointLink = null;
     }
 
-    if (this.grabbing) {
-      this.workspaceContainer.style.cursor = 'default';
-      this.grabbing = false;
-    }
-
     if (this.store.newConnector) {
       const cursorCoordinates = this.getCursorCoordinates(e);
       this.createConnection(cursorCoordinates, this.store.newConnector);
@@ -280,6 +262,7 @@ export default class CanvasEventListener {
       this.setRelevantGridCoordinates();
     }
     this.store.dispatch(ACTION.SET_CONNECTION_POINT, null);
+    this.store.dispatch(ACTION.DRAW);
   };
 
   private createConnection = ({ x, y }: CoordinatePoint, newConnection: Link) => {
@@ -341,6 +324,7 @@ export default class CanvasEventListener {
     }
 
     this.editedShape = detectedIndicator || detectedNode || null;
+    this.store.dispatch(ACTION.DRAW);
   };
 
   private onMouseDbClick = (e: MouseEvent) => {
@@ -349,13 +333,13 @@ export default class CanvasEventListener {
     const detectedIndicator = this.getDetectedShapeSetNoActive(this.store.indicators, cursorCoordinates);
     if (detectedIndicator) {
       this.store.dispatch(ACTION.SET_INDICATOR_EDIT, { id: detectedIndicator.id, isEditing: true });
-      return;
+    } else {
+      const detectedNode = this.getDetectedShapeSetNoActive(this.store.nodes, cursorCoordinates);
+      if (detectedNode) {
+        this.store.dispatch(ACTION.SET_NODE_EDIT, { id: detectedNode.id, isEditing: true });
+      }
     }
-
-    const detectedNode = this.getDetectedShapeSetNoActive(this.store.nodes, cursorCoordinates);
-    if (detectedNode) {
-      this.store.dispatch(ACTION.SET_NODE_EDIT, { id: detectedNode.id, isEditing: true });
-    }
+    this.store.dispatch(ACTION.DRAW);
   };
 
   private getDetectedShapeSetNoActive<T extends Indicator | Link | Node>(shapes: T[], { x, y }: CoordinatePoint) {
@@ -395,5 +379,6 @@ export default class CanvasEventListener {
         this.store.dispatch(ACTION.ADD_INDICATOR, indicator);
       }
     }
+    this.store.dispatch(ACTION.DRAW);
   };
 }

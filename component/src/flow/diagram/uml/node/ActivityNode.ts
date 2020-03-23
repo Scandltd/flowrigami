@@ -1,6 +1,7 @@
 import { SHAPE_SELECTION_STYLE } from '@app/flow/DefaultTheme';
 import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
 import Node from '@app/flow/diagram/Node';
+import NodeParams from '@app/flow/diagram/NodeParams';
 import {
   ACTIVITY_LABEL_STYLE,
   getAnchorPoints,
@@ -24,7 +25,7 @@ export default class ActivityNode extends Node {
   public get label() { return super.label; }
   public set label(label: string) {
     super.label = label;
-    this.textEditor.setText(super.label);
+    this.textEditor.text = this.label;
   }
 
   private rectangle: CanvasRectangle;
@@ -33,7 +34,7 @@ export default class ActivityNode extends Node {
 
   private textEditor: CanvasText;
 
-  constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, params: CoordinatePoint) {
+  constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, params: NodeParams) {
     super(canvas, htmlLayer, params);
 
     this.rectangle = new CanvasRectangle(canvas, htmlLayer, styles, getRectangleParams(params));

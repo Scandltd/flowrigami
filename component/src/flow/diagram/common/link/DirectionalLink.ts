@@ -19,8 +19,6 @@ const styles: ShapeStyle = {
 };
 
 export default class DirectionalLink extends Link {
-  public name = 'DirectionalLink';
-
   private arrow: CanvasLine;
   private line: CanvasLine;
   private inflectionPoints: AnchorPoint[];
@@ -29,10 +27,10 @@ export default class DirectionalLink extends Link {
     super(canvas, htmlLayer, points);
 
     this.isOrthogonal = isOrthogonal;
-    this.inflectionPoints = [];
     if (isOrthogonal) {
-      this.applyOrthogonality();
+      this.points = this.createOrthogonalPoints();
     }
+    this.inflectionPoints = this.createInflectionPoints();
 
     this.line = new CanvasLine(canvas, htmlLayer, styles, this.createLineParams(this.points));
     this.arrow = new CanvasLine(canvas, htmlLayer, styles, this.createArrowParams(this.points));
@@ -79,7 +77,6 @@ export default class DirectionalLink extends Link {
     this.line.draw();
 
     if (this.isHover || this.isActive) {
-      // @TODO remove when snap_to_grid works well
       this.updateInflectionPoints();
 
       this.inflectionPoints.forEach(point => point.draw());

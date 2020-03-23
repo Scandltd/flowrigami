@@ -12,11 +12,11 @@ export default class AddIndicator implements Action {
     this.indicator = indicator;
   }
 
-  execute = () => {
+  public redo = () => {
     this.store.addIndicator(this.indicator);
   };
 
-  revert = () => {
+  public undo = () => {
     this.store.deleteIndicatorById(this.indicator.id);
   };
 }

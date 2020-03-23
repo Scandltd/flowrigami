@@ -1,4 +1,5 @@
 import { SHAPE_LABEL_PADDING, SHAPE_PREVIEW_COLOR, TEXT_NODE_BORDER_COLOR_ACTIVE } from '@app/flow/DefaultThemeConstants';
+import NodeParams from '@app/flow/diagram/NodeParams';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 import Rectangle from '@app/flow/geometry/Rectangle';
 import ShapeStyle from '@app/flow/graphics/ShapeStyle';
@@ -11,6 +12,14 @@ const TEXT_NODE_BORDER_WIDTH = 2;
 
 const TEXT_NODE_PREVIEW_WIDTH = 40;
 const TEXT_NODE_PREVIEW_HEIGHT = 40;
+
+
+export const getTextParams = (params: TextParams) => ({
+  placeholder: params.placeholder,
+  text: params.text,
+  x: params.x,
+  y: params.y,
+});
 
 export function getRectangleParams(ctx: CanvasRenderingContext2D, style: TextStyle, params: TextParams): Rectangle {
   const boundingRect = measureText(ctx, style, params);

@@ -1,7 +1,6 @@
 export default interface TextParams {
-  placeholder?: string;
   text: string;
-
+  placeholder?: string;
   x: number;
   y: number;
   maxWidth?: number;

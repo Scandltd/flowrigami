@@ -5,10 +5,11 @@ import Node from '@app/flow/diagram/Node';
 import Dispatcher from '@app/flow/store/Dispatcher';
 import Action from '@app/flow/store/history/Action';
 import History from '@app/flow/store/history/History';
+import Observable from '@app/flow/store/Observable';
 import FlowrigamiOptions from '@app/FlowrigamiOptions';
 
 
-export default class Store {
+export default class Store extends Observable {
   private dispatcher: Dispatcher;
   private history: History;
 
@@ -33,6 +34,8 @@ export default class Store {
   // STATE
 
   constructor(options: FlowrigamiOptions) {
+    super();
+
     this.dispatcher = new Dispatcher(this);
     this.history = new History();
 
@@ -53,16 +56,16 @@ export default class Store {
     this.indicators.push(indicator);
   }
 
+  public deleteIndicatorById(id: string) {
+    this.indicators = this.indicators.filter((it) => it.id !== id);
+  }
+
   public moveAllIndicators(dx: number, dy: number) {
     this.indicators.forEach((it) => it.move(dx, dy));
   }
 
   public replaceAllIndicators(indicators: Indicator[]) {
     this.indicators = indicators;
-  }
-
-  public deleteIndicatorById(id: string) {
-    this.indicators = this.indicators.filter((it) => it.id !== id);
   }
 
   public deleteAllIndicators() {
@@ -81,6 +84,32 @@ export default class Store {
     this.links.push(...link);
   }
 
+  public deleteLinkById(id: string) {
+    const link = this.links.find((it) => it.id === id);
+    if (!link) {
+      return;
+    }
+
+    const firstPoint = link.points[0] as AnchorPoint;
+    firstPoint.links = firstPoint.links.filter((it) => it !== link);
+
+    const lastPoint = link.points[link.points.length - 1] as AnchorPoint;
+    lastPoint.links = lastPoint.links.filter((it) => it !== link);
+
+    this.links = this.links.filter((it) => it.id !== id);
+  }
+
+  public findAllLinksByNode(node: Node) {
+    const links: Link[] = [];
+
+    const anchors = node.points;
+    anchors.map((it) => {
+      links.push(...it.links);
+    });
+
+    return links;
+  }
+
   public moveAllLinks(dx: number, dy: number) {
     this.links.forEach((it) => it.move(dx, dy));
   }
@@ -89,8 +118,8 @@ export default class Store {
     this.links = links;
   }
 
-  public deleteLinkById(id: string) {
-    this.links = this.links.filter((it) => it.id !== id);
+  public deleteAllLinksByNodeId(nodeId: string) {
+    this.links = this.links.filter((it) => it.points.some((it) => (!it.owner || it.owner.id !== nodeId)));
   }
 
   public deleteAllLinks() {
@@ -109,6 +138,10 @@ export default class Store {
     this.nodes.push(node);
   }
 
+  public deleteNodeById(id: string) {
+    this.nodes = this.nodes.filter((it) => it.id !== id);
+  }
+
   public moveAllNodes(dx: number, dy: number) {
     this.nodes.forEach((it) => it.move(dx, dy));
   }
@@ -117,29 +150,13 @@ export default class Store {
     this.nodes = nodes;
   }
 
-  public deleteNodeById(id: string) {
-    this.links = this.links.filter((it) => it.points.some((it) => (!it.owner || it.owner.id !== id)));
-    this.nodes = this.nodes.filter((it) => it.id !== id);
-  }
-
   public deleteAllNodes() {
     this.nodes = [];
   }
 
   public dispatch = (action: string, payload: any = null) => {
     this.dispatcher.dispatch(action, payload);
-  };
-
-  public notify = (action: string) => {
-    this.dispatcher.notify(action);
-  };
-
-  public subscribe = (action: string, func: (data: any) => void) => {
-    this.dispatcher.subscribe(action, func);
-  };
-
-  public unsubscribe = (action: string, func: (data: any) => void) => {
-    this.dispatcher.unsubscribe(action, func);
+    this.notify(action);
   };
 
   public undo = () => {
@@ -151,15 +168,15 @@ export default class Store {
   };
 
   public archiveAction = (action: Action) => {
-    this.history.archiveAction(action);
+    this.history.execute(action);
   };
 
   public hasUndo = () => {
-    return this.history.hasUndo();
+    return this.history.canUndo();
   };
 
   public hasRedo = () => {
-    return this.history.hasRedo();
+    return this.history.canRedo();
   };
 
 }

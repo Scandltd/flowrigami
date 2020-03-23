@@ -52,14 +52,7 @@
 
 
 <div class="test-utilities">
-  <h2>
-    Testing utilities:
-  </h2>
-
-  <h3>
-    View Mode:
-  </h3>
-  <div class="">
+  <div class="collapse-wrapper">
     <div class="onoffswitch">
       <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="view_mode_switcher">
       <label class="onoffswitch-label" for="view_mode_switcher"></label>
@@ -70,25 +63,43 @@
     viewModeSwitcher.onchange = (e) => initializeFlowrigami({ viewMode: e.target.checked });
   </script>
 
-  <h3>
-    Diagram api:
-  </h3>
-  <div class="demo-data">
-    <button type="button" id="clear_data">
-      Clear
-    </button>
 
-    <button type="button" id="first_sample">
-      Simple sample
-    </button>
+  <div class="collapse-wrapper">
+    <input id="diagram-api" class="toggle" type="checkbox" checked>
+    <label for="diagram-api" class="label-toggle">
+      Diagram api
+    </label>
+    <div class="collapse-content">
+      <div class="collapse-inner">
+        <div class="flex-row">
+          <button type="button" id="clear_data">
+            Clear
+          </button>
+        </div>
+        <br>
 
-    <button type="button" id="kyc_process">
-      KYC process
-    </button>
+        <div class="flex-row">
+          <button type="button" id="first_sample">
+            Import (first_sample.json)
+          </button>
 
-    <button type="button" id="onboarding_process">
-      Onboarding process
-    </button>
+          <button type="button" id="kyc_process">
+            Import (kyc_process.json)
+          </button>
+
+          <button type="button" id="onboarding_process">
+            Import (onboarding_process.json)
+          </button>
+        </div>
+        <br>
+
+        <div class="flex-row">
+          <button type="button" id="export_diagram">
+            Export
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
   <script>
     const clearDiagram = document.getElementById('clear_data');
@@ -100,6 +111,22 @@
         then((json) => flowrigami.diagramApi.import(JSON.stringify(json)));
     }
 
+    function exportData() {
+      const json = flowrigami.diagramApi.export();
+      const a = document.createElement('a');
+      a.onclick = () => {
+        const blob = new Blob([json], { type: 'application/json' });
+        const dataUrl = URL.createObjectURL(blob);
+        a.download = 'diagram.json';
+        a.href = dataUrl;
+
+        setTimeout(() => {
+          URL.revokeObjectURL(a.href);
+        }, 0);
+      };
+      a.click();
+    }
+
     const firstSample = document.getElementById('first_sample');
     firstSample.onclick = () => importData('demo/first_sample.json');
 
@@ -108,19 +135,28 @@
 
     const onboardingProcess = document.getElementById('onboarding_process');
     onboardingProcess.onclick = () => importData('demo/onboarding_process.json');
+
+    const exportDiagram = document.getElementById('export_diagram');
+    exportDiagram.onclick = () => exportData();
   </script>
-  <br>
 
 
-  <h3>
-    Indicator api:
-  </h3>
-  <form id="indicator-form" autocomplete="off">
-    <input id="indicatorId" type="text" placeholder="Indicator ID">
-    <input id="indicatorValue" type="number" placeholder="Indicator value">
-    <input id="indicatorColor" type="text" placeholder="Indicator color">
-    <button type="submit">Submit indicator value</button>
-  </form>
+  <div class="collapse-wrapper">
+    <input id="indicator-api" class="toggle" type="checkbox">
+    <label for="indicator-api" class="label-toggle">
+      Indicator api
+    </label>
+    <div class="collapse-content">
+      <div class="collapse-inner">
+        <form id="indicator-form" autocomplete="off">
+          <input id="indicatorId" type="text" placeholder="Indicator ID">
+          <input id="indicatorValue" type="number" placeholder="Indicator value">
+          <input id="indicatorColor" type="text" placeholder="Indicator color">
+          <button type="submit">Submit indicator value</button>
+        </form>
+      </div>
+    </div>
+  </div>
   <script>
     const indicatorId = document.getElementById('indicatorId');
     const indicatorValue = document.getElementById('indicatorValue');

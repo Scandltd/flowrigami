@@ -24,6 +24,21 @@ body {
   width: 90vw;
 }
 
+.flex-row {
+  display: flex;
+  align-items: center;
+}
+
+.flex-row button {
+  margin-right: 10px;
+}
+
+.flex-row button:last-child {
+  margin-right: 0;
+}
+
+
+/* on-off toggle */
 .onoffswitch {
   position: relative; width: 50px;
   -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
@@ -36,7 +51,7 @@ body {
   height: 20px; padding: 0; line-height: 20px;
   border: 2px solid #999999; border-radius: 20px;
   background-color: #DDDDDD;
-  transition: background-color 0.3s ease-in;
+  transition: background-color 0.15s ease-in;
 }
 .onoffswitch-label:before {
   content: "";
@@ -45,7 +60,7 @@ body {
   position: absolute; top: 0; bottom: 0;
   right: 28px;
   border: 2px solid #999999; border-radius: 20px;
-  transition: all 0.3s ease-in 0s;
+  transition: all 0.15s ease-in 0s;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label {
   background-color: #56A4A7;
@@ -54,17 +69,46 @@ body {
   border-color: #56A4A7;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label:before {
-  right: 0px;
+  right: 0;
 }
 
-.demo-data {
-  display: flex;
-}
 
-.demo-data button {
-  margin-right: 10px;
+/* collapse */
+.collapse-wrapper {
+  margin-top: 1rem;
 }
-
-.demo-data button:last-child {
-  margin-right: 0;
+.collapse-wrapper input[type="checkbox"] {
+  display: none;
+}
+.collapse-wrapper .label-toggle {
+  font-size: 16px;
+  cursor: pointer;
+  user-select: none;
+}
+.collapse-wrapper .label-toggle::before {
+  /* triangle */
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid currentColor;
+  content: '';
+  display: inline-block;
+  margin: 0 0.4em 0.1em 0;
+  transform: translateY(-2px);
+  transition: transform 0.15s ease;
+  vertical-align: middle;
+}
+.collapse-wrapper .toggle:checked + .label-toggle::before {
+  transform: rotate(90deg) translateX(-3px);
+}
+.collapse-wrapper .collapse-content {
+  overflow: hidden;
+  margin-top: 0.5rem;
+  max-height: 0;
+  transition: max-height 0.15s ease;
+}
+.collapse-wrapper .toggle:checked + .label-toggle + .collapse-content {
+  max-height: 280px;
+}
+.collapse-wrapper .collapse-inner {
+  padding: 0.1rem 0.3rem;
 }

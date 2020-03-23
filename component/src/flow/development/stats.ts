@@ -1,3 +1,5 @@
+// @stats()
+// public draw()
 export function stats() {
   if (process.env.NODE_ENV !== 'development') return () => {};
 

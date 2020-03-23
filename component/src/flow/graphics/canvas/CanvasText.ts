@@ -1,5 +1,4 @@
 import { SHAPE_LABEL_PADDING, TEXT_NODE_BORDER_COLOR_ACTIVE } from '@app/flow/DefaultThemeConstants';
-import ShapeExportObject from '@app/flow/exportimport/ShapeExportObject';
 import Shape from '@app/flow/graphics/Shape';
 import TextParams from '@app/flow/graphics/TextParams';
 import TextStyle from '@app/flow/graphics/TextStyle';
@@ -8,14 +7,9 @@ import Store from '@app/flow/store/Store';
 import { wrapText } from '@app/flow/utils/CanvasTextUtils';
 import { drawText, isPointInText, measureTextLine } from '@app/flow/utils/CanvasUtils';
 import { moveCursorToTheEnd } from '@app/flow/utils/HtmlUtils';
-import nanoid from 'nanoid';
 
 
 export default class CanvasText implements Shape {
-  public name = 'CanvasText';
-
-  public id: string;
-
   private _isActive: boolean = false;
   public get isActive() { return this._isActive; }
   public set isActive(value: boolean) { this._isActive = value; }
@@ -28,11 +22,11 @@ export default class CanvasText implements Shape {
   protected htmlLayer: HTMLElement;
   protected ctx: CanvasRenderingContext2D;
 
-  private placeholder?: string;
-
   private _text: string;
   public get text() { return this._text; }
-  public setText(text: string = '') { this._text = text; }
+  public set text(text: string) { this._text = text; }
+
+  private placeholder?: string;
 
   private x: number;
   private y: number;
@@ -45,7 +39,6 @@ export default class CanvasText implements Shape {
     this.htmlLayer = htmlLayer;
     this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-    this.id = nanoid();
     this.placeholder = params.placeholder;
     this._text = params.text;
     this.x = params.x;
@@ -53,17 +46,6 @@ export default class CanvasText implements Shape {
     this.maxWidth = params.maxWidth;
     this.maxHeight = params.maxHeight;
     this.textStyle = textStyle;
-  }
-
-  public export(): ShapeExportObject {
-    return {
-      name: this.name,
-      id: this.id,
-    };
-  };
-
-  public import(object: ShapeExportObject) {
-    this.id = object.id;
   }
 
   public draw() {
@@ -115,7 +97,7 @@ export default class CanvasText implements Shape {
 
       const outsideClickHandler = (e: MouseEvent) => {
         const text = textEditor.innerText.trim();
-        this.setText(text);
+        this._text = text;
         store.dispatch(ACTION.UPDATE_SHAPE_TEXT, { id: id, text: text });
 
         if (textEditor !== e.target) {
@@ -166,7 +148,7 @@ export default class CanvasText implements Shape {
 
     const textEditor = document.createElement('div');
     textEditor.setAttribute('contenteditable', 'true');
-    textEditor.innerHTML = this.text;
+    textEditor.innerHTML = this._text;
     Object.assign(textEditor.style, {
       outline: 'none',
       cursor: 'text',

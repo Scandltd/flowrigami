@@ -9,18 +9,23 @@ export default class DeleteNode implements Action {
   private node: Node;
   private links: Link[] = [];
 
-  constructor(store: Store, node: Node, connections: Link[]) {
+  // @TODO implement getLinks method in store by node
+  constructor(store: Store, node: Node, links: Link[]) {
     this.store = store;
     this.node = node;
-    this.links = connections;
+    this.links = links;
   }
 
-  execute = () => {
+  public redo = () => {
+    console.log(this.links);
+    this.links = this.store.findAllLinksByNode(this.node);
+    console.log(this.links);
     this.store.deleteNodeById(this.node.id);
   };
 
-  revert = () => {
+  public undo = () => {
     this.store.addNode(this.node);
     this.store.addLinks(this.links);
+    this.links = [];
   };
 }

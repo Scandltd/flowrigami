@@ -1,4 +1,5 @@
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
+import Rectangle from '@app/flow/geometry/Rectangle';
 
 
 export function calculateRoundingShift(corner: CoordinatePoint, point1: CoordinatePoint, point2: CoordinatePoint, radius: number) {
@@ -8,26 +9,19 @@ export function calculateRoundingShift(corner: CoordinatePoint, point1: Coordina
   return Math.sqrt(radius**2 + curvedSection**2) - radius;
 }
 
-// @TODO improve this because it's not take into account vertical and horizontal lines
-export function areCoordinatesInRectangle(coordinates: CoordinatePoint, from: CoordinatePoint, to: CoordinatePoint) {
-  return (Math.min(from.x, to.x) <= coordinates.x) && (coordinates.x <= Math.max(from.x, to.x)) ||
-    (Math.min(from.y, to.y) <= coordinates.y) && (coordinates.y <= Math.max(from.y, to.y));
+export function belongsToLine(point: CoordinatePoint, from: CoordinatePoint, to: CoordinatePoint) {
+  // https://stackoverflow.com/a/907491/5177605
+  // check whether the determinant of the matrix {{to.x - from.x, to.y - from.y}, {point.x - from.x, point.y - from.y}} is close to 0
+  const determinant = (to.x - from.x)*(point.y - from.y) - (to.y - from.y)*(point.x - from.x);
+  const lineLength = Math.sqrt((from.x - to.x)**2 + (from.y - to.y)**2);
+  return Math.abs(determinant) < lineLength*5;
 }
 
-const LINE_DETECTION_DELTA = 10;
-export function areCoordinatesOnInfiniteLine(coordinates: CoordinatePoint, from: CoordinatePoint, to: CoordinatePoint) {
-  const dx1 = to.x - from.x;
-  const dy1 = to.y - from.y;
+export function belongsToRectangle(point: CoordinatePoint, rectangle: Rectangle) {
+  const from = { x: rectangle.x - 0.5*rectangle.width, y: rectangle.y - 0.5*rectangle.height };
+  const to = { x: from.x + rectangle.width, y: from.y + rectangle.height };
 
-  const dx = coordinates.x - from.x;
-  const dy = coordinates.y - from.y;
-  const S = dx1*dy - dx*dy1;
-
-  const ab = Math.sqrt(dx1*dx1 + dy1*dy1);
-
-  const h = S/ab;
-
-  return Math.abs(h) < LINE_DETECTION_DELTA;
+  return (from.x <= point.x) && (point.x <= to.x) && (from.y <= point.y) && (point.y <= to.y);
 }
 
 

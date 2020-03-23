@@ -1,32 +1,20 @@
 import Line from '@app/flow/geometry/Line';
 import CanvasShape from '@app/flow/graphics/canvas/CanvasShape';
 import ShapeStyle from '@app/flow/graphics/ShapeStyle';
-import { drawPath2D } from '@app/flow/utils/CanvasUtils';
-import { areCoordinatesInRectangle, areCoordinatesOnInfiniteLine } from '@app/flow/utils/MathUtils';
+import { belongsToLine, belongsToRectangle } from '@app/flow/utils/MathUtils';
 import { createLinePath2D } from '@app/flow/utils/Path2DUtils';
 
 
 export default class CanvasLine extends CanvasShape {
-  public name = 'CanvasLine';
-
-  private params: Line;
-  private style: ShapeStyle;
-  private path2d: Path2D;
+  protected params: Line;
+  protected style: ShapeStyle;
+  protected path2d: Path2D;
 
   constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement, style: ShapeStyle, params: Line) {
     super(canvas, htmlLayer);
     this.params = { ...params };
     this.style = style;
     this.path2d = createLinePath2D(this.params);
-  }
-
-  public draw() {
-    drawPath2D(this.ctx, this.path2d, this.getCurrentStyle());
-  }
-
-  private getCurrentStyle() {
-    const shapeStyle = this.style;
-    return this.isActive ? (shapeStyle.active || shapeStyle) : (this.isHover ? (shapeStyle.hover || shapeStyle) : shapeStyle);
   }
 
   public includes(x: number, y: number) {
@@ -40,7 +28,18 @@ export default class CanvasLine extends CanvasShape {
         const from = coordinateList[i - 1];
         const to = coordinateList[i];
 
-        isInLine = areCoordinatesInRectangle({ x, y }, from, to) && areCoordinatesOnInfiniteLine({ x, y }, from, to);
+        const pointBelongsToLine = belongsToLine({ x, y }, from, to);
+        if (pointBelongsToLine) {
+          const rectangle = {
+            x: 0.5*(from.x + to.x),
+            y: 0.5*(from.y + to.y),
+            width: Math.max(Math.abs(from.x - to.x), 10),
+            height: Math.max(Math.abs(from.y - to.y), 10),
+          };
+
+          isInLine = belongsToRectangle({ x, y }, rectangle);
+        }
+
         if (isInLine) break;
       }
     }

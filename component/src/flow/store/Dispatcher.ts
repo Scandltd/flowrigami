@@ -4,27 +4,24 @@ import DirectionalLink from '@app/flow/diagram/common/link/DirectionalLink';
 import Link from '@app/flow/diagram/Link';
 import Node from '@app/flow/diagram/Node';
 import ACTION from '@app/flow/store/ActionTypes';
-import AddConnection from '@app/flow/store/history/impl/AddConnection';
-import AddIndicator from '@app/flow/store/history/impl/AddIndicator';
-import AddNode from '@app/flow/store/history/impl/AddNode';
-import DeleteConnection from '@app/flow/store/history/impl/DeleteConnection';
-import DeleteIndicator from '@app/flow/store/history/impl/DeleteIndicator';
-import DeleteNode from '@app/flow/store/history/impl/DeleteNode';
-import Observable from '@app/flow/store/Observable';
+import AddIndicator from '@app/flow/store/history/actions/AddIndicator';
+import AddLink from '@app/flow/store/history/actions/AddLink';
+import AddNode from '@app/flow/store/history/actions/AddNode';
+import DeleteIndicator from '@app/flow/store/history/actions/DeleteIndicator';
+import DeleteLink from '@app/flow/store/history/actions/DeleteLink';
+import DeleteNode from '@app/flow/store/history/actions/DeleteNode';
 import Store from '@app/flow/store/Store';
 
 
-export default class Dispatcher extends Observable {
+export default class Dispatcher {
   private store: Store;
 
   constructor(store: Store) {
-    super();
     this.store = store;
   }
 
   public dispatch = (action: string, payload: any = null) => {
     this.update(action, payload);
-    this.notify(action);
   };
 
   private update = (action: string, payload: any) => {
@@ -39,7 +36,7 @@ export default class Dispatcher extends Observable {
       case ACTION.SET_INDICATOR_EDIT: {
         const indicator = this.store.findIndicatorById(payload.id);
         if (indicator) {
-          indicator.setEditing(payload.isEditing);
+          indicator.isEditing = payload.isEditing;
         }
         break;
       }
@@ -90,7 +87,7 @@ export default class Dispatcher extends Observable {
         this.deleteNode(payload);
         break;
       case ACTION.DELETE_CONNECTOR:
-        this.store.archiveAction(new DeleteConnection(this.store, payload));
+        this.store.archiveAction(new DeleteLink(this.store, payload));
         this.deleteLink(payload);
         break;
       case ACTION.CLEAR_DIAGRAM: {
@@ -171,15 +168,10 @@ export default class Dispatcher extends Observable {
     lastPoint.links.push(link);
 
     this.store.addLink(link);
-    this.store.archiveAction(new AddConnection(this.store, link));
+    this.store.archiveAction(new AddLink(this.store, link));
   };
 
   private deleteLink = (link: Link) => {
-    const firstPoint = link.points[0] as AnchorPoint;
-    const lastPoint = link.points[link.points.length - 1] as AnchorPoint;
-    firstPoint.links = firstPoint.links.filter((it) => it !== link);
-    lastPoint.links = lastPoint.links.filter((it) => it !== link);
-
     this.store.selectedConnector = null;
     this.store.deleteLinkById(link.id);
   };

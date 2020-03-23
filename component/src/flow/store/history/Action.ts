@@ -1,5 +1,5 @@
 export default interface Action {
-  execute: () => void;
+  redo: () => void;
 
-  revert: () => void;
+  undo: () => void;
 }

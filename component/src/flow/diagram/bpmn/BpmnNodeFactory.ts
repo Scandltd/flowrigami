@@ -11,6 +11,7 @@ import AnchorPoint from '@app/flow/diagram/common/AnchorPoint';
 import Indicator, { IndicatorParams } from '@app/flow/diagram/common/Indicator';
 import DirectionalLink from '@app/flow/diagram/common/link/DirectionalLink';
 import DiagramFactory from '@app/flow/diagram/DiagramFactory';
+import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 
 
 export enum BpmnNodes {
@@ -31,6 +32,11 @@ export default class BpmnNodeFactory implements DiagramFactory {
   constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement) {
     this.canvas = canvas;
     this.htmlLayer = htmlLayer;
+  }
+
+  public getAnchorPoint(point: CoordinatePoint) {
+    const ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+    return new AnchorPoint(ctx, point)
   }
 
   public getLink(points: AnchorPoint[]) {

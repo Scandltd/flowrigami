@@ -60,14 +60,12 @@ function createLayout(root: ShadowRoot, options: FlowrigamiOptions) {
 
   const div = document.createElement('div');
   div.innerHTML = innerHtml;
+  const container = root.appendChild(div.firstChild!) as HTMLElement;
 
-  root.appendChild(div.firstChild!);
-
-  const width = root.host.clientWidth;
-  const height = root.host.clientHeight;
-  const container = root.querySelector('.fl') as HTMLInputElement;
-  container.style.width = `${width}px`;
-  container.style.height = `${height}px`;
+  container.style.width = '100%';
+  container.style.height = '100vh';
+  container.style.maxHeight = '100%';
+  container.style.minHeight = '100%';
 
   return container;
 }

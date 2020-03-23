@@ -1,10 +1,7 @@
-import ShapeExportObject from '@app/flow/exportimport/ShapeExportObject';
+import NodeParams from '@app/flow/diagram/NodeParams';
 
 
-export default interface NodeExportObject extends ShapeExportObject {
-  params: {
-    label: string;
-    x: number;
-    y: number;
-  };
+export default interface NodeExportObject {
+  name: string;
+  params: NodeParams;
 }

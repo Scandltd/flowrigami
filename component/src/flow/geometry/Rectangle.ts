@@ -3,5 +3,5 @@ export default interface Rectangle {
   y: number;
   width: number;
   height: number;
-  borderRadius: number;
+  borderRadius?: number;
 }

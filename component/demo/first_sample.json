@@ -91,8 +91,8 @@
   "nodes": [
     {
       "name": "StartNode",
-      "id": "QbyyBZniRa3fsNaaYcLgf",
       "params": {
+        "id": "QbyyBZniRa3fsNaaYcLgf",
         "label": "",
         "x": 380,
         "y": 280
@@ -100,8 +100,8 @@
     },
     {
       "name": "DecisionNode",
-      "id": "A0ULnFxoMkD5K66fDsPNg",
       "params": {
+        "id": "A0ULnFxoMkD5K66fDsPNg",
         "label": "",
         "x": 510,
         "y": 280
@@ -109,8 +109,8 @@
     },
     {
       "name": "DecisionNode",
-      "id": "tTNdtqhkuTDuiQL-R9xl0",
       "params": {
+        "id": "tTNdtqhkuTDuiQL-R9xl0",
         "label": "",
         "x": 930,
         "y": 280
@@ -118,8 +118,8 @@
     },
     {
       "name": "ActivityNode",
-      "id": "sScZ5WXjlcpkiAo3-9mah",
       "params": {
+        "id": "sScZ5WXjlcpkiAo3-9mah",
         "label": "",
         "x": 720,
         "y": 210
@@ -127,8 +127,8 @@
     },
     {
       "name": "ActivityNode",
-      "id": "FhhvFzTzbH09aJsADGgQ0",
       "params": {
+        "id": "FhhvFzTzbH09aJsADGgQ0",
         "label": "",
         "x": 720,
         "y": 350
@@ -136,8 +136,8 @@
     },
     {
       "name": "EndNode",
-      "id": "otm_6fQh0L_Bj2tz95aAp",
       "params": {
+        "id": "otm_6fQh0L_Bj2tz95aAp",
         "label": "",
         "x": 1060,
         "y": 280

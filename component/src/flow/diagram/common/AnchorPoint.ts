@@ -27,18 +27,18 @@ const dotStyles: ShapeStyle = {
 
 
 enum Orientation {
-  Top = 'TOP',
-  Bottom = 'BOTTOM',
-  Left = 'LEFT',
-  Right = 'RIGHT',
-  TopBottom = 'TOP_BOTTOM',
-  LeftRight = 'LEFT_RIGHT',
+  Top = 'Top',
+  Bottom = 'Bottom',
+  Left = 'Left',
+  Right = 'Right',
+  TopBottom = 'TopBottom',
+  LeftRight = 'LeftRight',
 }
 
 export default class AnchorPoint {
   public static readonly Orientation = Orientation;
 
-  public id: string;
+  public readonly id: string;
   public x: number;
   public y: number;
   public orientation: Orientation | null;

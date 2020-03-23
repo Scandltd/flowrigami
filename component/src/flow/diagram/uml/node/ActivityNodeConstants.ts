@@ -11,6 +11,7 @@ import {
   SHAPE_PREVIEW_COLOR,
   SHAPE_SELECTION_MARGIN
 } from '@app/flow/DefaultThemeConstants';
+import NodeParams from '@app/flow/diagram/NodeParams';
 import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 import ShapeStyle from '@app/flow/graphics/ShapeStyle';
 import TextStyle from '@app/flow/graphics/TextStyle';
@@ -53,10 +54,10 @@ export function getPreviewRectangleParams({ x, y }: CoordinatePoint) {
   };
 }
 
-export const getTextParams = ({ x, y }: CoordinatePoint) => ({
-  text: '',
-  x: x,
-  y: y,
+export const getTextParams = (params: NodeParams) => ({
+  text: params.label || '',
+  x: params.x,
+  y: params.y,
   maxWidth: SHAPE_LABEL_WIDTH,
   maxHeight: SHAPE_LABEL_HEIGHT,
 });

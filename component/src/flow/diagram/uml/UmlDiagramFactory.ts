@@ -9,6 +9,7 @@ import HorizontalForkJoinNode from '@app/flow/diagram/uml/node/HorizontalForkJoi
 import StartNode from '@app/flow/diagram/uml/node/StartNode';
 import TextNode from '@app/flow/diagram/uml/node/TextNode';
 import VerticalForkJoinNode from '@app/flow/diagram/uml/node/VerticalForkJoinNode';
+import CoordinatePoint from '@app/flow/geometry/CoordinatePoint';
 
 
 export enum UmlNodes {
@@ -28,6 +29,11 @@ export default class UmlDiagramFactory implements DiagramFactory {
   constructor(canvas: HTMLCanvasElement, htmlLayer: HTMLElement) {
     this.canvas = canvas;
     this.htmlLayer = htmlLayer;
+  }
+
+  public getAnchorPoint(point: CoordinatePoint) {
+    const ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+    return new AnchorPoint(ctx, point)
   }
 
   public getLink(points: AnchorPoint[]) {
